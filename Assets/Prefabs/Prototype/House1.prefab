@@ -106,6 +106,8 @@ GameObject:
   - component: {fileID: 7575704192324468460}
   - component: {fileID: 8053050485311379434}
   - component: {fileID: 1772425321181965639}
+  - component: {fileID: -4254664939136904671}
+  - component: {fileID: -4656032921548570310}
   m_Layer: 0
   m_Name: House1
   m_TagString: Untagged
@@ -142,9 +144,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isRecieveDamage: 0
   isFlooded: 0
-  maxHealthPoint: 50
-  damagePerSecond: 10
-  reparePerSecond: 5
+  config: {fileID: 11400000, guid: 6200fa270e5373c4fa0237bdba76be8e, type: 2}
 --- !u!114 &1772425321181965639
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -157,8 +157,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13d794e35b491004c93cf59c194a9968, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levelCount: 1
-  windowOffset: 0.5
+  config: {fileID: 11400000, guid: 6200fa270e5373c4fa0237bdba76be8e, type: 2}
   mesh: {fileID: 7575704191919830196}
+  damageLevelComponent: {fileID: -4254664939136904671}
+--- !u!114 &-4254664939136904671
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7575704192324468463}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ce131b6e9d442844b6bd71334e38248, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  config: {fileID: 11400000, guid: 6200fa270e5373c4fa0237bdba76be8e, type: 2}
   vitality: {fileID: 8053050485311379434}
-  damageLevelStep: 0.3
+--- !u!114 &-4656032921548570310
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7575704192324468463}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f45e800e32a3984b8696a34a996d1a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  config: {fileID: 11400000, guid: 6200fa270e5373c4fa0237bdba76be8e, type: 2}
+  damageLevelComponent: {fileID: -4254664939136904671}

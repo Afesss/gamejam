@@ -6,40 +6,34 @@ using UnityEngine;
 /// </summary>
 public class CityGenerator : MonoBehaviour
 {
-    [Tooltip("Количество колонок для домов")]
+    [Tooltip("Настройки города")]
     [SerializeField]
+    private CitySettings config;
+
+    // TODO: Убрать эти поля и везде где они используются - использовать сразу config
     private int cityColsCount;
-
-    [Tooltip("Количество линий для домов")]
-    [SerializeField]
     private int cityRowsCount;
-
-    [Tooltip("Размер ячейки на которой стоит дом")]
-    [SerializeField]
     private Vector2 CellSize;
-
-    [Tooltip("Объекты домов")]
-    [SerializeField]
     private GameObject[] houseObjects;
-
-    [Tooltip("Процентное соотношение домов")]
-    [SerializeField]
     private int[] houseRates;
+    // ------------------------------------------------------------
 
     private int[] remainHousesToPlace;
     private int freeHouseTypesCount;
 
-
     private void Awake()
     {
+        cityColsCount = config.CityColsCount;
+        cityRowsCount = config.CityRowsCount;
+        CellSize = config.CellSize;
+        houseObjects = config.HouseObjects;
+        houseRates = config.HouseRates;
+
         InitHousesCounts();
 
-//        foreach (var value in remainHousesToPlace)
-//            Debug.Log(value);
-
-        for (var x = 0; x < cityColsCount; x++)
+        for (var x = 0; x < config.CityColsCount; x++)
         {
-            for (var z = 0; z < cityRowsCount; z++)
+            for (var z = 0; z < config.CityRowsCount; z++)
             {
                 InstantiateHouse(x, z, GetRandomFreeHouseIndex());
             }
@@ -61,23 +55,23 @@ public class CityGenerator : MonoBehaviour
 
     private void InitHousesCounts()
     {
-        freeHouseTypesCount = houseObjects.Length;
+        freeHouseTypesCount = config.HouseObjects.Length;
 
-        var count = cityColsCount * cityRowsCount;
-        remainHousesToPlace = new int[houseObjects.Length];
+        var count = config.CityColsCount * config.CityRowsCount;
+        remainHousesToPlace = new int[config.HouseObjects.Length];
         var sum = 0;
-        for(var i = 0; i < houseObjects.Length - 1; i++)
+        for(var i = 0; i < config.HouseObjects.Length - 1; i++)
         {
-            remainHousesToPlace[i] = (int) ((float) houseRates[i] * count / 100);
+            remainHousesToPlace[i] = (int) ((float)config.HouseRates[i] * count / 100);
             sum += remainHousesToPlace[i];
         }
-        remainHousesToPlace[houseObjects.Length - 1] = count - sum;
+        remainHousesToPlace[config.HouseObjects.Length - 1] = count - sum;
     }
 
     private void InstantiateHouse(int col, int row, int index)
     {
-        var position = new Vector3(col * CellSize.x, 0, row * CellSize.y);
-        GameObject.Instantiate(houseObjects[index], position, Quaternion.identity, transform);
+        var position = new Vector3(col * config.CellSize.x, 0, row * config.CellSize.y);
+        GameObject.Instantiate(config.HouseObjects[index], position, Quaternion.identity, transform);
     }
 
 }

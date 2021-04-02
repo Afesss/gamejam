@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 5387061924319597612}
   - component: {fileID: 7727384029965338343}
   - component: {fileID: 4153003210783404355}
+  - component: {fileID: 8441024101310867384}
+  - component: {fileID: -3360008554168732972}
   m_Layer: 0
   m_Name: House2
   m_TagString: Untagged
@@ -47,9 +49,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isRecieveDamage: 0
   isFlooded: 0
-  maxHealthPoint: 60
-  damagePerSecond: 10
-  reparePerSecond: 5
+  config: {fileID: 11400000, guid: 92cfb4cbb3fff9c46a230fb612d63a55, type: 2}
 --- !u!114 &4153003210783404355
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -62,11 +62,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13d794e35b491004c93cf59c194a9968, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levelCount: 2
-  windowOffset: 0.5
+  config: {fileID: 11400000, guid: 92cfb4cbb3fff9c46a230fb612d63a55, type: 2}
   mesh: {fileID: 5387061925043562092}
+  damageLevelComponent: {fileID: 8441024101310867384}
+--- !u!114 &8441024101310867384
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5387061924319597613}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ce131b6e9d442844b6bd71334e38248, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  config: {fileID: 11400000, guid: 92cfb4cbb3fff9c46a230fb612d63a55, type: 2}
   vitality: {fileID: 7727384029965338343}
-  damageLevelStep: 0.25
+--- !u!114 &-3360008554168732972
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5387061924319597613}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f45e800e32a3984b8696a34a996d1a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  config: {fileID: 11400000, guid: 92cfb4cbb3fff9c46a230fb612d63a55, type: 2}
+  damageLevelComponent: {fileID: 8441024101310867384}
 --- !u!1 &5387061925043562095
 GameObject:
   m_ObjectHideFlags: 0

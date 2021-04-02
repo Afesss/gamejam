@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbc6b872e87136f44a41a81546966a7c, type: 3}
+  m_Name: House4
+  m_EditorClassIdentifier: 
+  levelCount: 4
+  windowOffset: 0.5
+  damageLevelStep: 0.18
+  maxHealthPoint: 80
+  damagePerSecond: 10
+  reparePerSecond: 5
+  waterFlowAmountByLevel: 1.3
