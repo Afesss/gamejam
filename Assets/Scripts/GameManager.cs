@@ -4,14 +4,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class GameManager : Singleton<GameManager>
+internal class GameManager : Singleton<GameManager>
 {
     private enum GameScene
     {
         MENU,
         GAME
     }
-    public enum GameState
+    internal enum GameState
     {
         PREGAME,
         RUNNING,
@@ -59,8 +59,8 @@ public class GameManager : Singleton<GameManager>
         }
     }
 
-    
-    public void StartGame()
+
+    internal void StartGame()
     {
         if (currentGameState != GameState.RUNNING)
         {
@@ -71,8 +71,8 @@ public class GameManager : Singleton<GameManager>
             LoadScene(GameScene.GAME);
         }
     }
-    
-    public void UpdateGameState(GameState gameState)
+
+    internal void UpdateGameState(GameState gameState)
     {
         switch (gameState)
         {

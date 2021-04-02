@@ -70,7 +70,9 @@ public class CityGenerator : MonoBehaviour
 
     private void InstantiateHouse(int col, int row, int index)
     {
-        var position = new Vector3(col * config.CellSize.x, 0, row * config.CellSize.y);
+        var position = new Vector3(col * CellSize.x, 0, row * CellSize.y)
+            - new Vector3(CellSize.x * cityColsCount * 0.5f, 0, CellSize.y * cityRowsCount * 0.5f);
+
         GameObject.Instantiate(config.HouseObjects[index], position, Quaternion.identity, transform);
     }
 
