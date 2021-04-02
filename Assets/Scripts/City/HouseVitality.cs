@@ -3,6 +3,7 @@ using UnityEngine;
 /// <summary>
 /// Компонент жизнеспособности дома
 /// </summary>
+[SelectionBaseAttribute]
 public class HouseVitality : MonoBehaviour
 {
     [Tooltip("Получает ли дом повреждения")]
@@ -13,17 +14,22 @@ public class HouseVitality : MonoBehaviour
     [SerializeField]
     private bool isFlooded;
 
-    [Tooltip("Максимальное количество жизни")]
+    [Tooltip("Настройки дома")]
     [SerializeField]
+    private HouseSettings config;
+
+    // TODO: Убрать эти поля и везде где они используются - использовать сразу config
+    /// <summary>
+    /// Максимальное количество жизни
+    /// </summary>
     private float maxHealthPoint;
-    
-
-    [Tooltip("Количество повреждения получаемого в секунду")]
-    [SerializeField]
+    /// <summary>
+    /// Количество повреждения получаемого в секунду
+    /// </summary>
     private float damagePerSecond;
-
-    [Tooltip("Количество генерируемых очков починки в секунду")]
-    [SerializeField]
+    /// <summary>
+    /// Количество генерируемых очков починки в секунду
+    /// </summary>
     private float reparePerSecond;
 
     /// <summary>
@@ -41,17 +47,30 @@ public class HouseVitality : MonoBehaviour
 
     private void Awake()
     {
+        maxHealthPoint = config.MaxHealthPoint;
+        damagePerSecond = config.DamagePerSecond;
+        reparePerSecond = config.ReparePerSecond;
         healthPoint = maxHealthPoint;
     }
 
     private void Update()
     {
         if (isRecieveDamage && healthPoint > 0)
-            healthPoint -= damagePerSecond * Time.deltaTime;
+            DecreaseHealthTick();
         else if (!isRecieveDamage && !isFlooded && healthPoint < maxHealthPoint)
-            healthPoint += reparePerSecond * Time.deltaTime;
+            IncreaseHealthTick();
 
         if (isFlooded && healthPoint > 0)
             healthPoint = 0;
+    }
+
+    private void DecreaseHealthTick()
+    {
+        healthPoint -= damagePerSecond * Time.deltaTime;
+    }
+
+    private void IncreaseHealthTick()
+    {
+        healthPoint += reparePerSecond * Time.deltaTime;
     }
 }

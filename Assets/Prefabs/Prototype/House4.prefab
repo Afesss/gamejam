@@ -214,6 +214,8 @@ GameObject:
   - component: {fileID: 2833930589838076848}
   - component: {fileID: 7274647493364609128}
   - component: {fileID: 5977393590107948207}
+  - component: {fileID: -6310635178643886236}
+  - component: {fileID: 6392813052631394142}
   - component: {fileID: 4830036257995924950}
   - component: {fileID: 5673861224044372981}
   m_Layer: 6
@@ -255,9 +257,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isRecieveDamage: 0
   isFlooded: 0
-  maxHealthPoint: 80
-  damagePerSecond: 10
-  reparePerSecond: 5
+  config: {fileID: 11400000, guid: cafef0c4d7ceda04486328b1def70d7c, type: 2}
 --- !u!114 &5977393590107948207
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -270,11 +270,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13d794e35b491004c93cf59c194a9968, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levelCount: 4
-  windowOffset: 0.5
+  config: {fileID: 11400000, guid: cafef0c4d7ceda04486328b1def70d7c, type: 2}
   mesh: {fileID: 2833930588850800516}
+  damageLevelComponent: {fileID: -6310635178643886236}
+--- !u!114 &-6310635178643886236
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2833930589838076849}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ce131b6e9d442844b6bd71334e38248, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  config: {fileID: 11400000, guid: cafef0c4d7ceda04486328b1def70d7c, type: 2}
   vitality: {fileID: 7274647493364609128}
-  damageLevelStep: 0.18
 --- !u!114 &4830036257995924950
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -284,9 +296,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 2833930589838076849}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d33276bc782350f4bb9ab853346e8492, type: 3}
+  m_Script: {fileID: 11500000, guid: 1f45e800e32a3984b8696a34a996d1a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  config: {fileID: 11400000, guid: cafef0c4d7ceda04486328b1def70d7c, type: 2}
+  damageLevelComponent: {fileID: -6310635178643886236}
   attackButton: {fileID: 8272713207570716469}
   stealButton: {fileID: 7425914832269176248}
   homeButton: {fileID: 1277145934697930792}

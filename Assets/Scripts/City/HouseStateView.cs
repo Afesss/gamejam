@@ -5,74 +5,69 @@ using UnityEngine;
 [RequireComponent(typeof(HouseVitality))]
 public class HouseStateView : MonoBehaviour
 {
-    [Tooltip("Количество этажей")]
+    [Tooltip("Настройки дома")]
     [SerializeField]
-    private int levelCount;
-
-    [Tooltip("Расстояние окна от начала этажа")]
-    [SerializeField]
-    private float windowOffset;
+    private HouseSettings config;
 
     [Tooltip("Меш дома")]
     [SerializeField]
     private MeshRenderer mesh;
 
-    [Tooltip("Компонент жизнеспособности дома")]
+    [Tooltip("Компонент уровня поврежденности здания")]
     [SerializeField]
-    private HouseVitality vitality;
-
-    [Tooltip("Шаг перехода к следующему уровню повреждения")]
-    [SerializeField]
-    private float damageLevelStep;
+    private HouseDamageLevel damageLevelComponent;
 
     private float floorHeight;
     private Vector3 groundCenter;
     private Vector3[][] windowPosition;
     private WaterfallPoolObject[][] windowWater;
 
-    private int damageLevel = 0;
+    private void Awake()
+    {
+        damageLevelComponent.OnLevelIncrease += OnDamageLevelIncrease;
+        damageLevelComponent.OnLevelDecrease += OnDamageLevelDecrease;
+    }
 
     private void Start()
     {
-        floorHeight = mesh.bounds.size.y / levelCount;
+        floorHeight = mesh.bounds.size.y / config.LevelCount;
         groundCenter = new Vector3(mesh.bounds.center.x, 0, mesh.bounds.center.z);
-        windowPosition = new Vector3[levelCount][];
-        windowWater = new WaterfallPoolObject[levelCount][];
+        windowPosition = new Vector3[config.LevelCount][];
+        windowWater = new WaterfallPoolObject[config.LevelCount][];
 
         GenerateWindowPosition();
     }
 
-    private void Update()
+    private void OnDamageLevelIncrease(int level)
     {
-        var damageRate = 1 - vitality.HealthPointRate;
-        if (damageRate > (damageLevel + 1) * damageLevelStep && damageLevel < levelCount)
-            SetNextDamageLevel();
-        else if (damageRate < (damageLevel * damageLevelStep) && damageLevel > 0)
-            SetPreviousDamageLevel();
+        SetNextDamageLevel(level - 1);
     }
 
-    private void SetNextDamageLevel()
+    private void OnDamageLevelDecrease(int level)
     {
-        var levelWindowPositions =  windowPosition[damageLevel];
-        windowWater[damageLevel] = new WaterfallPoolObject[levelWindowPositions.Length];
+        SetPreviousDamageLevel(level);
+    }
+
+    private void SetNextDamageLevel(int levelIndex)
+    {
+        var levelWindowPositions =  windowPosition[levelIndex];
+        windowWater[levelIndex] = new WaterfallPoolObject[levelWindowPositions.Length];
         var startAngle = 0;
         for (var i = 0; i < levelWindowPositions.Length; i++)
         {
             var angle = startAngle + (i / 2) * 90;
-            windowWater[damageLevel][i] = CityData.Instance.waterfallPoolService.GetFreeElement();
-            windowWater[damageLevel][i].transform.rotation = Quaternion.Euler(0, angle, 0);
-            windowWater[damageLevel][i].transform.position = levelWindowPositions[i];
+            windowWater[levelIndex][i] = CityData.Instance.waterfallPoolService.GetFreeElement();
+            windowWater[levelIndex][i].transform.rotation = Quaternion.Euler(0, angle, 0);
+            windowWater[levelIndex][i].transform.position = levelWindowPositions[i];
         }
-        damageLevel++;
     }
 
-    private void SetPreviousDamageLevel()
+    private void SetPreviousDamageLevel(int levelIndex)
     {
-        damageLevel--;
-        var levelWindowPositions = windowPosition[damageLevel];
+        var levelWindowPositions = windowPosition[levelIndex];
         for (var i = 0; i < levelWindowPositions.Length; i++)
-            if (windowWater[damageLevel][i] != default)
-                windowWater[damageLevel][i].ReturnToPool();
+            if (windowWater[levelIndex][i] != default)
+                windowWater[levelIndex][i].ReturnToPool();
     }
 
     private void GenerateWindowPosition()
@@ -80,25 +75,34 @@ public class HouseStateView : MonoBehaviour
         var windowCount = 8;
         var sizeX = mesh.bounds.size.x;
         var sizeZ = mesh.bounds.size.z;
-        for (var i = 0; i < levelCount; i++)
+        for (var i = 0; i < config.LevelCount; i++)
         {
             var centerLevel = groundCenter + Vector3.up * floorHeight * i;
 
             windowPosition[i] = new Vector3[windowCount];
-            windowPosition[i][0] = new Vector3(centerLevel.x - sizeX / 4, centerLevel.y + windowOffset, centerLevel.z + mesh.bounds.extents.z);
-            windowPosition[i][1] = new Vector3(centerLevel.x + sizeX / 4, centerLevel.y + windowOffset, centerLevel.z + mesh.bounds.extents.z);
-            windowPosition[i][2] = new Vector3(centerLevel.x + mesh.bounds.extents.x, centerLevel.y + windowOffset, centerLevel.z + sizeZ / 4);
-            windowPosition[i][3] = new Vector3(centerLevel.x + mesh.bounds.extents.x, centerLevel.y + windowOffset, centerLevel.z - sizeZ / 4);
-            windowPosition[i][4] = new Vector3(centerLevel.x + sizeX / 4, centerLevel.y + windowOffset, centerLevel.z - mesh.bounds.extents.z);
-            windowPosition[i][5] = new Vector3(centerLevel.x - sizeX / 4, centerLevel.y + windowOffset, centerLevel.z - mesh.bounds.extents.z);
-            windowPosition[i][6] = new Vector3(centerLevel.x - mesh.bounds.extents.x, centerLevel.y + windowOffset, centerLevel.z - sizeZ / 4);
-            windowPosition[i][7] = new Vector3(centerLevel.x - mesh.bounds.extents.x, centerLevel.y + windowOffset, centerLevel.z + sizeZ / 4);
+            windowPosition[i][0] = new Vector3(centerLevel.x - sizeX / 4, centerLevel.y + config.WindowOffset, centerLevel.z + mesh.bounds.extents.z);
+            windowPosition[i][1] = new Vector3(centerLevel.x + sizeX / 4, centerLevel.y + config.WindowOffset, centerLevel.z + mesh.bounds.extents.z);
+            windowPosition[i][2] = new Vector3(centerLevel.x + mesh.bounds.extents.x, centerLevel.y + config.WindowOffset, centerLevel.z + sizeZ / 4);
+            windowPosition[i][3] = new Vector3(centerLevel.x + mesh.bounds.extents.x, centerLevel.y + config.WindowOffset, centerLevel.z - sizeZ / 4);
+            windowPosition[i][4] = new Vector3(centerLevel.x + sizeX / 4, centerLevel.y + config.WindowOffset, centerLevel.z - mesh.bounds.extents.z);
+            windowPosition[i][5] = new Vector3(centerLevel.x - sizeX / 4, centerLevel.y + config.WindowOffset, centerLevel.z - mesh.bounds.extents.z);
+            windowPosition[i][6] = new Vector3(centerLevel.x - mesh.bounds.extents.x, centerLevel.y + config.WindowOffset, centerLevel.z - sizeZ / 4);
+            windowPosition[i][7] = new Vector3(centerLevel.x - mesh.bounds.extents.x, centerLevel.y + config.WindowOffset, centerLevel.z + sizeZ / 4);
+        }
+    }
+
+    private void OnDestroy()
+    {
+        if (damageLevelComponent != null)
+        {
+            damageLevelComponent.OnLevelIncrease -= OnDamageLevelIncrease;
+            damageLevelComponent.OnLevelDecrease -= OnDamageLevelDecrease;
         }
     }
 
     private void OnDrawGizmos()
     {
-        for(var i = 0; i < levelCount; i++)
+        for(var i = 0; i < config.LevelCount; i++)
         {
             var center = groundCenter + Vector3.up * floorHeight * i;
             Gizmos.DrawWireCube(center, new Vector3(3, 0.01f, 3));
