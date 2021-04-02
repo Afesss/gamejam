@@ -1,19 +1,19 @@
-using System.Collections;
+п»їusing System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(HouseVitality))]
 public class HouseStateView : MonoBehaviour
 {
-    [Tooltip("Настройки дома")]
+    [Tooltip("РќР°СЃС‚СЂРѕР№РєРё РґРѕРјР°")]
     [SerializeField]
     private HouseSettings config;
 
-    [Tooltip("Меш дома")]
+    [Tooltip("РњРµС€ РґРѕРјР°")]
     [SerializeField]
     private MeshRenderer mesh;
 
-    [Tooltip("Компонент уровня поврежденности здания")]
+    [Tooltip("РљРѕРјРїРѕРЅРµРЅС‚ СѓСЂРѕРІРЅСЏ РїРѕРІСЂРµР¶РґРµРЅРЅРѕСЃС‚Рё Р·РґР°РЅРёСЏ")]
     [SerializeField]
     private HouseDamageLevel damageLevelComponent;
 

@@ -1,8 +1,8 @@
-using UnityEngine;
+п»їusing UnityEngine;
 
 public class WorldWaterLevel : MonoBehaviour
 {
-    [Tooltip("Настройки города")]
+    [Tooltip("РќР°СЃС‚СЂРѕР№РєРё РіРѕСЂРѕРґР°")]
     [SerializeField]
     private CitySettings config;
 

@@ -1,82 +1,82 @@
-using UnityEngine;
+п»їusing UnityEngine;
 
 [CreateAssetMenu(fileName = "CitySettings", menuName = "BeaverGame/City", order = 1)]
 public class CitySettings : ScriptableObject
 {
     /// <summary>
-    /// Количество колонок для домов
+    /// РљРѕР»РёС‡РµСЃС‚РІРѕ РєРѕР»РѕРЅРѕРє РґР»СЏ РґРѕРјРѕРІ
     /// </summary>
     public int CityColsCount { get { return cityColsCount; } }
 
     /// <summary>
-    /// Количество линий для домов
+    /// РљРѕР»РёС‡РµСЃС‚РІРѕ Р»РёРЅРёР№ РґР»СЏ РґРѕРјРѕРІ
     /// </summary>
     public int CityRowsCount { get { return cityRowsCount; } }
 
     /// <summary>
-    /// Размер ячейки на которой стоит дом
+    /// Р Р°Р·РјРµСЂ СЏС‡РµР№РєРё РЅР° РєРѕС‚РѕСЂРѕР№ СЃС‚РѕРёС‚ РґРѕРј
     /// </summary>
     public Vector2 CellSize { get { return cellSize; } }
 
     /// <summary>
-    /// Объекты домов
+    /// РћР±СЉРµРєС‚С‹ РґРѕРјРѕРІ
     /// </summary>
     public GameObject[] HouseObjects { get { return houseObjects; } }
 
     /// <summary>
-    /// Процентное соотношение домов
+    /// РџСЂРѕС†РµРЅС‚РЅРѕРµ СЃРѕРѕС‚РЅРѕС€РµРЅРёРµ РґРѕРјРѕРІ
     /// </summary>
     public int[] HouseRates { get { return houseRates; } }
 
     /// <summary>
-    /// Максимальное количество воды
+    /// РњР°РєСЃРёРјР°Р»СЊРЅРѕРµ РєРѕР»РёС‡РµСЃС‚РІРѕ РІРѕРґС‹
     /// </summary>
     public float MaxWaterLevel { get { return maxWaterLevel; } }
 
     /// <summary>
-    /// Максимальная высота уровня воды на сцене (ось Y)
+    /// РњР°РєСЃРёРјР°Р»СЊРЅР°СЏ РІС‹СЃРѕС‚Р° СѓСЂРѕРІРЅСЏ РІРѕРґС‹ РЅР° СЃС†РµРЅРµ (РѕСЃСЊ Y)
     /// </summary>
     public float MaxWaterYPosition { get { return maxWaterYPosition; } }
 
     /// <summary>
-    /// Скорость убывания воды (количество в секунду)
+    /// РЎРєРѕСЂРѕСЃС‚СЊ СѓР±С‹РІР°РЅРёСЏ РІРѕРґС‹ (РєРѕР»РёС‡РµСЃС‚РІРѕ РІ СЃРµРєСѓРЅРґСѓ)
     /// </summary>
     public float OutflowSpeedPerSecond { get { return outflowSpeedPerSecond; } }
 
 
-    [Header("Генератор города")]
+    [Header("Р“РµРЅРµСЂР°С‚РѕСЂ РіРѕСЂРѕРґР°")]
 
-    [Tooltip("Количество колонок для домов")]
+    [Tooltip("РљРѕР»РёС‡РµСЃС‚РІРѕ РєРѕР»РѕРЅРѕРє РґР»СЏ РґРѕРјРѕРІ")]
     [SerializeField]
     private int cityColsCount;
 
-    [Tooltip("Количество линий для домов")]
+    [Tooltip("РљРѕР»РёС‡РµСЃС‚РІРѕ Р»РёРЅРёР№ РґР»СЏ РґРѕРјРѕРІ")]
     [SerializeField]
     private int cityRowsCount;
 
-    [Tooltip("Размер ячейки на которой стоит дом")]
+    [Tooltip("Р Р°Р·РјРµСЂ СЏС‡РµР№РєРё РЅР° РєРѕС‚РѕСЂРѕР№ СЃС‚РѕРёС‚ РґРѕРј")]
     [SerializeField]
     private Vector2 cellSize;
 
-    [Tooltip("Объекты домов")]
+    [Tooltip("РћР±СЉРµРєС‚С‹ РґРѕРјРѕРІ")]
     [SerializeField]
     private GameObject[] houseObjects;
 
-    [Tooltip("Процентное соотношение домов")]
+    [Tooltip("РџСЂРѕС†РµРЅС‚РЅРѕРµ СЃРѕРѕС‚РЅРѕС€РµРЅРёРµ РґРѕРјРѕРІ")]
     [SerializeField]
     private int[] houseRates;
 
-    [Header("Уровень затопленности города")]
+    [Header("РЈСЂРѕРІРµРЅСЊ Р·Р°С‚РѕРїР»РµРЅРЅРѕСЃС‚Рё РіРѕСЂРѕРґР°")]
 
-    [Tooltip("Максимальное количество воды")]
+    [Tooltip("РњР°РєСЃРёРјР°Р»СЊРЅРѕРµ РєРѕР»РёС‡РµСЃС‚РІРѕ РІРѕРґС‹")]
     [SerializeField]
     private float maxWaterLevel = 3000;
 
-    [Tooltip("Максимальная высота уровня воды на сцене (ось Y)")]
+    [Tooltip("РњР°РєСЃРёРјР°Р»СЊРЅР°СЏ РІС‹СЃРѕС‚Р° СѓСЂРѕРІРЅСЏ РІРѕРґС‹ РЅР° СЃС†РµРЅРµ (РѕСЃСЊ Y)")]
     [SerializeField]
     private float maxWaterYPosition = 10;
 
-    [Tooltip("Скорость убывания воды (количество в секунду)")]
+    [Tooltip("РЎРєРѕСЂРѕСЃС‚СЊ СѓР±С‹РІР°РЅРёСЏ РІРѕРґС‹ (РєРѕР»РёС‡РµСЃС‚РІРѕ РІ СЃРµРєСѓРЅРґСѓ)")]
     [SerializeField]
     private float outflowSpeedPerSecond = 10;
 

@@ -18,4 +18,7 @@ MonoBehaviour:
   maxHealthPoint: 60
   damagePerSecond: 10
   reparePerSecond: 5
+  maxChocolateAmount: 20
+  minChocolateAmount: 30
+  chocolateStealPerSecond: 0.2
   waterFlowAmountByLevel: 1.1
