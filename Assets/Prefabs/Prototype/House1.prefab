@@ -324,8 +324,8 @@ GameObject:
   - component: {fileID: 1772425321181965639}
   - component: {fileID: -4254664939136904671}
   - component: {fileID: -4656032921548570310}
-  - component: {fileID: 2900613842989338931}
   - component: {fileID: 1734491033600907845}
+  - component: {fileID: 8419530239117023139}
   m_Layer: 6
   m_Name: House1
   m_TagString: Untagged
@@ -409,10 +409,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   config: {fileID: 11400000, guid: 6200fa270e5373c4fa0237bdba76be8e, type: 2}
   damageLevelComponent: {fileID: -4254664939136904671}
-  attackButton: {fileID: 1109740833}
-  stealButton: {fileID: 1190106902}
-  homeButton: {fileID: 9180078002045843799}
-  houseVitality: {fileID: 8053050485311379434}
 --- !u!65 &1734491033600907845
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -426,6 +422,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 2, y: 2, z: 2}
   m_Center: {x: 0, y: 1, z: 0}
+--- !u!114 &8419530239117023139
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7575704192324468463}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d33276bc782350f4bb9ab853346e8492, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackButton: {fileID: 1109740833}
+  stealButton: {fileID: 1190106902}
+  homeButton: {fileID: 9180078002045843799}
+  houseVitality: {fileID: 8053050485311379434}
 --- !u!1 &9180078002045843799
 GameObject:
   m_ObjectHideFlags: 0

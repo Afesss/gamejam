@@ -22,6 +22,6 @@ MonoBehaviour:
   - {fileID: 2833930589838076849, guid: c0f09e987965e7743b682cede9d329b7, type: 3}
   - {fileID: 7009513973003839654, guid: 9451350e744f4d246ae36b4805dbdb31, type: 3}
   houseRates: 1e00000019000000140000000f0000000a000000
-  maxWaterLevel: 3000
+  maxWaterLevel: 30000
   maxWaterYPosition: 11
-  outflowSpeedPerSecond: 100
+  outflowSpeedPerSecond: 1000
