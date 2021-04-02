@@ -16,6 +16,7 @@ public class HouseVitality : MonoBehaviour
     [Tooltip("Максимальное количество жизни")]
     [SerializeField]
     private float maxHealthPoint;
+    
 
     [Tooltip("Количество повреждения получаемого в секунду")]
     [SerializeField]
@@ -29,6 +30,7 @@ public class HouseVitality : MonoBehaviour
     /// Текущее количество жизни у дома
     /// </summary>
     public float HealthPoint { get { return healthPoint; } }
+    public bool IsRecieveDamage { get { return isRecieveDamage; } set { isRecieveDamage = value; } }
 
     /// <summary>
     /// Доля жизни дома

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UIManager : Singleton<UIManager>
+internal class UIManager : Singleton<UIManager>
 {
     [SerializeField] GameObject mainMenu;
     [SerializeField] AnimationClip menuOn;
@@ -21,23 +21,23 @@ public class UIManager : Singleton<UIManager>
         if (Input.GetKeyDown(KeyCode.Escape))
             Pause();
     }
-    public void NewGame()
+    internal void NewGame()
     {
         GameManager.Instance.StartGame();
         GameManager.Instance.UpdateGameState(GameManager.GameState.RUNNING);
         MenuOff();
     }
-    public void Pause()
+    internal void Pause()
     {
         GameManager.Instance.UpdateGameState(GameManager.GameState.PAUSE);
         MenuOn();
     }
-    public void Ñontinue()
+    internal void Ñontinue()
     {
         GameManager.Instance.UpdateGameState(GameManager.GameState.RUNNING);
         MenuOff();
     }
-    public void Exit()
+    internal void Exit()
     {
         Application.Quit();
     }
