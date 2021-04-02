@@ -1,12 +1,12 @@
-using UnityEngine;
+п»їusing UnityEngine;
 
 public class WaterfallPool : MonoBehaviour
 {
-    [Tooltip("Префаб объекта вытекающей воды")]
+    [Tooltip("РџСЂРµС„Р°Р± РѕР±СЉРµРєС‚Р° РІС‹С‚РµРєР°СЋС‰РµР№ РІРѕРґС‹")]
     [SerializeField]
     private WaterfallPoolObject waterfallPrefab = null;
 
-    [Tooltip("Изначальный размер пула")]
+    [Tooltip("РР·РЅР°С‡Р°Р»СЊРЅС‹Р№ СЂР°Р·РјРµСЂ РїСѓР»Р°")]
     [SerializeField]
     private int size;
 

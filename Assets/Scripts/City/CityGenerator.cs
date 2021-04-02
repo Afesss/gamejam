@@ -1,34 +1,20 @@
-using System;
+п»їusing System;
 using UnityEngine;
 
 /// <summary>
-/// Генератор города
+/// Р“РµРЅРµСЂР°С‚РѕСЂ РіРѕСЂРѕРґР°
 /// </summary>
 public class CityGenerator : MonoBehaviour
 {
-    [Tooltip("Настройки города")]
+    [Tooltip("РќР°СЃС‚СЂРѕР№РєРё РіРѕСЂРѕРґР°")]
     [SerializeField]
     private CitySettings config;
-
-    // TODO: Убрать эти поля и везде где они используются - использовать сразу config
-    private int cityColsCount;
-    private int cityRowsCount;
-    private Vector2 CellSize;
-    private GameObject[] houseObjects;
-    private int[] houseRates;
-    // ------------------------------------------------------------
 
     private int[] remainHousesToPlace;
     private int freeHouseTypesCount;
 
     private void Awake()
     {
-        cityColsCount = config.CityColsCount;
-        cityRowsCount = config.CityRowsCount;
-        CellSize = config.CellSize;
-        houseObjects = config.HouseObjects;
-        houseRates = config.HouseRates;
-
         InitHousesCounts();
 
         for (var x = 0; x < config.CityColsCount; x++)
@@ -70,10 +56,9 @@ public class CityGenerator : MonoBehaviour
 
     private void InstantiateHouse(int col, int row, int index)
     {
-        var position = new Vector3(col * CellSize.x, 0, row * CellSize.y)
-            - new Vector3(CellSize.x * cityColsCount * 0.5f, 0, CellSize.y * cityRowsCount * 0.5f);
+        var position = new Vector3(col * config.CellSize.x, 0, row * config.CellSize.y)
+            - new Vector3(config.CellSize.x * config.CityColsCount * 0.5f, 0, config.CellSize.y * config.CityRowsCount * 0.5f);
 
         GameObject.Instantiate(config.HouseObjects[index], position, Quaternion.identity, transform);
     }
-
 }

@@ -1,63 +1,46 @@
-using UnityEngine;
+п»їusing UnityEngine;
 
 /// <summary>
-/// Компонент жизнеспособности дома
+/// РљРѕРјРїРѕРЅРµРЅС‚ Р¶РёР·РЅРµСЃРїРѕСЃРѕР±РЅРѕСЃС‚Рё РґРѕРјР°
 /// </summary>
 [SelectionBaseAttribute]
 public class HouseVitality : MonoBehaviour
 {
-    [Tooltip("Получает ли дом повреждения")]
+    [Tooltip("РџРѕР»СѓС‡Р°РµС‚ Р»Рё РґРѕРј РїРѕРІСЂРµР¶РґРµРЅРёСЏ")]
     [SerializeField]
     private bool isRecieveDamage;
 
-    [Tooltip("Затоплен ли дом")]
+    [Tooltip("Р—Р°С‚РѕРїР»РµРЅ Р»Рё РґРѕРј")]
     [SerializeField]
     private bool isFlooded;
 
-    [Tooltip("Настройки дома")]
+    [Tooltip("РќР°СЃС‚СЂРѕР№РєРё РґРѕРјР°")]
     [SerializeField]
     private HouseSettings config;
 
-    // TODO: Убрать эти поля и везде где они используются - использовать сразу config
     /// <summary>
-    /// Максимальное количество жизни
-    /// </summary>
-    private float maxHealthPoint;
-    /// <summary>
-    /// Количество повреждения получаемого в секунду
-    /// </summary>
-    private float damagePerSecond;
-    /// <summary>
-    /// Количество генерируемых очков починки в секунду
-    /// </summary>
-    private float reparePerSecond;
-
-    /// <summary>
-    /// Текущее количество жизни у дома
+    /// РўРµРєСѓС‰РµРµ РєРѕР»РёС‡РµСЃС‚РІРѕ Р¶РёР·РЅРё Сѓ РґРѕРјР°
     /// </summary>
     public float HealthPoint { get { return healthPoint; } }
     public bool IsRecieveDamage { get { return isRecieveDamage; } set { isRecieveDamage = value; } }
 
     /// <summary>
-    /// Доля жизни дома
+    /// Р”РѕР»СЏ Р¶РёР·РЅРё РґРѕРјР°
     /// </summary>
-    public float HealthPointRate { get { return Mathf.Clamp01(healthPoint / maxHealthPoint); } }
+    public float HealthPointRate { get { return Mathf.Clamp01(healthPoint / config.MaxHealthPoint); } }
 
     private float healthPoint;
 
     private void Awake()
     {
-        maxHealthPoint = config.MaxHealthPoint;
-        damagePerSecond = config.DamagePerSecond;
-        reparePerSecond = config.ReparePerSecond;
-        healthPoint = maxHealthPoint;
+        healthPoint = config.MaxHealthPoint;
     }
 
     private void Update()
     {
         if (isRecieveDamage && healthPoint > 0)
             DecreaseHealthTick();
-        else if (!isRecieveDamage && !isFlooded && healthPoint < maxHealthPoint)
+        else if (!isRecieveDamage && !isFlooded && healthPoint < config.MaxHealthPoint)
             IncreaseHealthTick();
 
         if (isFlooded && healthPoint > 0)
@@ -66,11 +49,11 @@ public class HouseVitality : MonoBehaviour
 
     private void DecreaseHealthTick()
     {
-        healthPoint -= damagePerSecond * Time.deltaTime;
+        healthPoint -= config.DamagePerSecond * Time.deltaTime;
     }
 
     private void IncreaseHealthTick()
     {
-        healthPoint += reparePerSecond * Time.deltaTime;
+        healthPoint += config.ReparePerSecond * Time.deltaTime;
     }
 }

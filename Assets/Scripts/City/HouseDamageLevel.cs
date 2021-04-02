@@ -1,15 +1,15 @@
-using UnityEngine;
+п»їusing UnityEngine;
 
 /// <summary>
-/// Компонент уровня поврежденности здания
+/// РљРѕРјРїРѕРЅРµРЅС‚ СѓСЂРѕРІРЅСЏ РїРѕРІСЂРµР¶РґРµРЅРЅРѕСЃС‚Рё Р·РґР°РЅРёСЏ
 /// </summary>
 public class HouseDamageLevel : MonoBehaviour
 {
-    [Tooltip("Настройки дома")]
+    [Tooltip("РќР°СЃС‚СЂРѕР№РєРё РґРѕРјР°")]
     [SerializeField]
     private HouseSettings config;
 
-    [Tooltip("Компонент жизнеспособности дома")]
+    [Tooltip("РљРѕРјРїРѕРЅРµРЅС‚ Р¶РёР·РЅРµСЃРїРѕСЃРѕР±РЅРѕСЃС‚Рё РґРѕРјР°")]
     [SerializeField]
     private HouseVitality vitality;
 

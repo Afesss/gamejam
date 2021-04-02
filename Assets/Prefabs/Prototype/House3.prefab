@@ -326,6 +326,7 @@ GameObject:
   - component: {fileID: 5589480208359165349}
   - component: {fileID: 3560776235966590071}
   - component: {fileID: 4137675195698821004}
+  - component: {fileID: -6515787978865010768}
   m_Layer: 6
   m_Name: House3
   m_TagString: Untagged
@@ -438,6 +439,20 @@ MonoBehaviour:
   stealButton: {fileID: 4602038496372310664}
   homeButton: {fileID: 8073984437576528703}
   houseVitality: {fileID: 2862483263839732479}
+--- !u!114 &-6515787978865010768
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6260125980503860387}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25486e30ccd823046880d6f3250b31f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isStealingActive: 0
+  config: {fileID: 11400000, guid: 8682e589b57fa4f4c943039792e98e4c, type: 2}
 --- !u!1 &8073984437576528703
 GameObject:
   m_ObjectHideFlags: 0
