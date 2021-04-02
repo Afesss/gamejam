@@ -1,18 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class StealButton : MonoBehaviour
 {
-    [SerializeField] private GameObject attackButton;
-    private GameObject _gameObject;
+
+    internal event Action IsSteal;
+    internal bool isSteal { get; set; }
     private void Awake()
     {
-        _gameObject = gameObject;
     }
     private void OnMouseDown()
     {
-        _gameObject.SetActive(false);
-        attackButton.SetActive(false);
+        isSteal = true;
+        IsSteal();
     }
 }

@@ -5,6 +5,7 @@ using UnityEngine;
 internal class BeaverStateHandler : MonoBehaviour
 {
     internal bool attack { get; private set; }
+    internal  Vector3 TargetPosition { get; private set; }
 
     private Rigidbody _rigidbody;
     private Transform _transform;
@@ -24,10 +25,19 @@ internal class BeaverStateHandler : MonoBehaviour
 
         fSM.SetStartState(idleState);
 
-        attack = false;
     }
-    internal void ToAttackState()
+    internal void ToAttackState(Vector3 target)
     {
+        attack = true;
+        TargetPosition = target;
         fSM.ChangeState(moveState);
+    }
+    private void Update()
+    {
+        fSM.CurrentState.Update();
+    }
+    private void FixedUpdate()
+    {
+        fSM.CurrentState.PhysicsUpdate();
     }
 }

@@ -57,15 +57,5 @@ internal class FSM
                 return;
         }
     }
-    private class Transition
-    {
-        internal Func<bool> Condition { get; }
-        internal State To { get; }
-        internal Transition(State to,Func<bool> condition)
-        {
-            Condition = condition;
-            To = to;
-        }
-    }
 }
 

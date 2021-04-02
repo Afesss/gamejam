@@ -29,7 +29,7 @@ internal class BeaversController : MonoBehaviour
         {
             if(BeaverData.Instance.BeaversPool[i].activeSelf && !BeaverData.Instance.BeaversStateHandler[i].attack)
             {
-                BeaverData.Instance.BeaversStateHandler[i].ToAttackState();
+                BeaverData.Instance.BeaversStateHandler[i].ToAttackState(BeaverData.Instance.TargetPosition);
                 return;
             }
         }

@@ -23,9 +23,22 @@ internal class BeaverMoveState : BeaverIdleState
 
     internal override void PhysicsUpdate()
     {
+        Movement();
     }
 
     internal override void Update()
     {
+    }
+    Vector3 nextMove;
+    private void Movement()
+    {
+        nextMove = transform.forward;
+        Debug.Log(Vector3.Dot(transform.position, beaver.TargetPosition));
+        if (Vector3.Dot(transform.position,beaver.TargetPosition) > 0)
+        {
+            nextMove = Vector3.zero;
+        }
+        nextMove *= BeaverData.Instance.BeaverSpeed * Time.deltaTime;
+        rigidbody.MovePosition(rigidbody.position + nextMove);
     }
 }

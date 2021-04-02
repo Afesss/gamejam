@@ -213,7 +213,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 66581216}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.72, y: 2.18, z: 5.35}
+  m_LocalPosition: {x: 4.7, y: 2.18, z: 5.35}
   m_LocalScale: {x: 2, y: 3, z: 2}
   m_Children:
   - {fileID: 1109740834}
@@ -266,6 +266,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   beaverPrefab: {fileID: 1863381680205831976, guid: 6f4d276b054fdb64f8caf43de79f0e30, type: 3}
   maxBeaverCount: 10
+  beaverSpeed: 4
 --- !u!4 &584078393
 Transform:
   m_ObjectHideFlags: 0
@@ -607,7 +608,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd223bcf735b14348a5ea54c3b120c91, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stealButton: {fileID: 1190106902}
 --- !u!1 &1190106902
 GameObject:
   m_ObjectHideFlags: 0
@@ -716,7 +716,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e3530d112ae2ae4189ec974fb525429, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackButton: {fileID: 1109740833}
 --- !u!1 &1692404254
 GameObject:
   m_ObjectHideFlags: 0
@@ -806,7 +805,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1692404254}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.06, y: 0.91, z: -11.11}
+  m_LocalPosition: {x: 1.29, y: 0.91, z: -11.11}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
