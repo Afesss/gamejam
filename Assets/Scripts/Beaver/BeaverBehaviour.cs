@@ -41,9 +41,6 @@ internal class BeaverBehaviour : MonoBehaviour, IPoolObject
         currentState = State.Queue;
 
 
-        rightRay = new Ray(_transform.position + Vector3.up, Vector3.right);
-        backRay = new Ray(_transform.position +Vector3.up, -_transform.forward);
-        leftRay = new Ray(_transform.position + Vector3.up, -Vector3.right);
     }
     public void ReturnToPool()
     {
@@ -117,7 +114,7 @@ internal class BeaverBehaviour : MonoBehaviour, IPoolObject
     {
         if (move)
         {
-            backRay = new Ray(_transform.position + Vector3.up, -Vector3.forward);
+            Ray backRay = new Ray(_transform.position + Vector3.up, -Vector3.forward);
             if (Physics.SphereCast(backRay, rayRadius, rayDistance, housLayer))
             {
                 rotation = _rigidbody.position.x > BeaverData.Instance.SpawnTransform.position.x ? -angleRotate : angleRotate;
@@ -145,11 +142,7 @@ internal class BeaverBehaviour : MonoBehaviour, IPoolObject
         }
 
     }
-    private Ray backRay;
-    private Ray rightRay;
-    private Ray leftRay;
-    [SerializeField] LayerMask beaverLayer;
-    private RaycastHit raycastHit;
+    
     private void QueueLogic()
     {
 

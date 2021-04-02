@@ -4,9 +4,9 @@ using UnityEngine;
 
 internal class BeaversController : MonoBehaviour
 {
-    
-    private int maxBeaverCount;
-    private void Start()
+    private Vector3[] positionQueue;
+    private Queue<BeaverBehaviour> queue = new Queue<BeaverBehaviour>();
+    private void Awake()
     {
         StartCoroutine(WaitToRespawn());
 
@@ -16,8 +16,17 @@ internal class BeaversController : MonoBehaviour
     IEnumerator WaitToRespawn()
     {
         yield return new WaitForSeconds(1);
+        positionQueue = new Vector3[BeaverData.Instance.MaxBeaverCount];
+        for(int i = 0; i< positionQueue.Length; i++)
+        {
+            positionQueue[i] = BeaverData.Instance.SpawnTransform.position;
+            positionQueue[i].x += -i;
+            Debug.Log(positionQueue[i]);
+        }
+
         BeaverData.Instance.availableBeavers.Add(BeaverData.Instance.beaverPoolService.GetFreeElement());
-        BeaverData.Instance.availableBeavers[0].transform.position = BeaverData.Instance.SpawnTransform.position;
+        BeaverData.Instance.availableBeavers[0].transform.position = positionQueue[0];
+        queue.Enqueue(BeaverData.Instance.availableBeavers[0]);
     }
     internal void ToAttack()
     {
