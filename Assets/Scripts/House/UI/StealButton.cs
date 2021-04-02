@@ -6,14 +6,9 @@ using System;
 public class StealButton : MonoBehaviour
 {
 
-    internal event Action IsSteal;
-    internal bool isSteal { get; set; }
-    private void Awake()
-    {
-    }
+    internal event Action GoSteal;
     private void OnMouseDown()
     {
-        isSteal = true;
-        IsSteal();
+        GoSteal();
     }
 }

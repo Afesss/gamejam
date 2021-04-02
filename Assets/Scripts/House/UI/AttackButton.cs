@@ -6,14 +6,9 @@ using System;
 internal class AttackButton : MonoBehaviour
 {
 
-    internal event Action IsAttack;
-    internal bool isAttack { get; set; }
-    private void Awake()
-    {
-    }
+    internal event Action GoAttack;
     private void OnMouseDown()
     {
-        isAttack = true;
-        IsAttack();
+        GoAttack();
     }
 }
