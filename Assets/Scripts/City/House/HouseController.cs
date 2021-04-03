@@ -13,14 +13,19 @@ internal class HouseController : MonoBehaviour
     [SerializeField] HouseBeaverDetector houseBeaverDetector;
 
     private bool isBeaverDetected;
+    private bool beaverMoveToHouse;
 
     private Vector3 homeButtonDefaultPosition;
-    private Transform homeButtonTransform;
     private Vector3 targetPosition;
+
+    private Transform homeButtonTransform;
     private BeaverBehaviour _beaver;
+    private Animation _animation;
 
     private void Awake()
     {
+        _animation = GetComponent<Animation>();
+        _animation.Stop();
         attackButton.GetComponent<AttackButton>().GoAttack += ButtonAttackDown;
         stealButton.GetComponent<StealButton>().GoSteal += ButtonStealDown;
         homeButton.GetComponent<HomeButton>().GoHome += ButtonHomeDown;
@@ -36,15 +41,10 @@ internal class HouseController : MonoBehaviour
         stealButton.GetComponent<StealButton>().GoSteal -= ButtonStealDown;
         homeButton.GetComponent<HomeButton>().GoHome -= ButtonHomeDown;
     }
-    private void HideOtherButtons()
-    {
-        attackButton.SetActive(false);
-        stealButton.SetActive(false);
-        homeButton.SetActive(false);
-    }
+    
     private void OnMouseDown()
     {
-        if (!isBeaverDetected)
+        if (!isBeaverDetected && !beaverMoveToHouse)
         {
             EventBroker.ButtonDown -= HideOtherButtons;
             EventBroker.ButtonDownInvoke();
@@ -59,53 +59,19 @@ internal class HouseController : MonoBehaviour
             }
             else
             {
-                attackButton.SetActive(true);
-                stealButton.SetActive(true);
-                EventBroker.ButtonDown += HideOtherButtons;
+                if (BeaversController.CountBeaverInQueue != 0)
+                {
+                    attackButton.SetActive(true);
+                    stealButton.SetActive(true);
+                    EventBroker.ButtonDown += HideOtherButtons;
+                }
             }
-        }
-    }
-    private IEnumerator HidingButtons()
-    {
-        yield return new WaitForSeconds(1);
-        attackButton.SetActive(false);
-        stealButton.SetActive(false);
-        homeButton.SetActive(false);
-    }
-    private void ButtonAttackDown()
-    {
-        BeaversController.targetPosition = targetPosition;
-        attackButton.SetActive(false);
-        stealButton.SetActive(false);
-        EventBroker.AttackInvoke();
-    }
-    private void ButtonStealDown()
-    {
-        BeaversController.targetPosition = targetPosition;
-        attackButton.SetActive(false);
-        stealButton.SetActive(false);
-        EventBroker.StealInvoke();
-    }
-    private void ButtonHomeDown()
-    {
-        if (_beaver != null)
-        {
-            if(_beaver.currentState == BeaverBehaviour.State.Steal)
-            {
-                houseChocolate.OnChocolateOutOfStock -= OnChocolateOutOfStock;
-            }
-            isBeaverDetected = false;
-            houseBeaverDetector.OnDetectBeaver -= OnDetectBeaver;
-            houseChocolate.IsStealingActive = false;
-            houseVitality.IsRecieveDamage = false;
-            homeButton.SetActive(false);
-            _beaver.GoHome(targetPosition);
-            _beaver = null;
         }
     }
     
     private void OnTriggerEnter(Collider other)
     {
+        beaverMoveToHouse = false;
         _beaver = other.GetComponent<BeaverBehaviour>();
         houseBeaverDetector.OnDetectBeaver += OnDetectBeaver;
         houseBeaverDetector.OnDestroyBeaver += HomeButtonOff;
@@ -120,7 +86,58 @@ internal class HouseController : MonoBehaviour
                 break;
         }
     }
+    private void HideOtherButtons()
+    {
+        attackButton.SetActive(false);
+        stealButton.SetActive(false);
+        homeButton.SetActive(false);
+    }
+    private IEnumerator HidingButtons()
+    {
+        yield return new WaitForSeconds(3);
+        attackButton.SetActive(false);
+        stealButton.SetActive(false);
+        homeButton.SetActive(false);
+    }
+    
+    private void ButtonAttackDown()
+    {
+        beaverMoveToHouse = true;
+        BeaversController.targetPosition = targetPosition;
+        attackButton.SetActive(false);
+        stealButton.SetActive(false);
+        EventBroker.AttackInvoke();
+    }
+    private void ButtonStealDown()
+    {
+        beaverMoveToHouse = true;
+        BeaversController.targetPosition = targetPosition;
+        attackButton.SetActive(false);
+        stealButton.SetActive(false);
+        EventBroker.StealInvoke();
+    }
+    private void ButtonHomeDown()
+    {
+        if (_beaver != null)
+        {
+            if(_beaver.currentState == BeaverBehaviour.State.Steal)
+            {
+                houseChocolate.OnChocolateOutOfStock -= OnChocolateOutOfStock;
+            }
+            if (isBeaverDetected)
+            {
+                _animation.Stop();
+                isBeaverDetected = false;
+            }
 
+            houseBeaverDetector.OnDetectBeaver -= OnDetectBeaver;
+            houseChocolate.IsStealingActive = false;
+            houseVitality.IsRecieveDamage = false;
+            homeButton.SetActive(false);
+            _beaver.GoHome(targetPosition);
+            _beaver = null;
+        }
+    }
     private void OnChocolateOutOfStock()
     {
         homeButton.SetActive(true);
@@ -128,6 +145,7 @@ internal class HouseController : MonoBehaviour
 
     private void HomeButtonOff()
     {
+        _animation.Stop();
         isBeaverDetected = false;
         homeButton.SetActive(false);
         houseBeaverDetector.OnDestroyBeaver -= HomeButtonOff;
@@ -135,6 +153,7 @@ internal class HouseController : MonoBehaviour
     
     private void OnDetectBeaver(Vector3 detectPosition)
     {
+        _animation.Play();
         isBeaverDetected = true;
         homeButtonTransform.position = detectPosition;
         homeButton.SetActive(true);
