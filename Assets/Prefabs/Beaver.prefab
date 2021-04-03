@@ -135,9 +135,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   houseCollider: {fileID: 1734491033600907845, guid: 4619cda5883501648b66c1150bbfc74a, type: 3}
-  beaverLayer:
-    serializedVersion: 2
-    m_Bits: 128
+  renderObject: {fileID: 3511808607623928164}
 --- !u!95 &535876238
 Animator:
   serializedVersion: 3
@@ -335,6 +333,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ae31a883dbdf6a4459c4306805a17f40, type: 3}
+--- !u!1 &3511808607623928164 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: ae31a883dbdf6a4459c4306805a17f40, type: 3}
+  m_PrefabInstance: {fileID: 4358669165995254837}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &4321102679240934366 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: ae31a883dbdf6a4459c4306805a17f40, type: 3}
