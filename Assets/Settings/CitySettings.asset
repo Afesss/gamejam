@@ -62,4 +62,4 @@ MonoBehaviour:
   - {fileID: 2230855586578986120, guid: a203b02216371064fa30897dfdd9548f, type: 3}
   maxWaterLevel: 90000
   maxWaterYPosition: 15
-  outflowSpeedPerSecond: -2000
+  outflowSpeedPerSecond: 500
