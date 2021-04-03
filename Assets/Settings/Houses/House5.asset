@@ -27,3 +27,5 @@ MonoBehaviour:
   waterFlowAmountByLevel: 15
   detectionTickDuration: 3
   detectionRatePerHealthUnit: 0.005
+  timeToFlee: 5
+  fleeButtonOffset: 1.2

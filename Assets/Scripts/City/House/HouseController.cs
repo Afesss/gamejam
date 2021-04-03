@@ -10,7 +10,12 @@ internal class HouseController : MonoBehaviour
     [SerializeField] GameObject homeButton;
     [SerializeField] HouseVitality houseVitality;
     [SerializeField] HouseChocolate houseChocolate;
-     
+    [SerializeField] HouseBeaverDetector houseBeaverDetector;
+
+    private bool isBeaverDetected;
+
+    private Vector3 homeButtonDefaultPosition;
+    private Transform homeButtonTransform;
     private Vector3 targetPosition;
     private BeaverBehaviour _beaver;
 
@@ -20,6 +25,8 @@ internal class HouseController : MonoBehaviour
         stealButton.GetComponent<StealButton>().GoSteal += ButtonStealDown;
         homeButton.GetComponent<HomeButton>().GoHome += ButtonHomeDown;
         targetPosition = transform.position;
+        homeButtonTransform = homeButton.transform;
+        homeButtonDefaultPosition = homeButton.transform.position;
         EventBroker.ButtonDown += HideOtherButtons;
     }
     private void OnDestroy()
@@ -37,20 +44,25 @@ internal class HouseController : MonoBehaviour
     }
     private void OnMouseDown()
     {
-        EventBroker.ButtonDown -= HideOtherButtons;
-        EventBroker.ButtonDownInvoke();
-        StopAllCoroutines();
-        StartCoroutine(HidingButtons());
-        if (houseVitality.IsRecieveDamage || houseChocolate.IsStealingActive)
+        if (!isBeaverDetected)
         {
-            homeButton.SetActive(true);
-            EventBroker.ButtonDown += HideOtherButtons;
-        }
-        else
-        {
-            attackButton.SetActive(true);
-            stealButton.SetActive(true);
-            EventBroker.ButtonDown += HideOtherButtons;
+            EventBroker.ButtonDown -= HideOtherButtons;
+            EventBroker.ButtonDownInvoke();
+            StopAllCoroutines();
+            StartCoroutine(HidingButtons());
+        
+            if (houseVitality.IsRecieveDamage || houseChocolate.IsStealingActive)
+            {
+                homeButtonTransform.position = homeButtonDefaultPosition;
+                homeButton.SetActive(true);
+                EventBroker.ButtonDown += HideOtherButtons;
+            }
+            else
+            {
+                attackButton.SetActive(true);
+                stealButton.SetActive(true);
+                EventBroker.ButtonDown += HideOtherButtons;
+            }
         }
     }
     private IEnumerator HidingButtons()
@@ -78,6 +90,12 @@ internal class HouseController : MonoBehaviour
     {
         if (_beaver != null)
         {
+            if(_beaver.currentState == BeaverBehaviour.State.Steal)
+            {
+                houseChocolate.OnChocolateOutOfStock -= OnChocolateOutOfStock;
+            }
+            isBeaverDetected = false;
+            houseBeaverDetector.OnDetectBeaver -= OnDetectBeaver;
             houseChocolate.IsStealingActive = false;
             houseVitality.IsRecieveDamage = false;
             homeButton.SetActive(false);
@@ -89,14 +107,36 @@ internal class HouseController : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         _beaver = other.GetComponent<BeaverBehaviour>();
+        houseBeaverDetector.OnDetectBeaver += OnDetectBeaver;
+        houseBeaverDetector.OnDestroyBeaver += HomeButtonOff;
         switch (_beaver.currentState)
         {
             case BeaverBehaviour.State.Attack:
                 houseVitality.IsRecieveDamage = true;
                 break;
             case BeaverBehaviour.State.Steal:
+                houseChocolate.OnChocolateOutOfStock += OnChocolateOutOfStock;
                 houseChocolate.IsStealingActive = true;
                 break;
         }
+    }
+
+    private void OnChocolateOutOfStock()
+    {
+        homeButton.SetActive(true);
+    }
+
+    private void HomeButtonOff()
+    {
+        isBeaverDetected = false;
+        homeButton.SetActive(false);
+        houseBeaverDetector.OnDestroyBeaver -= HomeButtonOff;
+    }
+    
+    private void OnDetectBeaver(Vector3 detectPosition)
+    {
+        isBeaverDetected = true;
+        homeButtonTransform.position = detectPosition;
+        homeButton.SetActive(true);
     }
 }

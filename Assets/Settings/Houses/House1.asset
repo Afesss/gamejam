@@ -23,7 +23,9 @@ MonoBehaviour:
   reparePerSecond: 5
   maxChocolateAmount: 10
   minChocolateAmount: 15
-  chocolateStealPerSecond: 0.1
-  waterFlowAmountByLevel: 11
+  chocolateStealPerSecond: 1
+  waterFlowAmountByLevel: 100
   detectionTickDuration: 3
   detectionRatePerHealthUnit: 0.002
+  timeToFlee: 3
+  fleeButtonOffset: 1.2

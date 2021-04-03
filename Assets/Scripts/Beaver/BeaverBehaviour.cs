@@ -4,29 +4,36 @@ using UnityEngine;
 
 internal class BeaverBehaviour : MonoBehaviour, IPoolObject
 {
+    [SerializeField] private BeaverSettings beaverSettings;
     [SerializeField] private float rayDistance;
     [SerializeField] private float rayRadius;
     [SerializeField] private LayerMask housLayer;
     [SerializeField] private BoxCollider houseCollider;
     [SerializeField] private GameObject renderObject;
+    [SerializeField] private Transform waterLevelTransform;
+    
     internal bool move { get; private set; }
 
+
+    private int stealedChocolateAmount;
     private int hashRun = Animator.StringToHash("Run");
     private int hashWalk = Animator.StringToHash("Walk");
-    private int hashIdle = Animator.StringToHash("Idle");
 
     internal Vector3 targetPosition;
     private Vector3 nextMove;
+    private Vector3 savedPosition;
 
     private float angleRotate = 90;
     private float rotation = 0;
     private float spawnPointX;
+    
+    
 
     private Animator _animator;
     private Rigidbody _rigidbody;
     private Transform _transform;
     private GameObject _gameObject;
-
+    private HouseBeaverDetector houseBeaverDetector;
     internal State currentState { get; private set; }
     internal enum State
     {
@@ -35,6 +42,10 @@ internal class BeaverBehaviour : MonoBehaviour, IPoolObject
         Queue,
         GoHome,
         Wait
+    }
+    private void Start()
+    {
+        waterLevelTransform = CityData.Instance.worldWaterLevel.transform;
     }
     private void Awake()
     {
@@ -48,6 +59,11 @@ internal class BeaverBehaviour : MonoBehaviour, IPoolObject
     }
     internal void Die()
     {
+        houseChocolate.ReturnStealdChocolate(stealedChocolateAmount);
+        houseChocolate.OnChocolateSteal -= OnChocolateSteal;
+        houseChocolate = null;
+        houseBeaverDetector.OnDestroyBeaver -= Die;
+        houseBeaverDetector = null;
         BeaversController.RemoveFromAvailableList(this);
         ReturnToPool();
     }
@@ -74,13 +90,18 @@ internal class BeaverBehaviour : MonoBehaviour, IPoolObject
     }
     internal void GoHome(Vector3 target)
     {
+
         targetPosition = target;
         _transform.position = targetPosition - Vector3.forward * houseCollider.size.z;
         _transform.rotation = Quaternion.Euler(0, 180, 0);
         move = true;
         currentState = State.GoHome;
         renderObject.SetActive(true);
-        
+
+        houseChocolate.OnChocolateSteal -= OnChocolateSteal;
+        houseChocolate = null;
+        houseBeaverDetector.OnDestroyBeaver -= Die;
+        houseBeaverDetector = null;
     }
     
     private void FixedUpdate()
@@ -110,16 +131,16 @@ internal class BeaverBehaviour : MonoBehaviour, IPoolObject
             if (Mathf.Abs(_rigidbody.position.x) > Mathf.Abs(targetPosition.x))
             {
                 _rigidbody.MoveRotation(Quaternion.Euler(0,
-                    Mathf.Lerp(rotation, 0, Time.deltaTime * BeaverData.Instance.RotationSpeed), 0));
+                    Mathf.Lerp(rotation, 0, Time.deltaTime * beaverSettings.RotationSpeed), 0));
             }
             else if (_rigidbody.position.z > targetPosition.z - houseCollider.size.z)
             {
                 rotation = Mathf.Sign(nextMove.x) > 0 ? angleRotate : -angleRotate;
                 _rigidbody.MoveRotation(Quaternion.Euler(0,
-                    Mathf.Lerp(0, rotation, Time.deltaTime * BeaverData.Instance.RotationSpeed), 0));
+                    Mathf.Lerp(0, rotation, Time.deltaTime * beaverSettings.RotationSpeed), 0));
             }
             
-            nextMove = _transform.forward * BeaverData.Instance.RunSpeed * Time.deltaTime;
+            nextMove = _transform.forward * beaverSettings.RunSpeed * Time.deltaTime;
             _rigidbody.MovePosition(_rigidbody.position + nextMove);
 
             _animator.SetBool(hashRun, true);
@@ -141,31 +162,39 @@ internal class BeaverBehaviour : MonoBehaviour, IPoolObject
                 rotation = _rigidbody.position.x > spawnPointX ? -angleRotate : angleRotate;
 
                 _rigidbody.MoveRotation(Quaternion.Euler
-                    (0, Mathf.Lerp(0, rotation, Time.deltaTime * BeaverData.Instance.RotationSpeed), 0));
+                    (0, Mathf.Lerp(0, rotation, Time.deltaTime * beaverSettings.RotationSpeed), 0));
             }
             else
             {
                 _rigidbody.MoveRotation(Quaternion.Euler
-                    (0, Mathf.Lerp(0, 180, Time.deltaTime * BeaverData.Instance.RotationSpeed), 0));
+                    (0, Mathf.Lerp(0, 180, Time.deltaTime * beaverSettings.RotationSpeed), 0));
             }
 
-            nextMove = _transform.forward * BeaverData.Instance.RunSpeed * Time.deltaTime;
+            nextMove = _transform.forward * beaverSettings.RunSpeed * Time.deltaTime;
             _rigidbody.MovePosition(_rigidbody.position + nextMove);
 
             _animator.SetBool(hashRun, true);
         }
 
+        ToWaitState();
+
+    }
+    private void ToWaitState()
+    {
         if ((BeaversController.QueuePosition() - _transform.position).magnitude < 0.3f)
         {
+            if (stealedChocolateAmount > 0)
+            {
+                BeaversController.AddChocolateToStock(stealedChocolateAmount);
+                stealedChocolateAmount = 0;
+            }
             move = false;
             currentState = State.Wait;
             _transform.rotation = Quaternion.Euler(0, 0, 0);
             BeaversController.AddToQueue(this);
             _animator.SetBool(hashRun, false);
         }
-
     }
-    private Vector3 savedPosition;
     
     private void QueueLogic()
     {
@@ -173,7 +202,7 @@ internal class BeaverBehaviour : MonoBehaviour, IPoolObject
         if (_rigidbody.position.x > savedPosition.x + 1.5f)
         {
             _rigidbody.MoveRotation(Quaternion.Euler
-                    (0, Mathf.Lerp(angleRotate, 0, Time.deltaTime * BeaverData.Instance.RotationSpeed), 0));
+                    (0, Mathf.Lerp(angleRotate, 0, Time.deltaTime * beaverSettings.RotationSpeed), 0));
             if(_transform.rotation.eulerAngles.y == 0)
             {
                 currentState = State.Wait;
@@ -183,18 +212,32 @@ internal class BeaverBehaviour : MonoBehaviour, IPoolObject
         else
         {
             _rigidbody.MoveRotation(Quaternion.Euler
-                        (0, Mathf.Lerp(0, angleRotate, Time.deltaTime * BeaverData.Instance.RotationSpeed), 0));
+                        (0, Mathf.Lerp(0, angleRotate, Time.deltaTime * beaverSettings.RotationSpeed), 0));
 
-            nextMove = _transform.forward * BeaverData.Instance.WalkSpeed * Time.deltaTime;
+            nextMove = _transform.forward * beaverSettings.WalkSpeed * Time.deltaTime;
             _rigidbody.MovePosition(_rigidbody.position + nextMove);
         }
     }
+    private HouseChocolate houseChocolate;
     private void OnTriggerEnter(Collider other)
     {
+        houseChocolate = other.GetComponent<HouseChocolate>();
+        houseChocolate.OnChocolateSteal += OnChocolateSteal;
+        houseBeaverDetector = other.GetComponent<HouseBeaverDetector>();
+        houseBeaverDetector.OnDestroyBeaver += Die;
         _animator.SetBool(hashRun, false);
         move = false;
         renderObject.SetActive(false);
     }
+
+    private void OnChocolateSteal(int remain)
+    {
+        if (remain == 0)
+            return;
+        stealedChocolateAmount++;
+        Debug.Log(stealedChocolateAmount);
+    }
+
     private void OnDrawGizmos()
     {
         Gizmos.DrawWireSphere(transform.position + Vector3.up, rayRadius);

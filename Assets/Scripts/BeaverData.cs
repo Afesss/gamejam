@@ -9,22 +9,15 @@ internal class BeaverData : Singleton<BeaverData>
     {
         base.Awake();
     }
-    [SerializeField] private GameObject beaverPrefab;
-    [SerializeField] private int maxBeaverCount;
-    [SerializeField] private float runSpeed;
-    [SerializeField] private float walkSpeed;
-    [SerializeField] private float rotationSpeed;
-    [SerializeField] private Transform spawnTransform;
+    
+    //[SerializeField] private int maxBeaverCount;
+    //[SerializeField] private float runSpeed;
+    //[SerializeField] private float walkSpeed;
+    //[SerializeField] private float rotationSpeed;
 
     
-    internal int MaxBeaverCount { get { return maxBeaverCount; } }
-    internal GameObject BeaverPrefab { get { return beaverPrefab; } }
-    internal float RunSpeed { get { return runSpeed; } }
-    internal float WalkSpeed { get { return walkSpeed; } }
-    internal float RotationSpeed { get { return rotationSpeed; } }
-    internal Vector3 TargetPosition { get; set; }
-    internal Transform SpawnTransform { get { return spawnTransform; } }
-    internal int busyBeavers { get; set; }
-
-    internal List<BeaverBehaviour> availableBeavers = new List<BeaverBehaviour>();
+    //internal int MaxBeaverCount { get { return maxBeaverCount; } }
+    //internal float RunSpeed { get { return runSpeed; } }
+    //internal float WalkSpeed { get { return walkSpeed; } }
+    //internal float RotationSpeed { get { return rotationSpeed; } }
 }

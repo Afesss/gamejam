@@ -8,9 +8,9 @@ public class HouseChocolate : MonoBehaviour
 {
     public bool IsStealingActive { get { return isStealingActive; } set { isStealingActive = value; } }
 
-    public delegate void StealAction(float remain);
-    public static event StealAction OnChocolateSteal;
-    public static event Action OnChocolateOutOfStock;
+    public delegate void StealAction(int remain);
+    public event StealAction OnChocolateSteal;
+    public event Action OnChocolateOutOfStock;
 
     [Tooltip("Крадут ли бобры шоколад")]
     [SerializeField]
@@ -43,5 +43,9 @@ public class HouseChocolate : MonoBehaviour
                     OnChocolateOutOfStock?.Invoke();
             }
         }
+    }
+    internal void ReturnStealdChocolate(int amount)
+    {
+        currentIntAmount += amount;
     }
 }
