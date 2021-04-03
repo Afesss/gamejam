@@ -27,13 +27,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1071761964240298284}
-  m_LocalRotation: {x: 0.2722802, y: -0, z: -0, w: 0.96221805}
-  m_LocalPosition: {x: 1.48, y: 10.64, z: 0.43}
-  m_LocalScale: {x: 1, y: 0.9084798, z: 0.5686403}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.9, y: 12, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 7009513973003839655}
   m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 31.6, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &1561301427886981368
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -135,13 +135,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2349571381358801197}
-  m_LocalRotation: {x: 0.2722802, y: -0, z: -0, w: 0.96221805}
-  m_LocalPosition: {x: -1.4699999, y: 10.64, z: 0.4300002}
-  m_LocalScale: {x: 1, y: 0.9084798, z: 0.5686403}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.9, y: 12, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 7009513973003839655}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 31.6, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &1378901297443821052
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -331,6 +331,7 @@ MonoBehaviour:
   stealButton: {fileID: 1071761964240298284}
   homeButton: {fileID: 7883474261535522604}
   houseVitality: {fileID: 6847594868708279022}
+  houseChocolate: {fileID: 638055522143199637}
 --- !u!65 &6551934139112146522
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -385,7 +386,7 @@ Transform:
   m_GameObject: {fileID: 7009513974935697657}
   m_LocalRotation: {x: -0, y: -0.7071068, z: -0.7071068, w: 0}
   m_LocalPosition: {x: 0.00000027070195, y: 0, z: -0.0000016636773}
-  m_LocalScale: {x: 200, y: 200, z: 200}
+  m_LocalScale: {x: 150, y: 150, z: 150}
   m_Children: []
   m_Father: {fileID: 7009513973003839655}
   m_RootOrder: 0
@@ -468,13 +469,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7883474261535522604}
-  m_LocalRotation: {x: 0.2722802, y: -0, z: -0, w: 0.96221805}
-  m_LocalPosition: {x: -0.01, y: 11.05, z: 0.06}
-  m_LocalScale: {x: 1, y: 0.90848, z: 0.56864}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.01, y: 12, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 7009513973003839655}
   m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 31.6, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &6980423916581636793
 MeshFilter:
   m_ObjectHideFlags: 0
