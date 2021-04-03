@@ -28,8 +28,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 355834624920766048}
   m_LocalRotation: {x: 0.2722802, y: -0, z: -0, w: 0.96221805}
-  m_LocalPosition: {x: 1.47, y: 5.36, z: -0.13}
-  m_LocalScale: {x: 1, y: 0.90847975, z: 0.5686403}
+  m_LocalPosition: {x: 0.9, y: 6, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 5387061924319597612}
   m_RootOrder: 2
@@ -136,8 +136,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1201730384508190135}
   m_LocalRotation: {x: 0.2722802, y: -0, z: -0, w: 0.96221805}
-  m_LocalPosition: {x: -0.01, y: 5.23, z: 0.06}
-  m_LocalScale: {x: 1, y: 0.90848, z: 0.56864}
+  m_LocalPosition: {x: 0, y: 6, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 5387061924319597612}
   m_RootOrder: 3
@@ -345,6 +345,7 @@ MonoBehaviour:
   stealButton: {fileID: 355834624920766048}
   homeButton: {fileID: 1201730384508190135}
   houseVitality: {fileID: 7727384029965338343}
+  houseChocolate: {fileID: -7601945025591865440}
 --- !u!114 &-7601945025591865440
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -487,8 +488,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7688401593495294978}
   m_LocalRotation: {x: 0.2722802, y: -0, z: -0, w: 0.96221805}
-  m_LocalPosition: {x: -1.48, y: 5.36, z: -0.12999982}
-  m_LocalScale: {x: 1, y: 0.90847975, z: 0.5686403}
+  m_LocalPosition: {x: -0.9, y: 6, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 5387061924319597612}
   m_RootOrder: 1
