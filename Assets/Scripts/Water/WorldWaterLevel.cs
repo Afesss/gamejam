@@ -2,17 +2,28 @@
 
 public class WorldWaterLevel : MonoBehaviour
 {
+    public delegate void FloodLevelAction(int level);
+    public event FloodLevelAction OnFloodLevelChange;
+
+    public float WaterLevelRate { get { return currentWaterLevel / config.MaxWaterLevel; } }
+    public int FloodLevel { get { return currentFloodLevel; } }
+
     [Tooltip("Настройки города")]
     [SerializeField]
     private CitySettings config;
 
-    public float WaterLevelRate { get { return currentWaterLevel / config.MaxWaterLevel; } }
-
     private float currentWaterLevel = 0;
+
+    private int maxHouseLevel;
+    private float waterAmountToLevel = 0;
+
+    private int currentFloodLevel = 0;
 
     private void Awake()
     {
         EventBroker.OnHouseWaterFlow += OnHouseWaterFlow;
+        maxHouseLevel = config.HouseSets.Length;
+        waterAmountToLevel = config.MaxWaterLevel / maxHouseLevel;
     }
 
     private void Update()
@@ -24,8 +35,16 @@ public class WorldWaterLevel : MonoBehaviour
             transform.position = new Vector3(curPos.x, yPos, curPos.z);
         }
 
-        if (currentWaterLevel > 0)
-            currentWaterLevel -= config.OutflowSpeedPerSecond * Time.deltaTime;
+        var limit = currentFloodLevel * waterAmountToLevel;
+        if (currentWaterLevel > limit)
+            currentWaterLevel = Mathf.Clamp(currentWaterLevel - config.OutflowSpeedPerSecond * Time.deltaTime, limit, float.MaxValue);
+
+        var newLevel = Mathf.FloorToInt(currentWaterLevel / waterAmountToLevel);
+        if (newLevel != currentFloodLevel)
+        {
+            OnFloodLevelChange?.Invoke(newLevel);
+            currentFloodLevel = newLevel;
+        }
     }
 
     private void OnHouseWaterFlow(float amount)
