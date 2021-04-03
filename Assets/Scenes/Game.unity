@@ -561,6 +561,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Water
       objectReference: {fileID: 0}
+    - target: {fileID: 8344266867365372673, guid: 4134b75c763a9904d8efaf243483e3e9, type: 3}
+      propertyPath: m_TagString
+      value: Water
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4134b75c763a9904d8efaf243483e3e9, type: 3}
 --- !u!4 &1203041410 stripped
