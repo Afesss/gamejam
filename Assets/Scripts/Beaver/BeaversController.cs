@@ -5,28 +5,29 @@ using TMPro;
 
 internal class BeaversController : MonoBehaviour
 {
-    [SerializeField] BeaverSettings beaverSettings;
-    [SerializeField] TextMeshProUGUI chocolateAmountPanel;
-    [SerializeField] TextMeshProUGUI priceAmounPanel;
+    [SerializeField] private BeaverSettings beaverSettings;
     [SerializeField] private Transform spawnTransform;
-    
 
-    
     private int currentPrice;
+    internal static int chocolateAmount { get; private set; }
+    internal static int CountBeaverInQueue { get { return queue.Count; } }
+    internal static int AvailableBeavers { get { return availableBeavers.Count; } }
 
     internal PoolingService<BeaverBehaviour> beaverPoolService = null;
-    internal static int chocolateAmount { get; private set; }
+
+    
     internal static Vector3 targetPosition { get; set; }
     private static Vector3 spawnOffset;
 
     private static Queue<BeaverBehaviour> queue = new Queue<BeaverBehaviour>();
     private static List<BeaverBehaviour> availableBeavers = new List<BeaverBehaviour>();
     internal static Vector3 spawnPoint { get; private set; }
+    private Rigidbody _rigidbody;
     private void Awake()
     {
         currentPrice = beaverSettings.StartPrice;
-        chocolateAmountPanel.text = chocolateAmount.ToString();
-        priceAmounPanel.text = currentPrice.ToString();
+        EventBroker.UpdateChocolateInvoke(chocolateAmount);
+        EventBroker.UpdatePriceInvoke(currentPrice);
         
         StartCoroutine(WaitToRespawn());
         spawnOffset = Vector3.zero;
@@ -34,6 +35,8 @@ internal class BeaversController : MonoBehaviour
         EventBroker.Attack += ToAttack;
         EventBroker.Steal += ToSteal;
         EventBroker.UpdateGUI += UpdateGUE;
+        EventBroker.BuyBeaver += BuyBeaver;
+        _rigidbody = GetComponent<Rigidbody>();
     }
     private IEnumerator WaitToRespawn()
     {
@@ -44,11 +47,13 @@ internal class BeaversController : MonoBehaviour
     }
     private void UpdateGUE()
     {
-        chocolateAmountPanel.text = chocolateAmount.ToString();
-        priceAmounPanel.text = currentPrice.ToString();
+        EventBroker.UpdateChocolateInvoke(chocolateAmount);
+        EventBroker.UpdatePriceInvoke(currentPrice);
     }
     private void OnDestroy()
     {
+        chocolateAmount = 0;
+        EventBroker.BuyBeaver -= BuyBeaver;
         EventBroker.UpdateGUI -= UpdateGUE;
         EventBroker.Attack -= ToAttack;
         EventBroker.Steal -= ToSteal;
@@ -71,7 +76,12 @@ internal class BeaversController : MonoBehaviour
             QueueOffset();
         }
     }
-    
+    private void Update()
+    {
+        spawnPoint = spawnTransform.position;
+        if (_rigidbody.IsSleeping())
+            _rigidbody.WakeUp();
+    }
     public void BuyBeaver()
     {
         if (availableBeavers.Count < beaverSettings.MaxBeaverCount && chocolateAmount >= currentPrice) 

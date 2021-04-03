@@ -10,7 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 8344266867365372672}
   - component: {fileID: 8344266867365372679}
-  m_Layer: 0
+  - component: {fileID: 2246964968387080553}
+  m_Layer: 4
   m_Name: Water
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -45,6 +46,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   config: {fileID: 11400000, guid: f18b13ac88df83e48a82c13e6ee21464, type: 2}
+--- !u!65 &2246964968387080553
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8344266867365372673}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 50, y: 76.700455, z: 50}
+  m_Center: {x: 0, y: -40.01326, z: 0}
 --- !u!1 &8344266867907875166
 GameObject:
   m_ObjectHideFlags: 0
@@ -57,7 +71,7 @@ GameObject:
   - component: {fileID: 8344266867907875155}
   - component: {fileID: 8344266867907875164}
   - component: {fileID: 8344266867907875165}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: WaterModel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
