@@ -235,7 +235,6 @@ internal class BeaverBehaviour : MonoBehaviour, IPoolObject
         if (remain == 0)
             return;
         stealedChocolateAmount++;
-        Debug.Log(stealedChocolateAmount);
     }
 
     private void OnDrawGizmos()
