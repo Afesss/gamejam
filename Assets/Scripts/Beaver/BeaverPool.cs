@@ -12,6 +12,6 @@ public class BeaverPool : MonoBehaviour
     private void Start()
     {
         if (beaverPrefab != null)
-            BeaverData.Instance.beaverPoolService = new PoolingService<BeaverBehaviour>(beaverPrefab, BeaverData.Instance.MaxBeaverCount, transform, true);
+            beaversController.beaverPoolService = new PoolingService<BeaverBehaviour>(beaverPrefab, BeaverData.Instance.MaxBeaverCount, transform, true);
     }
 }

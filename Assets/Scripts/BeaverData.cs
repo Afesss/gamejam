@@ -9,7 +9,6 @@ internal class BeaverData : Singleton<BeaverData>
     {
         base.Awake();
     }
-    internal PoolingService<BeaverBehaviour> beaverPoolService = null;
     [SerializeField] private GameObject beaverPrefab;
     [SerializeField] private int maxBeaverCount;
     [SerializeField] private float runSpeed;

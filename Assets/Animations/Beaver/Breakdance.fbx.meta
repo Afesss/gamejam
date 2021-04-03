@@ -1,11 +1,11 @@
 fileFormatVersion: 2
-guid: ae31a883dbdf6a4459c4306805a17f40
+guid: 97f754a94bc9cc444858ca5fce2b5900
 ModelImporter:
   serializedVersion: 20200
   internalIDToNameTable:
   - first:
       74: -203655887218126122
-    second: Idle
+    second: Breakdance
   externalObjects: {}
   materials:
     materialImportMode: 2
@@ -18,8 +18,7 @@ ModelImporter:
     resampleCurves: 1
     optimizeGameObjects: 0
     motionNodeName: 
-    rigImportErrors: "Invalid copied Avatar Rig Configuration:\n\tNo human bone found.
-      Ensure both rig type match\n"
+    rigImportErrors: 
     rigImportWarnings: 
     animationImportErrors: 
     animationImportWarnings: 
@@ -36,11 +35,11 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Idle
+      name: Breakdance
       takeName: mixamo.com
       internalID: 0
       firstFrame: 0
-      lastFrame: 365
+      lastFrame: 201
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -287,18 +286,18 @@ ModelImporter:
         length: 0
         modified: 0
     skeleton:
-    - name: Beaver(Clone)
+    - name: Old_Man_Idle(Clone)
       parentName: 
       position: {x: 0, y: 0, z: 0}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: LP.003
-      parentName: Beaver(Clone)
+      parentName: Old_Man_Idle(Clone)
       position: {x: -0, y: 0, z: 0}
       rotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071067}
       scale: {x: 100, y: 100, z: 100}
     - name: mixamorig:Hips
-      parentName: Beaver(Clone)
+      parentName: Old_Man_Idle(Clone)
       position: {x: -0.0034973188, y: 0.56608284, z: -0.047566175}
       rotation: {x: 0.000000014901154, y: -1.2490009e-16, z: -9.313228e-10, w: 1}
       scale: {x: 1, y: 1, z: 0.99999994}
@@ -434,11 +433,11 @@ ModelImporter:
     hasTranslationDoF: 0
     hasExtraRoot: 1
     skeletonHasParents: 1
-  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  lastHumanDescriptionAvatarSource: {fileID: 9000000, guid: ae31a883dbdf6a4459c4306805a17f40, type: 3}
   autoGenerateAvatarMappingIfUnspecified: 1
   animationType: 3
   humanoidOversampling: 1
-  avatarSetup: 1
+  avatarSetup: 2
   addHumanoidExtraRootOnlyWhenUsingAvatar: 1
   additionalBone: 0
   userData: 

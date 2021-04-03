@@ -8,6 +8,7 @@ internal class EventBroker : MonoBehaviour
     internal static event Action Attack;
     internal static event Action Steal;
     internal static event Action GoHome;
+    internal static event Action ButtonDown;
 
     internal delegate void WaterFlowAction(float amount);
     internal static event WaterFlowAction OnHouseWaterFlow;
@@ -15,6 +16,7 @@ internal class EventBroker : MonoBehaviour
     internal delegate void StealAction(float remain);
     internal static event StealAction OnChocolateSteal;
     internal static event Action OnChocolateOutOfStock;
+
 
     internal static void AttackInvoke()
     {
@@ -28,7 +30,10 @@ internal class EventBroker : MonoBehaviour
     {
         GoHome.Invoke();
     }
-
+    internal static void ButtonDownInvoke()
+    {
+        ButtonDown.Invoke();
+    }
     internal static void OnHouseWaterFlowInvoke(float amount)
     {
         OnHouseWaterFlow?.Invoke(amount);

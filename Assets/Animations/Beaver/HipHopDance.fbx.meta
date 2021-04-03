@@ -1,11 +1,11 @@
 fileFormatVersion: 2
-guid: 97f754a94bc9cc444858ca5fce2b5900
+guid: 6199da9230d07bb4db665a6e54e9cae2
 ModelImporter:
   serializedVersion: 20200
   internalIDToNameTable:
   - first:
       74: -203655887218126122
-    second: mixamo.com
+    second: HipHop
   externalObjects: {}
   materials:
     materialImportMode: 2
@@ -33,7 +33,36 @@ ModelImporter:
     animationWrapMode: 0
     extraExposedTransformPaths: []
     extraUserProperties: []
-    clipAnimations: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: HipHop
+      takeName: mixamo.com
+      internalID: 0
+      firstFrame: 0
+      lastFrame: 505
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
     isReadable: 0
   meshes:
     lODScreenPercentages: []
@@ -257,18 +286,18 @@ ModelImporter:
         length: 0
         modified: 0
     skeleton:
-    - name: Old_Man_Idle(Clone)
+    - name: Beaver(Clone)
       parentName: 
       position: {x: 0, y: 0, z: 0}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: LP.003
-      parentName: Old_Man_Idle(Clone)
+      parentName: Beaver(Clone)
       position: {x: -0, y: 0, z: 0}
       rotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071067}
       scale: {x: 100, y: 100, z: 100}
     - name: mixamorig:Hips
-      parentName: Old_Man_Idle(Clone)
+      parentName: Beaver(Clone)
       position: {x: -0.0034973188, y: 0.56608284, z: -0.047566175}
       rotation: {x: 0.000000014901154, y: -1.2490009e-16, z: -9.313228e-10, w: 1}
       scale: {x: 1, y: 1, z: 0.99999994}
