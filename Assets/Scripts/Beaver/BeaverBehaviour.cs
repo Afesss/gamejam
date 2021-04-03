@@ -4,33 +4,37 @@ using UnityEngine;
 
 internal class BeaverBehaviour : MonoBehaviour, IPoolObject
 {
-
     [SerializeField] private float rayDistance;
     [SerializeField] private float rayRadius;
     [SerializeField] private LayerMask housLayer;
     [SerializeField] private BoxCollider houseCollider;
+    [SerializeField] private GameObject renderObject;
     internal bool move { get; private set; }
-    internal bool isAttaks { get; private set; }
 
-    private int hashSpeed = Animator.StringToHash("Speed");
+    private int hashRun = Animator.StringToHash("Run");
+    private int hashWalk = Animator.StringToHash("Walk");
+    private int hashIdle = Animator.StringToHash("Idle");
 
     internal Vector3 targetPosition;
     private Vector3 nextMove;
 
     private float angleRotate = 90;
     private float rotation = 0;
+    private float spawnPointX;
 
     private Animator _animator;
     private Rigidbody _rigidbody;
     private Transform _transform;
     private GameObject _gameObject;
+
     internal State currentState { get; private set; }
     internal enum State
     {
         Attack,
         Steal,
         Queue,
-        GoHome
+        GoHome,
+        Wait
     }
     private void Awake()
     {
@@ -38,9 +42,20 @@ internal class BeaverBehaviour : MonoBehaviour, IPoolObject
         _rigidbody = GetComponent<Rigidbody>();
         _transform = GetComponent<Transform>();
         _gameObject = gameObject;
-        currentState = State.Queue;
+        currentState = State.Wait;
+        RandomAnimation();
 
-
+    }
+    private void RandomAnimation()
+    {
+        int count = Random.Range(1, 5);
+        Debug.Log(count);
+        _animator.SetFloat(hashIdle, (int)count);
+    }
+    internal void Die()
+    {
+        BeaversController.RemoveFromAvailableList(this);
+        ReturnToPool();
     }
     public void ReturnToPool()
     {
@@ -58,6 +73,11 @@ internal class BeaverBehaviour : MonoBehaviour, IPoolObject
         move = true;
         targetPosition = target;
     }
+    internal void ToQueueState()
+    {
+        savedPosition = _transform.position;
+        currentState = State.Queue;
+    }
     internal void GoHome(Vector3 target)
     {
         targetPosition = target;
@@ -65,7 +85,7 @@ internal class BeaverBehaviour : MonoBehaviour, IPoolObject
         _transform.rotation = Quaternion.Euler(0, 180, 0);
         move = true;
         currentState = State.GoHome;
-        _gameObject.SetActive(true);
+        renderObject.SetActive(true);
         
     }
     
@@ -73,6 +93,8 @@ internal class BeaverBehaviour : MonoBehaviour, IPoolObject
     {
         switch (currentState)
         {
+            case State.Wait:
+                break;
             case State.GoHome:
                 MoveToHome();
                 break;
@@ -106,7 +128,7 @@ internal class BeaverBehaviour : MonoBehaviour, IPoolObject
             nextMove = _transform.forward * BeaverData.Instance.RunSpeed * Time.deltaTime;
             _rigidbody.MovePosition(_rigidbody.position + nextMove);
 
-            _animator.SetFloat(hashSpeed, 1);
+            _animator.SetBool(hashRun, true);
         }
     }
     
@@ -115,9 +137,14 @@ internal class BeaverBehaviour : MonoBehaviour, IPoolObject
         if (move)
         {
             Ray backRay = new Ray(_transform.position + Vector3.up, -Vector3.forward);
-            if (Physics.SphereCast(backRay, rayRadius, rayDistance, housLayer))
+            if (Physics.SphereCast(backRay, rayRadius, rayDistance, housLayer) ||
+                _rigidbody.position.z < BeaversController.QueuePosition().z)
             {
-                rotation = _rigidbody.position.x > BeaverData.Instance.SpawnTransform.position.x ? -angleRotate : angleRotate;
+
+                spawnPointX = _rigidbody.position.z > (BeaversController.spawnPoint.z + 5) ?
+                    BeaversController.spawnPoint.x : BeaversController.QueuePosition().x;
+
+                rotation = _rigidbody.position.x > spawnPointX ? -angleRotate : angleRotate;
 
                 _rigidbody.MoveRotation(Quaternion.Euler
                     (0, Mathf.Lerp(0, rotation, Time.deltaTime * BeaverData.Instance.RotationSpeed), 0));
@@ -131,27 +158,50 @@ internal class BeaverBehaviour : MonoBehaviour, IPoolObject
             nextMove = _transform.forward * BeaverData.Instance.RunSpeed * Time.deltaTime;
             _rigidbody.MovePosition(_rigidbody.position + nextMove);
 
-            _animator.SetFloat(hashSpeed, 1);
+            _animator.SetBool(hashRun, true);
         }
 
-        if(/*(BeaverData.Instance.SpawnTransform.position - transform.position).magnitude < 5f ||*/
-            transform.position.z < BeaverData.Instance.SpawnTransform.position.z + 3)
+        if ((BeaversController.QueuePosition() - _transform.position).magnitude < 0.3f)
         {
             move = false;
-            currentState = State.Queue;
+            currentState = State.Wait;
+            _transform.rotation = Quaternion.Euler(0, 0, 0);
+            BeaversController.AddToQueue(this);
+            _animator.SetBool(hashRun, false);
+            RandomAnimation();
         }
 
     }
+    private Vector3 savedPosition;
     
     private void QueueLogic()
     {
+        _animator.SetBool(hashWalk, true);
+        if (_rigidbody.position.x > savedPosition.x + 1.5f)
+        {
+            _rigidbody.MoveRotation(Quaternion.Euler
+                    (0, Mathf.Lerp(angleRotate, 0, Time.deltaTime * BeaverData.Instance.RotationSpeed), 0));
+            if(_transform.rotation.eulerAngles.y == 0)
+            {
+                currentState = State.Wait;
+                _animator.SetBool(hashWalk, false);
+                RandomAnimation();
+            }
+        }
+        else
+        {
+            _rigidbody.MoveRotation(Quaternion.Euler
+                        (0, Mathf.Lerp(0, angleRotate, Time.deltaTime * BeaverData.Instance.RotationSpeed), 0));
 
+            nextMove = _transform.forward * BeaverData.Instance.WalkSpeed * Time.deltaTime;
+            _rigidbody.MovePosition(_rigidbody.position + nextMove);
+        }
     }
     private void OnTriggerEnter(Collider other)
     {
-        _animator.SetFloat(hashSpeed, 0);
+        _animator.SetBool(hashRun, false);
         move = false;
-        _gameObject.SetActive(false);
+        renderObject.SetActive(false);
     }
     private void OnDrawGizmos()
     {
