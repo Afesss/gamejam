@@ -13,7 +13,9 @@ MonoBehaviour:
   m_Name: House2
   m_EditorClassIdentifier: 
   levelCount: 2
-  windowOffset: 0.5
+  roofHeight: 0.43
+  windowFloorOffset: 0.75
+  windowMeshOffset: 0.4
   damageLevelStep: 0.25
   maxHealthPoint: 60
   damagePerSecond: 10
@@ -21,4 +23,4 @@ MonoBehaviour:
   maxChocolateAmount: 20
   minChocolateAmount: 30
   chocolateStealPerSecond: 0.2
-  waterFlowAmountByLevel: 1.1
+  waterFlowAmountByLevel: 12

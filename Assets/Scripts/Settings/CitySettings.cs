@@ -19,14 +19,19 @@ public class CitySettings : ScriptableObject
     public Vector2 CellSize { get { return cellSize; } }
 
     /// <summary>
-    /// Объекты домов
+    /// Набор домов
     /// </summary>
-    public GameObject[] HouseObjects { get { return houseObjects; } }
+    public House[] HouseSets { get { return houseSets; } }
 
     /// <summary>
-    /// Процентное соотношение домов
+    /// Наборы материалов
     /// </summary>
-    public int[] HouseRates { get { return houseRates; } }
+    public MaterialSet[] MaterialSets { get { return materialSets; } }
+
+    /// <summary>
+    /// Объекты крыш
+    /// </summary>
+    public GameObject[] RoofObjects { get { return roofObjects; } }
 
     /// <summary>
     /// Максимальное количество воды
@@ -43,7 +48,6 @@ public class CitySettings : ScriptableObject
     /// </summary>
     public float OutflowSpeedPerSecond { get { return outflowSpeedPerSecond; } }
 
-
     [Header("Генератор города")]
 
     [Tooltip("Количество колонок для домов")]
@@ -58,14 +62,19 @@ public class CitySettings : ScriptableObject
     [SerializeField]
     private Vector2 cellSize;
 
-    [Tooltip("Объекты домов")]
+    [Tooltip("Объекты домов (разместить в порядке количества этажей)")]
     [SerializeField]
-    private GameObject[] houseObjects;
+    private House[] houseSets;
 
-    [Tooltip("Процентное соотношение домов")]
+    [Tooltip("Наборы материалов (Применяются в порядке размещения)")]
     [SerializeField]
-    private int[] houseRates;
+    private MaterialSet[] materialSets;
 
+    [Tooltip("Объекты крыш")]
+    [SerializeField]
+    private GameObject[] roofObjects;
+
+    [Space]
     [Header("Уровень затопленности города")]
 
     [Tooltip("Максимальное количество воды")]

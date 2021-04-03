@@ -41,17 +41,17 @@ public class CityGenerator : MonoBehaviour
 
     private void InitHousesCounts()
     {
-        freeHouseTypesCount = config.HouseObjects.Length;
+        freeHouseTypesCount = config.HouseSets.Length;
 
         var count = config.CityColsCount * config.CityRowsCount;
-        remainHousesToPlace = new int[config.HouseObjects.Length];
+        remainHousesToPlace = new int[config.HouseSets.Length];
         var sum = 0;
-        for(var i = 0; i < config.HouseObjects.Length - 1; i++)
+        for(var i = 0; i < config.HouseSets.Length - 1; i++)
         {
-            remainHousesToPlace[i] = (int) ((float)config.HouseRates[i] * count / 100);
+            remainHousesToPlace[i] = (int) ((float)config.HouseSets[i].CountPercent * count / 100);
             sum += remainHousesToPlace[i];
         }
-        remainHousesToPlace[config.HouseObjects.Length - 1] = count - sum;
+        remainHousesToPlace[config.HouseSets.Length - 1] = count - sum;
     }
 
     private void InstantiateHouse(int col, int row, int index)
@@ -59,6 +59,47 @@ public class CityGenerator : MonoBehaviour
         var position = new Vector3(col * config.CellSize.x, 0, row * config.CellSize.y)
             - new Vector3(config.CellSize.x * config.CityColsCount * 0.5f, 0, config.CellSize.y * config.CityRowsCount * 0.5f);
 
-        GameObject.Instantiate(config.HouseObjects[index], position, Quaternion.identity, transform);
+        var obj = GameObject.Instantiate(config.HouseSets[index].Prefab, position, Quaternion.identity, transform);
+
+        SetRendomMaterialSet(ref obj, config.HouseSets[index].PrefabMaterialsCount, out MaterialSet materialSet);
+
+        if (config.HouseSets[index].HasRoof)
+            AddRandomRoof(ref obj, materialSet);
     }
+
+    private void AddRandomRoof(ref GameObject house, MaterialSet materialSet)
+    {
+        var houseRenderer = house.GetComponentInChildren<MeshRenderer>();
+        if (houseRenderer != null)
+        {
+            var roof = config.RoofObjects[UnityEngine.Random.Range(0, config.RoofObjects.Length)];
+            var position = new Vector3(house.transform.position.x, houseRenderer.bounds.size.y, house.transform.position.z);
+            var obj = GameObject.Instantiate(roof, position, Quaternion.identity, house.transform);
+
+            var renderer = obj.GetComponentInChildren<MeshRenderer>();
+            if (renderer != null)
+            {
+                Material[] mats = renderer.materials;
+                mats[0] = materialSet.materials[0];
+                renderer.materials = mats;
+            }
+        }
+    }
+
+    private void SetRendomMaterialSet(ref GameObject house, int modelMaterialCount, out MaterialSet materialSet)
+    {
+        materialSet = config.MaterialSets[UnityEngine.Random.Range(0, config.MaterialSets.Length)];
+        var renderer = house.GetComponentInChildren<MeshRenderer>();
+        if (renderer != null)
+        {
+            Material[] mats = renderer.materials;
+            for (var i = 0; i < modelMaterialCount; i++)
+                if (mats[i] != null && materialSet.materials[i] != null)
+                    mats[i] = materialSet.materials[i];
+            renderer.materials = mats;
+        }
+    }
+
+
+
 }

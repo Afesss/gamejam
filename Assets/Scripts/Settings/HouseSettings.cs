@@ -8,9 +8,17 @@ public class HouseSettings : ScriptableObject
     /// </summary>
     public int LevelCount { get { return levelCount; } }
     /// <summary>
+    /// Высота крыши
+    /// </summary>
+    public float RoofHeight { get { return roofHeight; } }
+    /// <summary>
     /// Расстояние окна от начала этажа
     /// </summary>
-    public float WindowOffset { get { return windowOffset; } }
+    public float WindowFloorOffset { get { return windowFloorOffset; } }
+    /// <summary>
+    /// Расстояние между окном и границей меша
+    /// </summary>
+    public float WindowMeshOffset { get { return windowMeshOffset; } }
     /// <summary>
     /// Шаг перехода к следующему уровню повреждения
     /// </summary>
@@ -51,16 +59,30 @@ public class HouseSettings : ScriptableObject
     [SerializeField]
     private int levelCount;
 
+    [Tooltip("Высота крыши")]
+    [SerializeField]
+    private float roofHeight;
+
     [Tooltip("Расстояние окна от начала этажа")]
     [SerializeField]
-    private float windowOffset;
+    private float windowFloorOffset;
 
+    [Tooltip("Расстояние между окном и границей меша")]
+    [SerializeField]
+    private float windowMeshOffset;
+
+    [Tooltip("Есть ли у дома крыша")]
+    [SerializeField]
+    private bool hasRoof;
+
+    [Space]
     [Header("Уровень повреждений")]
 
     [Tooltip("Шаг перехода к следующему уровню повреждения")]
     [SerializeField]
     private float damageLevelStep;
 
+    [Space]
     [Header("Жизнеспособность дома")]
 
     [Tooltip("Максимальное количество жизни")]
@@ -75,6 +97,7 @@ public class HouseSettings : ScriptableObject
     [SerializeField]
     private float reparePerSecond;
 
+    [Space]
     [Header("Жизнеспособность дома")]
 
     [Tooltip("Максимальное количество шоколада")]
@@ -89,6 +112,7 @@ public class HouseSettings : ScriptableObject
     [SerializeField]
     private float chocolateStealPerSecond;
 
+    [Space]
     [Header("Влияние на мир")]
 
     [Tooltip("Количество генерируемой воды в секунду за один уровень повреждения")]
