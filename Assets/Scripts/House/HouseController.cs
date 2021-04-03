@@ -9,7 +9,8 @@ internal class HouseController : MonoBehaviour
     [SerializeField] GameObject stealButton;
     [SerializeField] GameObject homeButton;
     [SerializeField] HouseVitality houseVitality;
-    
+    [SerializeField] HouseChocolate houseChocolate;
+     
     private Vector3 targetPosition;
     private BeaverBehaviour _beaver;
 
@@ -40,15 +41,15 @@ internal class HouseController : MonoBehaviour
         EventBroker.ButtonDownInvoke();
         StopAllCoroutines();
         StartCoroutine(HidingButtons());
-        if (!houseVitality.IsRecieveDamage)
+        if (houseVitality.IsRecieveDamage || houseChocolate.IsStealingActive)
         {
-            attackButton.SetActive(true);
-            stealButton.SetActive(true);
+            homeButton.SetActive(true);
             EventBroker.ButtonDown += HideOtherButtons;
         }
         else
         {
-            homeButton.SetActive(true);
+            attackButton.SetActive(true);
+            stealButton.SetActive(true);
             EventBroker.ButtonDown += HideOtherButtons;
         }
     }
@@ -77,6 +78,7 @@ internal class HouseController : MonoBehaviour
     {
         if (_beaver != null)
         {
+            houseChocolate.IsStealingActive = false;
             houseVitality.IsRecieveDamage = false;
             homeButton.SetActive(false);
             _beaver.GoHome(targetPosition);
@@ -93,7 +95,7 @@ internal class HouseController : MonoBehaviour
                 houseVitality.IsRecieveDamage = true;
                 break;
             case BeaverBehaviour.State.Steal:
-                Debug.Log("Steals");
+                houseChocolate.IsStealingActive = true;
                 break;
         }
     }

@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75b1191b088474f4d8593e009666e5c2, type: 3}
   m_Name: CitySettings
   m_EditorClassIdentifier: 
-  cityColsCount: 5
-  cityRowsCount: 5
+  cityColsCount: 6
+  cityRowsCount: 6
   cellSize: {x: 5, y: 5}
   houseSets:
   - Prefab: {fileID: 7575704192324468463, guid: 4619cda5883501648b66c1150bbfc74a, type: 3}

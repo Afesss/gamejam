@@ -56,8 +56,9 @@ public class CityGenerator : MonoBehaviour
 
     private void InstantiateHouse(int col, int row, int index)
     {
-        var position = new Vector3(col * config.CellSize.x, 0, row * config.CellSize.y)
+        var position = new Vector3((col + 0.5f) * config.CellSize.x, 0, (row + 0.5f) * config.CellSize.y)
             - new Vector3(config.CellSize.x * config.CityColsCount * 0.5f, 0, config.CellSize.y * config.CityRowsCount * 0.5f);
+           
 
         var obj = GameObject.Instantiate(config.HouseSets[index].Prefab, position, Quaternion.identity, transform);
 

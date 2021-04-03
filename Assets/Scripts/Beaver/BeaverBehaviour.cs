@@ -43,14 +43,8 @@ internal class BeaverBehaviour : MonoBehaviour, IPoolObject
         _transform = GetComponent<Transform>();
         _gameObject = gameObject;
         currentState = State.Wait;
-        RandomAnimation();
+        
 
-    }
-    private void RandomAnimation()
-    {
-        int count = Random.Range(1, 5);
-        Debug.Log(count);
-        _animator.SetFloat(hashIdle, (int)count);
     }
     internal void Die()
     {
@@ -168,7 +162,6 @@ internal class BeaverBehaviour : MonoBehaviour, IPoolObject
             _transform.rotation = Quaternion.Euler(0, 0, 0);
             BeaversController.AddToQueue(this);
             _animator.SetBool(hashRun, false);
-            RandomAnimation();
         }
 
     }
@@ -185,7 +178,6 @@ internal class BeaverBehaviour : MonoBehaviour, IPoolObject
             {
                 currentState = State.Wait;
                 _animator.SetBool(hashWalk, false);
-                RandomAnimation();
             }
         }
         else
