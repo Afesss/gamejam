@@ -262,7 +262,8 @@ internal class BeaverBehaviour : MonoBehaviour, IPoolObject
     {
         if (collision.gameObject.CompareTag("Ground"))
             _animator.SetBool("Swimming", false);
-        else _animator.SetBool("Swimming", true);
+        else if(collision.gameObject.CompareTag("Water"))
+            _animator.SetBool("Swimming", true);
     }
 
 }
