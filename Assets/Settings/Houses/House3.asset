@@ -16,6 +16,7 @@ MonoBehaviour:
   roofHeight: 0
   windowFloorOffset: 0.7
   windowMeshOffset: 0.2
+  hasRoof: 0
   damageLevelStep: 0.22
   maxHealthPoint: 70
   damagePerSecond: 10
@@ -24,3 +25,5 @@ MonoBehaviour:
   minChocolateAmount: 45
   chocolateStealPerSecond: 0.3
   waterFlowAmountByLevel: 13
+  detectionTickDuration: 3
+  detectionRatePerHealthUnit: 0.0035

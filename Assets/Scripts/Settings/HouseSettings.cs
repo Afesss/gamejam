@@ -53,6 +53,27 @@ public class HouseSettings : ScriptableObject
     /// </summary>
     public float WaterFlowAmountByLevel { get { return waterFlowAmountByLevel; } }
 
+    /// <summary>
+    /// Секунд на один тик проверки
+    /// </summary>
+    public float DetectionTickDuration { get { return detectionTickDuration; } }
+
+    /// <summary>
+    /// Шанс обнаружения на человека в доме
+    /// </summary>
+    public float DetectionRatePerHealthUnit { get { return detectionRatePerHealthUnit; } }
+
+    /// <summary>
+    /// Секунд на побег при обнаружении
+    /// </summary>
+    public float TimeToFlee { get { return timeToFlee; } }
+
+    /// <summary>
+    /// Отступ кнопки побега от центральной оси дома
+    /// </summary>
+    public float FleeButtonOffset { get { return fleeButtonOffset; } }
+
+
     [Header("Настройка геометрии")]
 
     [Tooltip("Количество этажей")]
@@ -75,16 +96,16 @@ public class HouseSettings : ScriptableObject
     [SerializeField]
     private bool hasRoof;
 
-    [Space]
     [Header("Уровень повреждений")]
 
+    [Space]
     [Tooltip("Шаг перехода к следующему уровню повреждения")]
     [SerializeField]
     private float damageLevelStep;
 
-    [Space]
     [Header("Жизнеспособность дома")]
 
+    [Space]
     [Tooltip("Максимальное количество жизни")]
     [SerializeField]
     private float maxHealthPoint;
@@ -97,9 +118,9 @@ public class HouseSettings : ScriptableObject
     [SerializeField]
     private float reparePerSecond;
 
-    [Space]
     [Header("Жизнеспособность дома")]
 
+    [Space]
     [Tooltip("Максимальное количество шоколада")]
     [SerializeField]
     private int maxChocolateAmount;
@@ -112,10 +133,31 @@ public class HouseSettings : ScriptableObject
     [SerializeField]
     private float chocolateStealPerSecond;
 
-    [Space]
     [Header("Влияние на мир")]
 
+    [Space]
     [Tooltip("Количество генерируемой воды в секунду за один уровень повреждения")]
     [SerializeField]
     private float waterFlowAmountByLevel;
+
+    [Header("Обнаружение бобров")]
+
+    [Space]
+    [Tooltip("Секунд на один тик проверки")]
+    [SerializeField]
+    private float detectionTickDuration = 3;
+
+    [Tooltip("Шанс обнаружения в доме на единицу жизни дома")]
+    [SerializeField]
+    [Range(0, 0.05f)]
+    private float detectionRatePerHealthUnit = 0.005f;
+
+    [Tooltip("Секунд на побег при обнаружении")]
+    [SerializeField]
+    private float timeToFlee = 3;
+
+    [Tooltip("Отступ кнопки побега от центральной оси дома")]
+    [SerializeField]
+    private float fleeButtonOffset = 1.2f;
+
 }

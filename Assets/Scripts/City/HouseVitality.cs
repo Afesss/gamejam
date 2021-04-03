@@ -22,6 +22,10 @@ public class HouseVitality : MonoBehaviour
     /// Текущее количество жизни у дома
     /// </summary>
     public float HealthPoint { get { return healthPoint; } }
+
+    /// <summary>
+    /// Получает ли дом повреждения
+    /// </summary>
     public bool IsRecieveDamage { get { return isRecieveDamage; } set { isRecieveDamage = value; } }
 
     /// <summary>

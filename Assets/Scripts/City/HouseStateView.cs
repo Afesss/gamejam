@@ -55,10 +55,13 @@ public class HouseStateView : MonoBehaviour
         var startAngle = 0;
         for (var i = 0; i < levelWindowPositions.Length; i++)
         {
-            var angle = startAngle + (i / 2) * 90;
-            windowWater[levelIndex][i] = CityData.Instance.waterfallPoolService.GetFreeElement();
-            windowWater[levelIndex][i].transform.rotation = Quaternion.Euler(0, angle, 0);
-            windowWater[levelIndex][i].transform.position = levelWindowPositions[i];
+            if (!float.IsInfinity(levelWindowPositions[i].x))
+            {
+                var angle = startAngle + (i / 2) * 90;
+                windowWater[levelIndex][i] = CityData.Instance.waterfallPoolService.GetFreeElement();
+                windowWater[levelIndex][i].transform.rotation = Quaternion.Euler(0, angle, 0);
+                windowWater[levelIndex][i].transform.position = levelWindowPositions[i];
+            }
         }
     }
 
@@ -81,8 +84,6 @@ public class HouseStateView : MonoBehaviour
 
             var yPosition = centerLevel.y + config.WindowFloorOffset;
 
-            //var forwardLeftWindow
-
             var zBoundForward = centerLevel.z + mesh.bounds.extents.z - config.WindowMeshOffset;
             var zBoundBackward = centerLevel.z - mesh.bounds.extents.z + config.WindowMeshOffset;
             var xBoundRight = centerLevel.x + mesh.bounds.extents.x - config.WindowMeshOffset;
@@ -94,11 +95,8 @@ public class HouseStateView : MonoBehaviour
             windowPosition[i][2] = new Vector3(xBoundRight, yPosition, centerLevel.z + sizeZ / 5);
             windowPosition[i][3] = new Vector3(xBoundRight, yPosition, centerLevel.z - sizeZ / 5);
             // не показываем воду на первом этаже там где дверь
-            if (i != 0)
-            {
-                windowPosition[i][4] = new Vector3(centerLevel.x + sizeX / 5, yPosition, zBoundBackward);
-                windowPosition[i][5] = new Vector3(centerLevel.x - sizeX / 5, yPosition, zBoundBackward);
-            }
+            windowPosition[i][4] = (i != 0)? new Vector3(centerLevel.x + sizeX / 5, yPosition, zBoundBackward): Vector3.negativeInfinity;
+            windowPosition[i][5] = (i != 0)? new Vector3(centerLevel.x - sizeX / 5, yPosition, zBoundBackward): Vector3.negativeInfinity;
             windowPosition[i][6] = new Vector3(xBoundLeft, yPosition, centerLevel.z - sizeZ / 5);
             windowPosition[i][7] = new Vector3(xBoundLeft, yPosition, centerLevel.z + sizeZ / 5);
         }
