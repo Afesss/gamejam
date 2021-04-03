@@ -15,13 +15,51 @@ MonoBehaviour:
   cityColsCount: 5
   cityRowsCount: 5
   cellSize: {x: 5, y: 5}
-  houseObjects:
-  - {fileID: 7575704192324468463, guid: 4619cda5883501648b66c1150bbfc74a, type: 3}
-  - {fileID: 5387061924319597613, guid: 91d1da4f4992aa542ba3f8e3276da487, type: 3}
-  - {fileID: 6260125980503860387, guid: 8522f947755514d45b72cb92a3495918, type: 3}
-  - {fileID: 2833930589838076849, guid: c0f09e987965e7743b682cede9d329b7, type: 3}
-  - {fileID: 7009513973003839654, guid: 9451350e744f4d246ae36b4805dbdb31, type: 3}
-  houseRates: 1e00000019000000140000000f0000000a000000
-  maxWaterLevel: 30000
-  maxWaterYPosition: 11
-  outflowSpeedPerSecond: 1000
+  houseSets:
+  - Prefab: {fileID: 7575704192324468463, guid: 4619cda5883501648b66c1150bbfc74a, type: 3}
+    CountPercent: 30
+    HasRoof: 0
+    PrefabMaterialsCount: 2
+  - Prefab: {fileID: 5387061924319597613, guid: 91d1da4f4992aa542ba3f8e3276da487, type: 3}
+    CountPercent: 25
+    HasRoof: 0
+    PrefabMaterialsCount: 2
+  - Prefab: {fileID: 6260125980503860387, guid: 8522f947755514d45b72cb92a3495918, type: 3}
+    CountPercent: 20
+    HasRoof: 1
+    PrefabMaterialsCount: 1
+  - Prefab: {fileID: 2833930589838076849, guid: c0f09e987965e7743b682cede9d329b7, type: 3}
+    CountPercent: 15
+    HasRoof: 1
+    PrefabMaterialsCount: 1
+  - Prefab: {fileID: 7009513973003839654, guid: 9451350e744f4d246ae36b4805dbdb31, type: 3}
+    CountPercent: 10
+    HasRoof: 1
+    PrefabMaterialsCount: 1
+  materialSets:
+  - materials:
+    - {fileID: 2100000, guid: 476952bf7e74a9d4195e83186de82971, type: 2}
+    - {fileID: 2100000, guid: 232a89f3cbc415247ae6743805f6d15f, type: 2}
+  - materials:
+    - {fileID: 2100000, guid: eb4ff0ebe7b270445a7ee706e0b358a6, type: 2}
+    - {fileID: 2100000, guid: e9f49f9fe9ad56f46902b870a4b3feb6, type: 2}
+  - materials:
+    - {fileID: 2100000, guid: ae1c04649554ea440813993f1aa97763, type: 2}
+    - {fileID: 2100000, guid: 1b921072e8374bd4d86f0ed72dcd967d, type: 2}
+  - materials:
+    - {fileID: 2100000, guid: 6c9afc8a98b566348a31cf11441d2569, type: 2}
+    - {fileID: 2100000, guid: aa00f9c3f935f2a40aea9d5c43d7dc09, type: 2}
+  - materials:
+    - {fileID: 2100000, guid: 476952bf7e74a9d4195e83186de82971, type: 2}
+    - {fileID: 2100000, guid: 8f323825f90e62f4b9467e7c0c4d4e41, type: 2}
+  - materials:
+    - {fileID: 2100000, guid: ae1c04649554ea440813993f1aa97763, type: 2}
+    - {fileID: 2100000, guid: e9f49f9fe9ad56f46902b870a4b3feb6, type: 2}
+  roofObjects:
+  - {fileID: 7268010005482485112, guid: 7f3ba76a10a9e0a4c93fa5d06bc5086d, type: 3}
+  - {fileID: 7160261342845162020, guid: 99e4851f3d96025459fd40b7f94543a7, type: 3}
+  - {fileID: 363149376010469843, guid: 1b2b7b730acb63d4983be3a48ad7ec41, type: 3}
+  - {fileID: 2230855586578986120, guid: a203b02216371064fa30897dfdd9548f, type: 3}
+  maxWaterLevel: 90000
+  maxWaterYPosition: 15
+  outflowSpeedPerSecond: 50

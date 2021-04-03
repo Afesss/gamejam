@@ -1,19 +1,19 @@
-using System.Collections;
+п»їusing System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(HouseVitality))]
 public class HouseStateView : MonoBehaviour
 {
-    [Tooltip("Настройки дома")]
+    [Tooltip("РќР°СЃС‚СЂРѕР№РєРё РґРѕРјР°")]
     [SerializeField]
     private HouseSettings config;
 
-    [Tooltip("Меш дома")]
+    [Tooltip("РњРµС€ РґРѕРјР°")]
     [SerializeField]
     private MeshRenderer mesh;
 
-    [Tooltip("Компонент уровня поврежденности здания")]
+    [Tooltip("РљРѕРјРїРѕРЅРµРЅС‚ СѓСЂРѕРІРЅСЏ РїРѕРІСЂРµР¶РґРµРЅРЅРѕСЃС‚Рё Р·РґР°РЅРёСЏ")]
     [SerializeField]
     private HouseDamageLevel damageLevelComponent;
 
@@ -30,7 +30,7 @@ public class HouseStateView : MonoBehaviour
 
     private void Start()
     {
-        floorHeight = mesh.bounds.size.y / config.LevelCount;
+        floorHeight = mesh.bounds.size.y / config.LevelCount - config.RoofHeight;
         groundCenter = new Vector3(mesh.bounds.center.x, 0, mesh.bounds.center.z);
         windowPosition = new Vector3[config.LevelCount][];
         windowWater = new WaterfallPoolObject[config.LevelCount][];
@@ -79,15 +79,28 @@ public class HouseStateView : MonoBehaviour
         {
             var centerLevel = groundCenter + Vector3.up * floorHeight * i;
 
+            var yPosition = centerLevel.y + config.WindowFloorOffset;
+
+            //var forwardLeftWindow
+
+            var zBoundForward = centerLevel.z + mesh.bounds.extents.z - config.WindowMeshOffset;
+            var zBoundBackward = centerLevel.z - mesh.bounds.extents.z + config.WindowMeshOffset;
+            var xBoundRight = centerLevel.x + mesh.bounds.extents.x - config.WindowMeshOffset;
+            var xBoundLeft = centerLevel.x - mesh.bounds.extents.x + config.WindowMeshOffset;
+
             windowPosition[i] = new Vector3[windowCount];
-            windowPosition[i][0] = new Vector3(centerLevel.x - sizeX / 4, centerLevel.y + config.WindowOffset, centerLevel.z + mesh.bounds.extents.z);
-            windowPosition[i][1] = new Vector3(centerLevel.x + sizeX / 4, centerLevel.y + config.WindowOffset, centerLevel.z + mesh.bounds.extents.z);
-            windowPosition[i][2] = new Vector3(centerLevel.x + mesh.bounds.extents.x, centerLevel.y + config.WindowOffset, centerLevel.z + sizeZ / 4);
-            windowPosition[i][3] = new Vector3(centerLevel.x + mesh.bounds.extents.x, centerLevel.y + config.WindowOffset, centerLevel.z - sizeZ / 4);
-            windowPosition[i][4] = new Vector3(centerLevel.x + sizeX / 4, centerLevel.y + config.WindowOffset, centerLevel.z - mesh.bounds.extents.z);
-            windowPosition[i][5] = new Vector3(centerLevel.x - sizeX / 4, centerLevel.y + config.WindowOffset, centerLevel.z - mesh.bounds.extents.z);
-            windowPosition[i][6] = new Vector3(centerLevel.x - mesh.bounds.extents.x, centerLevel.y + config.WindowOffset, centerLevel.z - sizeZ / 4);
-            windowPosition[i][7] = new Vector3(centerLevel.x - mesh.bounds.extents.x, centerLevel.y + config.WindowOffset, centerLevel.z + sizeZ / 4);
+            windowPosition[i][0] = new Vector3(centerLevel.x - sizeX / 5, yPosition, zBoundForward);
+            windowPosition[i][1] = new Vector3(centerLevel.x + sizeX / 5, yPosition, zBoundForward);
+            windowPosition[i][2] = new Vector3(xBoundRight, yPosition, centerLevel.z + sizeZ / 5);
+            windowPosition[i][3] = new Vector3(xBoundRight, yPosition, centerLevel.z - sizeZ / 5);
+            // РЅРµ РїРѕРєР°Р·С‹РІР°РµРј РІРѕРґСѓ РЅР° РїРµСЂРІРѕРј СЌС‚Р°Р¶Рµ С‚Р°Рј РіРґРµ РґРІРµСЂСЊ
+            if (i != 0)
+            {
+                windowPosition[i][4] = new Vector3(centerLevel.x + sizeX / 5, yPosition, zBoundBackward);
+                windowPosition[i][5] = new Vector3(centerLevel.x - sizeX / 5, yPosition, zBoundBackward);
+            }
+            windowPosition[i][6] = new Vector3(xBoundLeft, yPosition, centerLevel.z - sizeZ / 5);
+            windowPosition[i][7] = new Vector3(xBoundLeft, yPosition, centerLevel.z + sizeZ / 5);
         }
     }
 
@@ -111,7 +124,10 @@ public class HouseStateView : MonoBehaviour
             {
                 for (var j = 0; j < windowPosition[i].Length; j++)
                 {
-                    Gizmos.color = Color.red;
+                    if (j == 0)
+                        Gizmos.color = Color.green;
+                    else
+                        Gizmos.color = Color.red;
                     Gizmos.DrawSphere(windowPosition[i][j], 0.1f);
                     Gizmos.color = Color.white;
                 }

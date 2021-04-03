@@ -1,13 +1,13 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 
 [RequireComponent(typeof(HouseVitality))]
 public class HouseWaterFlow : MonoBehaviour
 {
-    [Tooltip("Íàñòðîéêè äîìà")]
+    [Tooltip("ÐÐ°ÑÑ‚Ñ€Ð¾Ð¹ÐºÐ¸ Ð´Ð¾Ð¼Ð°")]
     [SerializeField]
     private HouseSettings config;
 
-    [Tooltip("Êîìïîíåíò óðîâíÿ ïîâðåæäåííîñòè çäàíèÿ")]
+    [Tooltip("ÐšÐ¾Ð¼Ð¿Ð¾Ð½ÐµÐ½Ñ‚ ÑƒÑ€Ð¾Ð²Ð½Ñ Ð¿Ð¾Ð²Ñ€ÐµÐ¶Ð´ÐµÐ½Ð½Ð¾ÑÑ‚Ð¸ Ð·Ð´Ð°Ð½Ð¸Ñ")]
     [SerializeField]
     private HouseDamageLevel damageLevelComponent;
 
@@ -22,7 +22,7 @@ public class HouseWaterFlow : MonoBehaviour
     private void Update()
     {
         if (currentDamageLevel > 0)
-            EventBroker.OnHouseWaterFlowInvoke(currentDamageLevel * config.WaterFlowAmountByLevel);
+            EventBroker.OnHouseWaterFlowInvoke(currentDamageLevel * config.WaterFlowAmountByLevel * Time.deltaTime);
     }
 
     private void OnDamageLevelUpdate(int level)

@@ -255,8 +255,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 300545715}
-  m_LocalRotation: {x: 0.15859598, y: -0.46910685, z: 0.08683561, w: 0.86443377}
-  m_LocalPosition: {x: 27.393131, y: 11.051796, z: -8.344426}
+  m_LocalRotation: {x: 0.19679089, y: -0.26332095, z: 0.055099986, w: 0.94281465}
+  m_LocalPosition: {x: 6.951185, y: 15.02973, z: -21.774519}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -292,16 +292,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   config: {fileID: 11400000, guid: f18b13ac88df83e48a82c13e6ee21464, type: 2}
-  cityColsCount: 7
-  cityRowsCount: 7
-  CellSize: {x: 5, y: 5}
-  houseObjects:
-  - {fileID: 7575704192324468463, guid: 4619cda5883501648b66c1150bbfc74a, type: 3}
-  - {fileID: 5387061924319597613, guid: 91d1da4f4992aa542ba3f8e3276da487, type: 3}
-  - {fileID: 6260125980503860387, guid: 8522f947755514d45b72cb92a3495918, type: 3}
-  - {fileID: 2833930589838076849, guid: c0f09e987965e7743b682cede9d329b7, type: 3}
-  - {fileID: 7009513973003839654, guid: 9451350e744f4d246ae36b4805dbdb31, type: 3}
-  houseRates: 1e00000019000000140000000f0000000a000000
 --- !u!4 &635660616
 Transform:
   m_ObjectHideFlags: 0
@@ -536,7 +526,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a9034fcb55e09d42aa5d2525a0f5315, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  waterController: {fileID: 1658849324}
+  worldWaterLevel: {fileID: 0}
 --- !u!4 &1195310420
 Transform:
   m_ObjectHideFlags: 0
@@ -672,8 +662,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1658849322}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -2.5, y: -2.5, z: 0}
+  m_LocalScale: {x: 1.5, y: 1, z: 1.5}
   m_Children:
   - {fileID: 1107966585}
   m_Father: {fileID: 0}

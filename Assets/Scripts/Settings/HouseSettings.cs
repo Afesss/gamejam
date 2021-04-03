@@ -1,70 +1,121 @@
-using UnityEngine;
+п»їusing UnityEngine;
 
 [CreateAssetMenu(fileName = "HouseSettings", menuName = "BeaverGame/House", order = 0)]
 public class HouseSettings : ScriptableObject
 {
     /// <summary>
-    /// Количество этажей
+    /// РљРѕР»РёС‡РµСЃС‚РІРѕ СЌС‚Р°Р¶РµР№
     /// </summary>
     public int LevelCount { get { return levelCount; } }
     /// <summary>
-    /// Расстояние окна от начала этажа
+    /// Р’С‹СЃРѕС‚Р° РєСЂС‹С€Рё
     /// </summary>
-    public float WindowOffset { get { return windowOffset; } }
+    public float RoofHeight { get { return roofHeight; } }
     /// <summary>
-    /// Шаг перехода к следующему уровню повреждения
+    /// Р Р°СЃСЃС‚РѕСЏРЅРёРµ РѕРєРЅР° РѕС‚ РЅР°С‡Р°Р»Р° СЌС‚Р°Р¶Р°
+    /// </summary>
+    public float WindowFloorOffset { get { return windowFloorOffset; } }
+    /// <summary>
+    /// Р Р°СЃСЃС‚РѕСЏРЅРёРµ РјРµР¶РґСѓ РѕРєРЅРѕРј Рё РіСЂР°РЅРёС†РµР№ РјРµС€Р°
+    /// </summary>
+    public float WindowMeshOffset { get { return windowMeshOffset; } }
+    /// <summary>
+    /// РЁР°Рі РїРµСЂРµС…РѕРґР° Рє СЃР»РµРґСѓСЋС‰РµРјСѓ СѓСЂРѕРІРЅСЋ РїРѕРІСЂРµР¶РґРµРЅРёСЏ
     /// </summary>
     public float DamageLevelStep { get { return damageLevelStep; } }
     /// <summary>
-    /// Максимальное количество жизни
+    /// РњР°РєСЃРёРјР°Р»СЊРЅРѕРµ РєРѕР»РёС‡РµСЃС‚РІРѕ Р¶РёР·РЅРё
     /// </summary>
     public float MaxHealthPoint { get { return maxHealthPoint; } }
     /// <summary>
-    /// Количество повреждения получаемого в секунду
+    /// РљРѕР»РёС‡РµСЃС‚РІРѕ РїРѕРІСЂРµР¶РґРµРЅРёСЏ РїРѕР»СѓС‡Р°РµРјРѕРіРѕ РІ СЃРµРєСѓРЅРґСѓ
     /// </summary>
     public float DamagePerSecond { get { return damagePerSecond; } }
     /// <summary>
-    /// Количество генерируемых очков починки в секунду
+    /// РљРѕР»РёС‡РµСЃС‚РІРѕ РіРµРЅРµСЂРёСЂСѓРµРјС‹С… РѕС‡РєРѕРІ РїРѕС‡РёРЅРєРё РІ СЃРµРєСѓРЅРґСѓ
     /// </summary>
     public float ReparePerSecond { get { return reparePerSecond; } }
     /// <summary>
-    /// Количество генерируемой воды за один уровень повреждения
+    /// РњР°РєСЃРёРјР°Р»СЊРЅРѕРµ РєРѕР»РёС‡РµСЃС‚РІРѕ С€РѕРєРѕР»Р°РґР°
+    /// </summary>
+    public int MaxChocolateAmount { get { return maxChocolateAmount; } }
+    /// <summary>
+    /// РњРёРЅРёРјР°Р»СЊРЅРѕРµ РєРѕР»РёС‡РµСЃС‚РІРѕ С€РѕРєРѕР»Р°РґР°
+    /// </summary>
+    public int MinChocolateAmount { get { return minChocolateAmount; } }
+    /// <summary>
+    /// РљРѕР»РёС‡РµСЃС‚РІРѕ С€РѕРєРѕР»Р°РґР°, РєРѕС‚РѕСЂРѕРµ Р±РѕР±РµСЂ РєСЂР°РґРµС‚ Р·Р° СЃРµРєСѓРЅРґСѓ
+    /// </summary>
+    public float РЎhocolateStealPerSecond { get { return chocolateStealPerSecond; } }
+
+    /// <summary>
+    /// РљРѕР»РёС‡РµСЃС‚РІРѕ РіРµРЅРµСЂРёСЂСѓРµРјРѕР№ РІРѕРґС‹ РІ СЃРµРєСѓРЅРґСѓ Р·Р° РѕРґРёРЅ СѓСЂРѕРІРµРЅСЊ РїРѕРІСЂРµР¶РґРµРЅРёСЏ
     /// </summary>
     public float WaterFlowAmountByLevel { get { return waterFlowAmountByLevel; } }
 
-    [Header("Настройка геометрии")]
+    [Header("РќР°СЃС‚СЂРѕР№РєР° РіРµРѕРјРµС‚СЂРёРё")]
 
-    [Tooltip("Количество этажей")]
+    [Tooltip("РљРѕР»РёС‡РµСЃС‚РІРѕ СЌС‚Р°Р¶РµР№")]
     [SerializeField]
     private int levelCount;
 
-    [Tooltip("Расстояние окна от начала этажа")]
+    [Tooltip("Р’С‹СЃРѕС‚Р° РєСЂС‹С€Рё")]
     [SerializeField]
-    private float windowOffset;
+    private float roofHeight;
 
-    [Header("Уровень повреждений")]
+    [Tooltip("Р Р°СЃСЃС‚РѕСЏРЅРёРµ РѕРєРЅР° РѕС‚ РЅР°С‡Р°Р»Р° СЌС‚Р°Р¶Р°")]
+    [SerializeField]
+    private float windowFloorOffset;
 
-    [Tooltip("Шаг перехода к следующему уровню повреждения")]
+    [Tooltip("Р Р°СЃСЃС‚РѕСЏРЅРёРµ РјРµР¶РґСѓ РѕРєРЅРѕРј Рё РіСЂР°РЅРёС†РµР№ РјРµС€Р°")]
+    [SerializeField]
+    private float windowMeshOffset;
+
+    [Tooltip("Р•СЃС‚СЊ Р»Рё Сѓ РґРѕРјР° РєСЂС‹С€Р°")]
+    [SerializeField]
+    private bool hasRoof;
+
+    [Space]
+    [Header("РЈСЂРѕРІРµРЅСЊ РїРѕРІСЂРµР¶РґРµРЅРёР№")]
+
+    [Tooltip("РЁР°Рі РїРµСЂРµС…РѕРґР° Рє СЃР»РµРґСѓСЋС‰РµРјСѓ СѓСЂРѕРІРЅСЋ РїРѕРІСЂРµР¶РґРµРЅРёСЏ")]
     [SerializeField]
     private float damageLevelStep;
 
-    [Header("Жизнеспособность дома")]
+    [Space]
+    [Header("Р–РёР·РЅРµСЃРїРѕСЃРѕР±РЅРѕСЃС‚СЊ РґРѕРјР°")]
 
-    [Tooltip("Максимальное количество жизни")]
+    [Tooltip("РњР°РєСЃРёРјР°Р»СЊРЅРѕРµ РєРѕР»РёС‡РµСЃС‚РІРѕ Р¶РёР·РЅРё")]
     [SerializeField]
     private float maxHealthPoint;
 
-    [Tooltip("Количество повреждения получаемого в секунду")]
+    [Tooltip("РљРѕР»РёС‡РµСЃС‚РІРѕ РїРѕРІСЂРµР¶РґРµРЅРёСЏ РїРѕР»СѓС‡Р°РµРјРѕРіРѕ РІ СЃРµРєСѓРЅРґСѓ")]
     [SerializeField]
     private float damagePerSecond;
 
-    [Tooltip("Количество генерируемых очков починки в секунду")]
+    [Tooltip("РљРѕР»РёС‡РµСЃС‚РІРѕ РіРµРЅРµСЂРёСЂСѓРµРјС‹С… РѕС‡РєРѕРІ РїРѕС‡РёРЅРєРё РІ СЃРµРєСѓРЅРґСѓ")]
     [SerializeField]
     private float reparePerSecond;
 
-    [Header("Влияние на мир")]
+    [Space]
+    [Header("Р–РёР·РЅРµСЃРїРѕСЃРѕР±РЅРѕСЃС‚СЊ РґРѕРјР°")]
 
-    [Tooltip("Количество генерируемой воды за один уровень повреждения")]
+    [Tooltip("РњР°РєСЃРёРјР°Р»СЊРЅРѕРµ РєРѕР»РёС‡РµСЃС‚РІРѕ С€РѕРєРѕР»Р°РґР°")]
+    [SerializeField]
+    private int maxChocolateAmount;
+
+    [Tooltip("РњРёРЅРёРјР°Р»СЊРЅРѕРµ РєРѕР»РёС‡РµСЃС‚РІРѕ С€РѕРєРѕР»Р°РґР°")]
+    [SerializeField]
+    private int minChocolateAmount;
+
+    [Tooltip("РљРѕР»РёС‡РµСЃС‚РІРѕ С€РѕРєРѕР»Р°РґР°, РєРѕС‚РѕСЂРѕРµ Р±РѕР±РµСЂ РєСЂР°РґРµС‚ Р·Р° СЃРµРєСѓРЅРґСѓ")]
+    [SerializeField]
+    private float chocolateStealPerSecond;
+
+    [Space]
+    [Header("Р’Р»РёСЏРЅРёРµ РЅР° РјРёСЂ")]
+
+    [Tooltip("РљРѕР»РёС‡РµСЃС‚РІРѕ РіРµРЅРµСЂРёСЂСѓРµРјРѕР№ РІРѕРґС‹ РІ СЃРµРєСѓРЅРґСѓ Р·Р° РѕРґРёРЅ СѓСЂРѕРІРµРЅСЊ РїРѕРІСЂРµР¶РґРµРЅРёСЏ")]
     [SerializeField]
     private float waterFlowAmountByLevel;
 }

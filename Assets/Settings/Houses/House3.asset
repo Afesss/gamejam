@@ -13,9 +13,14 @@ MonoBehaviour:
   m_Name: House3
   m_EditorClassIdentifier: 
   levelCount: 3
-  windowOffset: 0.5
+  roofHeight: 0
+  windowFloorOffset: 0.7
+  windowMeshOffset: 0.2
   damageLevelStep: 0.22
   maxHealthPoint: 70
   damagePerSecond: 10
   reparePerSecond: 5
-  waterFlowAmountByLevel: 1.2
+  maxChocolateAmount: 30
+  minChocolateAmount: 45
+  chocolateStealPerSecond: 0.3
+  waterFlowAmountByLevel: 13

@@ -13,9 +13,14 @@ MonoBehaviour:
   m_Name: House4
   m_EditorClassIdentifier: 
   levelCount: 4
-  windowOffset: 0.5
+  roofHeight: 0
+  windowFloorOffset: 0.7
+  windowMeshOffset: 0.2
   damageLevelStep: 0.18
   maxHealthPoint: 80
   damagePerSecond: 10
   reparePerSecond: 5
-  waterFlowAmountByLevel: 1.3
+  maxChocolateAmount: 40
+  minChocolateAmount: 60
+  chocolateStealPerSecond: 0.4
+  waterFlowAmountByLevel: 14
