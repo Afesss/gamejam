@@ -118,7 +118,7 @@ public class HouseSettings : ScriptableObject
     [SerializeField]
     private float reparePerSecond;
 
-    [Header("Жизнеспособность дома")]
+    [Header("Шоколадки")]
 
     [Space]
     [Tooltip("Максимальное количество шоколада")]

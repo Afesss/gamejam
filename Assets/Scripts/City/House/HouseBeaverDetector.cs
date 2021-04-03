@@ -4,8 +4,8 @@ using System;
 public class HouseBeaverDetector : MonoBehaviour
 {
     public delegate void DetectorAction(Vector3 detectPosition);
-    public static event DetectorAction OnDetectBeaver;
-    public static event Action OnDestroyBeaver;
+    public event DetectorAction OnDetectBeaver;
+    public event Action OnDestroyBeaver;
 
     [Tooltip("Настройки дома")]
     [SerializeField]
@@ -14,6 +14,10 @@ public class HouseBeaverDetector : MonoBehaviour
     [Tooltip("Компонент жизнеспособности дома")]
     [SerializeField]
     private HouseVitality vitality;
+
+    [Tooltip("Компонент шоколад")]
+    [SerializeField]
+    private HouseChocolate chocolate;
 
     [Tooltip("Меш дома")]
     [SerializeField]
@@ -24,8 +28,6 @@ public class HouseBeaverDetector : MonoBehaviour
 
     private bool isBeaverDetected = false;
 
-    // TODO: Удалить после отладки
-    private Vector3 tmpDetectedPoint = Vector3.zero;
 
     private void Awake()
     {
@@ -38,7 +40,7 @@ public class HouseBeaverDetector : MonoBehaviour
     private void Update()
     {
         // если бобер убежал - сбрасываем все состояния
-        if (!vitality.IsRecieveDamage && (isBeaverDetected || tickCountdown < config.DetectionTickDuration))
+        if ((!vitality.IsRecieveDamage && !chocolate.IsStealingActive) && (isBeaverDetected || tickCountdown < config.DetectionTickDuration))
         {
             tickCountdown = config.DetectionTickDuration;
             fleeCountdown = config.TimeToFlee;
@@ -54,9 +56,9 @@ public class HouseBeaverDetector : MonoBehaviour
                 OnDestroyBeaver?.Invoke();
                 isBeaverDetected = false;
                 fleeCountdown = config.TimeToFlee;
+                chocolate.IsStealingActive = false;
                 vitality.IsRecieveDamage = false;
 
-                tmpDetectedPoint = Vector3.zero;
             }
             else
             {
@@ -66,7 +68,7 @@ public class HouseBeaverDetector : MonoBehaviour
         }
 
         // если завелся бобер - идут попытки его обнаружения
-        if (vitality.IsRecieveDamage && !isBeaverDetected)
+        if ((vitality.IsRecieveDamage || chocolate.IsStealingActive) && !isBeaverDetected)
         {
             if (tickCountdown <= 0 && vitality.HealthPoint > 0)
             {
@@ -105,16 +107,7 @@ public class HouseBeaverDetector : MonoBehaviour
         var dirs = new Vector3[] {Vector3.forward, Vector3.back, Vector3.left, Vector3.right};
         var dir = dirs[UnityEngine.Random.Range(0, dirs.Length)] * mesh.bounds.extents.x * config.FleeButtonOffset;
 
-        tmpDetectedPoint = levelCenter + dir;
 
         return levelCenter + dir;
-    }
-
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.green;
-        if (tmpDetectedPoint != Vector3.zero)
-            Gizmos.DrawSphere(tmpDetectedPoint, .5f);
-        Gizmos.color = Color.white;
     }
 }

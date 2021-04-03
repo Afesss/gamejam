@@ -430,6 +430,7 @@ MonoBehaviour:
   homeButton: {fileID: 9180078002045843799}
   houseVitality: {fileID: 8053050485311379434}
   houseChocolate: {fileID: -4146657178966127649}
+  houseBeaverDetector: {fileID: 6065582517048517079}
 --- !u!114 &-4146657178966127649
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -458,6 +459,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   config: {fileID: 11400000, guid: 6200fa270e5373c4fa0237bdba76be8e, type: 2}
   vitality: {fileID: 8053050485311379434}
+  chocolate: {fileID: -4146657178966127649}
   mesh: {fileID: 7575704191919830196}
 --- !u!1 &9180078002045843799
 GameObject:
