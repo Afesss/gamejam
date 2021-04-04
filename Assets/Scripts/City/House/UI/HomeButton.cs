@@ -8,6 +8,8 @@ public class HomeButton : MonoBehaviour
     internal event Action GoHome;
     private void OnMouseDown()
     {
+        
+        gameObject.SetActive(false);
         GoHome();
     }
 }

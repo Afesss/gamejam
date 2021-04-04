@@ -15,6 +15,7 @@ internal class UIManager : Singleton<UIManager>
     private UIEventMethods uIValues;
     private Animation _animation;
     private bool gameOverState;
+    private bool gameStart;
     
     protected override void Awake()
     {
@@ -42,6 +43,7 @@ internal class UIManager : Singleton<UIManager>
     }
     private void GameOver()
     {
+        gameStart = false;
         gameOverState = true;
         EventBroker.OnFloodingComplete -= Victory;
         EventBroker.UpdateChocolateAmount -= uIValues.UpdateChocolateAmount;
@@ -58,6 +60,7 @@ internal class UIManager : Singleton<UIManager>
     }
     internal void NewGame()
     {
+        gameStart = true;
         gameOverState = false;
         GameManager.Instance.StartGame();
         GameManager.Instance.UpdateGameState(GameManager.GameState.RUNNING);
@@ -84,15 +87,18 @@ internal class UIManager : Singleton<UIManager>
     }
     internal void Ñontinue()
     {
-        if (!gameOverState)
+        if (gameStart)
         {
-            EventBroker.OnFloodingComplete += Victory;
-            EventBroker.UpdateChocolateAmount += uIValues.UpdateChocolateAmount;
-            EventBroker.UpdatePriceAmoun += uIValues.UpdatePriceAmount;
-            EventBroker.GameOver += GameOver;
-            GameManager.Instance.UpdateGameState(GameManager.GameState.RUNNING);
-            MenuOff();
-            gUI.SetActive(true);
+            if (!gameOverState)
+            {
+                EventBroker.OnFloodingComplete += Victory;
+                EventBroker.UpdateChocolateAmount += uIValues.UpdateChocolateAmount;
+                EventBroker.UpdatePriceAmoun += uIValues.UpdatePriceAmount;
+                EventBroker.GameOver += GameOver;
+                GameManager.Instance.UpdateGameState(GameManager.GameState.RUNNING);
+                MenuOff();
+                gUI.SetActive(true);
+            }
         }
     }
     internal void Exit()
@@ -114,5 +120,8 @@ internal class UIManager : Singleton<UIManager>
         _animation.clip = menuOff;
         _animation.Play();
     }
-    
+    public void Developers()
+    {
+        Application.OpenURL("https://vk.com/whitecubegames");
+    }
 }
