@@ -27,11 +27,11 @@ internal class EventBroker : MonoBehaviour
     }
     internal static void UpdatePriceInvoke(int value)
     {
-        UpdatePriceAmoun.Invoke(value);
+        UpdatePriceAmoun?.Invoke(value);
     }
     internal static void UpdateChocolateInvoke(int value)
     {
-        UpdateChocolateAmount.Invoke(value);
+        UpdateChocolateAmount?.Invoke(value);
     }
 
     internal static void GameOverInvoke()
