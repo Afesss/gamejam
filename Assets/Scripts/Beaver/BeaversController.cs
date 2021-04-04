@@ -7,6 +7,7 @@ internal class BeaversController : MonoBehaviour
 {
     [SerializeField] private BeaverSettings beaverSettings;
     [SerializeField] private Transform spawnTransform;
+    [SerializeField] private AudioSource spawnAudioSource;
 
     internal static int CurrentPrice { get; private set; }
     internal static int ChocolateAmount { get; private set; }
@@ -92,7 +93,8 @@ internal class BeaversController : MonoBehaviour
             availableBeavers.Add(beaverPoolService.GetFreeElement());
             queue.Enqueue(availableBeavers[availableBeavers.Count - 1]);
             availableBeavers[availableBeavers.Count - 1].transform.position = SpawnPosition();
-            
+
+            spawnAudioSource.Play();
         }
     }
     internal static void AddToQueue(BeaverBehaviour beaver)

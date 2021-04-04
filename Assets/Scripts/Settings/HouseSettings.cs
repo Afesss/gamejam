@@ -73,6 +73,9 @@ public class HouseSettings : ScriptableObject
     /// </summary>
     public float FleeButtonOffset { get { return fleeButtonOffset; } }
 
+    public AudioClip BeaverDetectedAudio { get { return beaverDetectedAudio; } }
+    public float BeaverDetectedAudioVolume { get { return beaverDetectedAudioVolume; } }
+    public AudioClip HouseRecievedDamageAudio { get { return houseRecievedDamageAudio; } }
 
     [Header("Настройка геометрии")]
 
@@ -159,5 +162,16 @@ public class HouseSettings : ScriptableObject
     [Tooltip("Отступ кнопки побега от центральной оси дома")]
     [SerializeField]
     private float fleeButtonOffset = 1.2f;
+
+    [SerializeField]
+    private AudioClip beaverDetectedAudio;
+
+    [SerializeField]
+    [Range(0f,1f)]
+    private float beaverDetectedAudioVolume;
+
+    [SerializeField]
+    private AudioClip houseRecievedDamageAudio;
+
 
 }

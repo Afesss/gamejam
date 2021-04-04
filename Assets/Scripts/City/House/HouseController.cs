@@ -93,6 +93,7 @@ internal class HouseController : MonoBehaviour
         {
             case BeaverBehaviour.State.Attack:
                 houseVitality.IsRecieveDamage = true;
+                houseVitality.PlayDamageRecievedAudio();
                 toiletSign.SetActive(true);
                 break;
             case BeaverBehaviour.State.Steal:

@@ -11,8 +11,10 @@ internal class BeaverBehaviour : MonoBehaviour, IPoolObject
     [SerializeField] private LayerMask housLayer;
     [SerializeField] private BoxCollider houseCollider;
     [SerializeField] private GameObject renderObject;
-    
-    
+    [SerializeField] private AudioSource runAudioSource;
+    [SerializeField] private AudioSource sweemAudioSource;
+
+
     internal bool move { get; private set; }
 
 
@@ -36,7 +38,7 @@ internal class BeaverBehaviour : MonoBehaviour, IPoolObject
     private HouseBeaverDetector houseBeaverDetector;
     private HouseChocolate houseChocolate;
     private Collider triggerCollider;
-
+    private bool isSweeming;
     internal State currentState { get; private set; }
 
     internal enum State
@@ -58,12 +60,13 @@ internal class BeaverBehaviour : MonoBehaviour, IPoolObject
     }
     internal void Die()
     {
-        houseChocolate.ReturnStealdChocolate(stealedChocolateAmount);
+        houseBeaverDetector.OnDestroyBeaver -= Die;
+
+        houseChocolate?.ReturnStealdChocolate(stealedChocolateAmount);
         stealedChocolateAmount = 0;
         
         houseChocolate.OnChocolateSteal -= OnChocolateSteal;
         houseChocolate = null;
-        houseBeaverDetector.OnDestroyBeaver -= Die;
         houseBeaverDetector = null;
         BeaversController.RemoveFromAvailableList(this);
         renderObject.SetActive(true);
@@ -74,6 +77,12 @@ internal class BeaverBehaviour : MonoBehaviour, IPoolObject
         }
         triggerCollider.enabled = true;
         triggerCollider = null;
+
+        if (isSweeming)
+            sweemAudioSource.Stop();
+        else
+            runAudioSource.Stop();
+
     }
     public void ReturnToPool()
     {
@@ -85,17 +94,35 @@ internal class BeaverBehaviour : MonoBehaviour, IPoolObject
         currentState = State.Attack;
         move = true;
         targetPosition = target;
+
+        if (isSweeming)
+            sweemAudioSource.Play();
+        else
+            runAudioSource.Play();
+
     }
     internal void ToStealState(Vector3 target)
     {
         currentState = State.Steal;
         move = true;
         targetPosition = target;
+
+        if (isSweeming)
+            sweemAudioSource.Play();
+        else
+            runAudioSource.Play();
+
     }
     internal void ToQueueState()
     {
         savedPosition = _transform.position;
         currentState = State.Queue;
+
+        if (isSweeming)
+            sweemAudioSource.Play();
+        else
+            runAudioSource.Play();
+
     }
     internal void GoHome(Vector3 target)
     {
@@ -110,8 +137,14 @@ internal class BeaverBehaviour : MonoBehaviour, IPoolObject
         houseChocolate = null;
         houseBeaverDetector.OnDestroyBeaver -= Die;
         houseBeaverDetector = null;
+
+        if (isSweeming)
+            sweemAudioSource.Play();
+        else
+            runAudioSource.Play();
+
     }
-    
+
     private void FixedUpdate()
     {
         //Debug.Log(stealedChocolateAmount);
@@ -195,7 +228,6 @@ internal class BeaverBehaviour : MonoBehaviour, IPoolObject
     {
         if ((BeaversController.QueuePosition() - _transform.position).magnitude < 0.3f)
         {
-            Debug.Log(stealedChocolateAmount);
             if (stealedChocolateAmount > 0)
             {
                 BeaversController.AddChocolateToStock(stealedChocolateAmount);
@@ -206,6 +238,12 @@ internal class BeaverBehaviour : MonoBehaviour, IPoolObject
             _transform.rotation = Quaternion.Euler(0, 0, 0);
             BeaversController.AddToQueue(this);
             _animator.SetBool(hashRun, false);
+
+            if (isSweeming)
+                sweemAudioSource.Stop();
+            else
+                runAudioSource.Stop();
+
         }
     }
     
@@ -242,6 +280,11 @@ internal class BeaverBehaviour : MonoBehaviour, IPoolObject
         _animator.SetBool(hashRun, false);
         move = false;
         renderObject.SetActive(false);
+
+        if (isSweeming)
+            sweemAudioSource.Stop();
+        else
+            runAudioSource.Stop();
     }
 
     private void OnChocolateSteal(int remain)
@@ -258,9 +301,15 @@ internal class BeaverBehaviour : MonoBehaviour, IPoolObject
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Ground"))
+        {
             _animator.SetBool("Swimming", false);
-        else if(collision.gameObject.CompareTag("Water"))
+            isSweeming = false;
+        }
+        else if (collision.gameObject.CompareTag("Water"))
+        {
             _animator.SetBool("Swimming", true);
+            isSweeming = true;
+        }
     }
 
 }
