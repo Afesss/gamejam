@@ -8,6 +8,7 @@ public class CameraBehaviour : MonoBehaviour
     [SerializeField] private float rotateSpeed;
     private Transform _transform;
     private Vector3 rotateAngle;
+    private float xAxis;
     
     private void Awake()
     {
@@ -21,8 +22,11 @@ public class CameraBehaviour : MonoBehaviour
     private void CameraRotate()
     {
         rotateAngle.y += -_input.horizontalInput * rotateSpeed * Time.deltaTime;
-        rotateAngle.x += _input.verticalInput * rotateSpeed * Time.deltaTime;
-       
+        xAxis = xAxis < -30 ? -30 : xAxis;
+        xAxis = xAxis > 0 ? 0 : xAxis;
+        xAxis += _input.verticalInput * rotateSpeed * Time.deltaTime;
+
+        rotateAngle.x = Mathf.Clamp(xAxis, -30, 0);
         _transform.SetPositionAndRotation(_transform.position, Quaternion.Euler(rotateAngle));
     }
 }

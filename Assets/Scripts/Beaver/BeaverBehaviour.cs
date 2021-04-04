@@ -29,7 +29,6 @@ internal class BeaverBehaviour : MonoBehaviour, IPoolObject
     private float spawnPointX;
 
 
-    private Transform waterLevelTransform;
     private Animator _animator;
     private Rigidbody _rigidbody;
     private Transform _transform;
@@ -45,10 +44,6 @@ internal class BeaverBehaviour : MonoBehaviour, IPoolObject
         GoHome,
         Wait
     }
-    private void Start()
-    {
-        waterLevelTransform = CityData.Instance.worldWaterLevel.transform;
-    }
     private void Awake()
     {
         _animator = GetComponent<Animator>();
@@ -60,10 +55,7 @@ internal class BeaverBehaviour : MonoBehaviour, IPoolObject
     }
     internal void Die()
     {
-        if(BeaversController.AvailableBeavers == 0)
-        {
-            EventBroker.GameOverInvoke();
-        }
+        
 
         stealedChocolateAmount = 0;
         houseChocolate.ReturnStealdChocolate(stealedChocolateAmount);
@@ -74,6 +66,10 @@ internal class BeaverBehaviour : MonoBehaviour, IPoolObject
         BeaversController.RemoveFromAvailableList(this);
         renderObject.SetActive(true);
         ReturnToPool();
+        if (BeaversController.AvailableBeavers == 0 && BeaversController.ChocolateAmount < BeaversController.CurrentPrice)
+        {
+            EventBroker.GameOverInvoke();
+        }
 
     }
     public void ReturnToPool()

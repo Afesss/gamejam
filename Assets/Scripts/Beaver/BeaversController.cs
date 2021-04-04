@@ -8,8 +8,8 @@ internal class BeaversController : MonoBehaviour
     [SerializeField] private BeaverSettings beaverSettings;
     [SerializeField] private Transform spawnTransform;
 
-    private int currentPrice;
-    internal static int chocolateAmount { get; private set; }
+    internal static int CurrentPrice { get; private set; }
+    internal static int ChocolateAmount { get; private set; }
     internal static int CountBeaverInQueue { get { return queue.Count; } }
     internal static int AvailableBeavers { get { return availableBeavers.Count; } }
 
@@ -25,9 +25,9 @@ internal class BeaversController : MonoBehaviour
     private Rigidbody _rigidbody;
     private void Awake()
     {
-        currentPrice = beaverSettings.StartPrice;
-        EventBroker.UpdateChocolateInvoke(chocolateAmount);
-        EventBroker.UpdatePriceInvoke(currentPrice);
+        CurrentPrice = beaverSettings.StartPrice;
+        EventBroker.UpdateChocolateInvoke(ChocolateAmount);
+        EventBroker.UpdatePriceInvoke(CurrentPrice);
         
         StartCoroutine(WaitToRespawn());
         spawnOffset = Vector3.zero;
@@ -47,12 +47,12 @@ internal class BeaversController : MonoBehaviour
     }
     private void UpdateGUE()
     {
-        EventBroker.UpdateChocolateInvoke(chocolateAmount);
-        EventBroker.UpdatePriceInvoke(currentPrice);
+        EventBroker.UpdateChocolateInvoke(ChocolateAmount);
+        EventBroker.UpdatePriceInvoke(CurrentPrice);
     }
     private void OnDestroy()
     {
-        chocolateAmount = 0;
+        ChocolateAmount = 0;
         EventBroker.BuyBeaver -= BuyBeaver;
         EventBroker.UpdateGUI -= UpdateGUE;
         EventBroker.Attack -= ToAttack;
@@ -84,10 +84,10 @@ internal class BeaversController : MonoBehaviour
     }
     public void BuyBeaver()
     {
-        if (availableBeavers.Count < beaverSettings.MaxBeaverCount && chocolateAmount >= currentPrice) 
+        if (availableBeavers.Count < beaverSettings.MaxBeaverCount && ChocolateAmount >= CurrentPrice) 
         {
-            chocolateAmount -= currentPrice;
-            currentPrice += beaverSettings.PriceStep;
+            ChocolateAmount -= CurrentPrice;
+            CurrentPrice += beaverSettings.PriceStep;
             EventBroker.UpdateGUIInvoke();
             availableBeavers.Add(beaverPoolService.GetFreeElement());
             queue.Enqueue(availableBeavers[availableBeavers.Count - 1]);
@@ -123,7 +123,7 @@ internal class BeaversController : MonoBehaviour
     internal static void AddChocolateToStock(int count)
     {
         
-        chocolateAmount += count;
+        ChocolateAmount += count;
         EventBroker.UpdateGUIInvoke();
     }
 }

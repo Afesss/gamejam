@@ -715,6 +715,7 @@ MonoBehaviour:
   isRecieveDamage: 0
   isFlooded: 0
   config: {fileID: 11400000, guid: 8682e589b57fa4f4c943039792e98e4c, type: 2}
+  houseController: {fileID: 4137675195698821004}
 --- !u!114 &8622199811086305735
 MonoBehaviour:
   m_ObjectHideFlags: 0
