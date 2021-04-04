@@ -225,7 +225,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2114280038862270887, guid: 088f5a47f5dcb9b4fb65b3da38e51f43, type: 3}
       propertyPath: m_Name
-      value: BeaversController
+      value: BeaversController/Spawn
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 088f5a47f5dcb9b4fb65b3da38e51f43, type: 3}
@@ -317,7 +317,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a9034fcb55e09d42aa5d2525a0f5315, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  waterTransform: {fileID: 1203041410}
   worldWaterLevel: {fileID: 1137126423}
 --- !u!1 &635660614
 GameObject:
@@ -370,6 +369,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 691663178741301521, guid: bbbee062478dd65429a5b250721463a7, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6828257211480027290, guid: bbbee062478dd65429a5b250721463a7, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -420,79 +423,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bbbee062478dd65429a5b250721463a7, type: 3}
---- !u!1001 &888071561
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 1203041410}
-    m_Modifications:
-    - target: {fileID: 5159668051781966818, guid: 4743a99f89cd962469bea2ef51157467, type: 3}
-      propertyPath: m_RootOrder
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5159668051781966818, guid: 4743a99f89cd962469bea2ef51157467, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 25
-      objectReference: {fileID: 0}
-    - target: {fileID: 5159668051781966818, guid: 4743a99f89cd962469bea2ef51157467, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 26.55306
-      objectReference: {fileID: 0}
-    - target: {fileID: 5159668051781966818, guid: 4743a99f89cd962469bea2ef51157467, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 44.763645
-      objectReference: {fileID: 0}
-    - target: {fileID: 5159668051781966818, guid: 4743a99f89cd962469bea2ef51157467, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 4.33
-      objectReference: {fileID: 0}
-    - target: {fileID: 5159668051781966818, guid: 4743a99f89cd962469bea2ef51157467, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 2.42
-      objectReference: {fileID: 0}
-    - target: {fileID: 5159668051781966818, guid: 4743a99f89cd962469bea2ef51157467, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -11.795
-      objectReference: {fileID: 0}
-    - target: {fileID: 5159668051781966818, guid: 4743a99f89cd962469bea2ef51157467, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.8191521
-      objectReference: {fileID: 0}
-    - target: {fileID: 5159668051781966818, guid: 4743a99f89cd962469bea2ef51157467, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0.5735764
-      objectReference: {fileID: 0}
-    - target: {fileID: 5159668051781966818, guid: 4743a99f89cd962469bea2ef51157467, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5159668051781966818, guid: 4743a99f89cd962469bea2ef51157467, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5159668051781966818, guid: 4743a99f89cd962469bea2ef51157467, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 70
-      objectReference: {fileID: 0}
-    - target: {fileID: 5159668051781966818, guid: 4743a99f89cd962469bea2ef51157467, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5159668051781966818, guid: 4743a99f89cd962469bea2ef51157467, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5535208084522467672, guid: 4743a99f89cd962469bea2ef51157467, type: 3}
-      propertyPath: m_Name
-      value: BuyButton
-      objectReference: {fileID: 0}
-    - target: {fileID: 5535208084522467672, guid: 4743a99f89cd962469bea2ef51157467, type: 3}
-      propertyPath: m_Layer
-      value: 4
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 4743a99f89cd962469bea2ef51157467, type: 3}
 --- !u!114 &1137126423 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8344266867365372679, guid: 4134b75c763a9904d8efaf243483e3e9, type: 3}
@@ -511,24 +441,8 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2246964968387080553, guid: 4134b75c763a9904d8efaf243483e3e9, type: 3}
-      propertyPath: m_Size.y
-      value: 77.26369
-      objectReference: {fileID: 0}
-    - target: {fileID: 2246964968387080553, guid: 4134b75c763a9904d8efaf243483e3e9, type: 3}
-      propertyPath: m_Center.y
-      value: -39.731644
-      objectReference: {fileID: 0}
     - target: {fileID: 8344266867365372672, guid: 4134b75c763a9904d8efaf243483e3e9, type: 3}
       propertyPath: m_RootOrder
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 8344266867365372672, guid: 4134b75c763a9904d8efaf243483e3e9, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 8344266867365372672, guid: 4134b75c763a9904d8efaf243483e3e9, type: 3}
-      propertyPath: m_LocalScale.z
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8344266867365372672, guid: 4134b75c763a9904d8efaf243483e3e9, type: 3}
@@ -575,17 +489,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: Water
       objectReference: {fileID: 0}
-    - target: {fileID: 8344266867365372673, guid: 4134b75c763a9904d8efaf243483e3e9, type: 3}
-      propertyPath: m_TagString
-      value: Water
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4134b75c763a9904d8efaf243483e3e9, type: 3}
---- !u!4 &1203041410 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 8344266867365372672, guid: 4134b75c763a9904d8efaf243483e3e9, type: 3}
-  m_PrefabInstance: {fileID: 1203041409}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1225405245
 PrefabInstance:
   m_ObjectHideFlags: 0

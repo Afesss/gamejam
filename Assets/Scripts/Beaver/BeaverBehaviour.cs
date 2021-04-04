@@ -55,10 +55,10 @@ internal class BeaverBehaviour : MonoBehaviour, IPoolObject
     }
     internal void Die()
     {
-        
 
-        stealedChocolateAmount = 0;
         houseChocolate.ReturnStealdChocolate(stealedChocolateAmount);
+        stealedChocolateAmount = 0;
+        
         houseChocolate.OnChocolateSteal -= OnChocolateSteal;
         houseChocolate = null;
         houseBeaverDetector.OnDestroyBeaver -= Die;

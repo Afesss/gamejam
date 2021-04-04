@@ -14,6 +14,11 @@ public class CameraBehaviour : MonoBehaviour
     {
         DontDestroyOnLoad(this);
         _transform = transform;
+        EventBroker.SendWaterPosition += ChengePosition;
+    }
+    private void OnDestroy()
+    {
+        EventBroker.SendWaterPosition -= ChengePosition;
     }
     private void FixedUpdate()
     {
@@ -28,5 +33,12 @@ public class CameraBehaviour : MonoBehaviour
 
         rotateAngle.x = Mathf.Clamp(xAxis, -30, 0);
         _transform.SetPositionAndRotation(_transform.position, Quaternion.Euler(rotateAngle));
+    }
+    private Vector3 newPosition;
+    private void ChengePosition(float yPos)
+    {
+        newPosition = _transform.position;
+        newPosition.y = yPos;
+        _transform.position = newPosition;
     }
 }
