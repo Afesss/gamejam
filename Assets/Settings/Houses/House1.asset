@@ -24,8 +24,8 @@ MonoBehaviour:
   maxChocolateAmount: 10
   minChocolateAmount: 15
   chocolateStealPerSecond: 1
-  waterFlowAmountByLevel: 100
+  waterFlowAmountByLevel: 50
   detectionTickDuration: 3
   detectionRatePerHealthUnit: 0.002
   timeToFlee: 3
-  fleeButtonOffset: 1.2
+  fleeButtonOffset: 2
