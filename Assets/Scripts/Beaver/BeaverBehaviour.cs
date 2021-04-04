@@ -28,14 +28,17 @@ internal class BeaverBehaviour : MonoBehaviour, IPoolObject
     private float rotation = 0;
     private float spawnPointX;
 
-
+    
     private Animator _animator;
     private Rigidbody _rigidbody;
     private Transform _transform;
     private GameObject _gameObject;
     private HouseBeaverDetector houseBeaverDetector;
     private HouseChocolate houseChocolate;
+    private Collider triggerCollider;
+
     internal State currentState { get; private set; }
+
     internal enum State
     {
         Attack,
@@ -51,11 +54,10 @@ internal class BeaverBehaviour : MonoBehaviour, IPoolObject
         _transform = GetComponent<Transform>();
         _gameObject = gameObject;
         currentState = State.Wait;
-        
+        stealedChocolateAmount = 0;
     }
     internal void Die()
     {
-
         houseChocolate.ReturnStealdChocolate(stealedChocolateAmount);
         stealedChocolateAmount = 0;
         
@@ -70,7 +72,8 @@ internal class BeaverBehaviour : MonoBehaviour, IPoolObject
         {
             EventBroker.GameOverInvoke();
         }
-
+        triggerCollider.enabled = true;
+        triggerCollider = null;
     }
     public void ReturnToPool()
     {
@@ -96,7 +99,6 @@ internal class BeaverBehaviour : MonoBehaviour, IPoolObject
     }
     internal void GoHome(Vector3 target)
     {
-
         targetPosition = target;
         _transform.position = targetPosition - Vector3.forward * houseCollider.size.z;
         _transform.rotation = Quaternion.Euler(0, 180, 0);
@@ -109,12 +111,10 @@ internal class BeaverBehaviour : MonoBehaviour, IPoolObject
         houseBeaverDetector.OnDestroyBeaver -= Die;
         houseBeaverDetector = null;
     }
-    private void Swimming()
-    {
-    }
     
     private void FixedUpdate()
     {
+        //Debug.Log(stealedChocolateAmount);
         if (_rigidbody.IsSleeping())
             _rigidbody.WakeUp();
 
@@ -195,6 +195,7 @@ internal class BeaverBehaviour : MonoBehaviour, IPoolObject
     {
         if ((BeaversController.QueuePosition() - _transform.position).magnitude < 0.3f)
         {
+            Debug.Log(stealedChocolateAmount);
             if (stealedChocolateAmount > 0)
             {
                 BeaversController.AddChocolateToStock(stealedChocolateAmount);
@@ -233,6 +234,7 @@ internal class BeaverBehaviour : MonoBehaviour, IPoolObject
     
     private void OnTriggerEnter(Collider other)
     {
+        triggerCollider = other;
         houseChocolate = other.GetComponent<HouseChocolate>();
         houseChocolate.OnChocolateSteal += OnChocolateSteal;
         houseBeaverDetector = other.GetComponent<HouseBeaverDetector>();

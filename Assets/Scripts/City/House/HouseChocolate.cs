@@ -1,5 +1,7 @@
 using System;
 using UnityEngine;
+using System.Collections.Generic;
+using System.Collections;
 
 /// <summary>
 /// Компонент дающий дому возможность иметь шоколадки :)
@@ -22,15 +24,29 @@ public class HouseChocolate : MonoBehaviour
 
     private float currentAmount;
     private int currentIntAmount;
+    internal int CurrentIntAmount { get { return currentIntAmount; } }
+    private HouseController houseController;
+    internal bool chocolateEmpty { get; private set; }
 
     private void Awake()
     {
         currentIntAmount = UnityEngine.Random.Range(config.MinChocolateAmount, config.MaxChocolateAmount);
         currentAmount = currentIntAmount + 1;
+        houseController = GetComponent<HouseController>();
+        chocolateEmpty = false;
     }
 
     void Update()
     {
+        
+        if(currentIntAmount == 0)
+        {
+            chocolateEmpty = true;
+            houseController.ResetHomeButtonPosition();
+            houseController.HomeButton.SetActive(true);
+            houseController.ChocolateSign.SetActive(false);
+            currentIntAmount = -1;
+        }
         if (isStealingActive && currentIntAmount > 0)
         {
             currentAmount -= config.СhocolateStealPerSecond * Time.deltaTime;
@@ -42,6 +58,7 @@ public class HouseChocolate : MonoBehaviour
                 else
                     OnChocolateOutOfStock?.Invoke();
             }
+            
         }
     }
     internal void ReturnStealdChocolate(int amount)

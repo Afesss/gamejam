@@ -489,6 +489,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Water
       objectReference: {fileID: 0}
+    - target: {fileID: 9147790089584698780, guid: 4134b75c763a9904d8efaf243483e3e9, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 7.92
+      objectReference: {fileID: 0}
+    - target: {fileID: 9147790089584698780, guid: 4134b75c763a9904d8efaf243483e3e9, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -10.78
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4134b75c763a9904d8efaf243483e3e9, type: 3}
 --- !u!1001 &1225405245
@@ -498,6 +506,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 603344555067414186, guid: 329eb3bc2a587e649ac7c86978895a85, type: 3}
+      propertyPath: weight
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 603344556052922172, guid: 329eb3bc2a587e649ac7c86978895a85, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -545,6 +557,30 @@ PrefabInstance:
     - target: {fileID: 603344556052922175, guid: 329eb3bc2a587e649ac7c86978895a85, type: 3}
       propertyPath: m_Name
       value: Light
+      objectReference: {fileID: 0}
+    - target: {fileID: 603344556354968400, guid: 329eb3bc2a587e649ac7c86978895a85, type: 3}
+      propertyPath: m_Intensity
+      value: 120000
+      objectReference: {fileID: 0}
+    - target: {fileID: 603344556354968400, guid: 329eb3bc2a587e649ac7c86978895a85, type: 3}
+      propertyPath: m_ColorTemperature
+      value: 7446
+      objectReference: {fileID: 0}
+    - target: {fileID: 603344556354968400, guid: 329eb3bc2a587e649ac7c86978895a85, type: 3}
+      propertyPath: m_UseColorTemperature
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 603344556354968406, guid: 329eb3bc2a587e649ac7c86978895a85, type: 3}
+      propertyPath: m_Intensity
+      value: 120000
+      objectReference: {fileID: 0}
+    - target: {fileID: 603344556354968406, guid: 329eb3bc2a587e649ac7c86978895a85, type: 3}
+      propertyPath: useVolumetric
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 603344556354968406, guid: 329eb3bc2a587e649ac7c86978895a85, type: 3}
+      propertyPath: m_InteractsWithSky
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 329eb3bc2a587e649ac7c86978895a85, type: 3}

@@ -5,6 +5,7 @@ using UnityEngine;
 public class Sign : MonoBehaviour
 {
     [SerializeField] Animation _animation;
+
     private void Awake()
     {
         _animation.Play();
