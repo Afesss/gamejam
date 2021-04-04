@@ -317,6 +317,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a9034fcb55e09d42aa5d2525a0f5315, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waterTransform: {fileID: 1203041410}
   worldWaterLevel: {fileID: 1137126423}
 --- !u!1 &635660614
 GameObject:

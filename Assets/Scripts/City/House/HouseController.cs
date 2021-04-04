@@ -63,7 +63,9 @@ internal class HouseController : MonoBehaviour
             {
                 if (BeaversController.CountBeaverInQueue != 0)
                 {
-                    attackButton.SetActive(true);
+                    if(!houseVitality.IsFlooded)
+                        attackButton.SetActive(true);
+
                     stealButton.SetActive(true);
                     EventBroker.ButtonDown += HideOtherButtons;
                 }
