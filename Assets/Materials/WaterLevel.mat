@@ -242,7 +242,7 @@ Material:
     - _LightingEnabled: 0
     - _LinkDetailsWithBase: 0
     - _MaterialID: 1
-    - _Metallic: 0.05519458
+    - _Metallic: 0
     - _MetallicRemapMax: 0.05519458
     - _MetallicRemapMin: 0
     - _Mode: 2
@@ -260,7 +260,7 @@ Material:
     - _ReceivesSSR: 1
     - _ReceivesSSRTransparent: 0
     - _RefractionModel: 0
-    - _Smoothness: 1
+    - _Smoothness: 0
     - _SmoothnessRemapMax: 1
     - _SmoothnessRemapMin: 0
     - _SmoothnessTextureChannel: 0
