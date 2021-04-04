@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 internal class BeaverBehaviour : MonoBehaviour, IPoolObject
 {
@@ -10,7 +11,7 @@ internal class BeaverBehaviour : MonoBehaviour, IPoolObject
     [SerializeField] private LayerMask housLayer;
     [SerializeField] private BoxCollider houseCollider;
     [SerializeField] private GameObject renderObject;
-    [SerializeField] private Transform waterLevelTransform;
+    
     
     internal bool move { get; private set; }
 
@@ -26,14 +27,15 @@ internal class BeaverBehaviour : MonoBehaviour, IPoolObject
     private float angleRotate = 90;
     private float rotation = 0;
     private float spawnPointX;
-    
-    
 
+
+    private Transform waterLevelTransform;
     private Animator _animator;
     private Rigidbody _rigidbody;
     private Transform _transform;
     private GameObject _gameObject;
     private HouseBeaverDetector houseBeaverDetector;
+    private HouseChocolate houseChocolate;
     internal State currentState { get; private set; }
     internal enum State
     {
@@ -55,20 +57,28 @@ internal class BeaverBehaviour : MonoBehaviour, IPoolObject
         _gameObject = gameObject;
         currentState = State.Wait;
         
-
     }
     internal void Die()
     {
+        if(BeaversController.AvailableBeavers == 0)
+        {
+            EventBroker.GameOverInvoke();
+        }
+
+        stealedChocolateAmount = 0;
         houseChocolate.ReturnStealdChocolate(stealedChocolateAmount);
         houseChocolate.OnChocolateSteal -= OnChocolateSteal;
         houseChocolate = null;
         houseBeaverDetector.OnDestroyBeaver -= Die;
         houseBeaverDetector = null;
         BeaversController.RemoveFromAvailableList(this);
+        renderObject.SetActive(true);
         ReturnToPool();
+
     }
     public void ReturnToPool()
     {
+        
         gameObject.SetActive(false);
     }
     internal void ToAttackState(Vector3 target)
@@ -103,9 +113,15 @@ internal class BeaverBehaviour : MonoBehaviour, IPoolObject
         houseBeaverDetector.OnDestroyBeaver -= Die;
         houseBeaverDetector = null;
     }
+    private void Swimming()
+    {
+    }
     
     private void FixedUpdate()
     {
+        if (_rigidbody.IsSleeping())
+            _rigidbody.WakeUp();
+
         switch (currentState)
         {
             case State.Wait:
@@ -218,7 +234,7 @@ internal class BeaverBehaviour : MonoBehaviour, IPoolObject
             _rigidbody.MovePosition(_rigidbody.position + nextMove);
         }
     }
-    private HouseChocolate houseChocolate;
+    
     private void OnTriggerEnter(Collider other)
     {
         houseChocolate = other.GetComponent<HouseChocolate>();
@@ -235,11 +251,18 @@ internal class BeaverBehaviour : MonoBehaviour, IPoolObject
         if (remain == 0)
             return;
         stealedChocolateAmount++;
-        Debug.Log(stealedChocolateAmount);
     }
 
     private void OnDrawGizmos()
     {
         Gizmos.DrawWireSphere(transform.position + Vector3.up, rayRadius);
     }
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Ground"))
+            _animator.SetBool("Swimming", false);
+        else if(collision.gameObject.CompareTag("Water"))
+            _animator.SetBool("Swimming", true);
+    }
+
 }

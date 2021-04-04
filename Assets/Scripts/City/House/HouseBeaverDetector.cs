@@ -27,14 +27,19 @@ public class HouseBeaverDetector : MonoBehaviour
     private float fleeCountdown;
 
     private bool isBeaverDetected = false;
-
+    private int currentMinLevel = 0;
 
     private void Awake()
     {
         tickCountdown = config.DetectionTickDuration;
         fleeCountdown = config.TimeToFlee;
+        
+        CityData.Instance.worldWaterLevel.OnFloodLevelChange += OnFloodLevelChange;
+    }
 
-        //GetRandomPoint();
+    private void OnFloodLevelChange(int level)
+    {
+        currentMinLevel = level;
     }
 
     private void Update()
@@ -79,6 +84,7 @@ public class HouseBeaverDetector : MonoBehaviour
                     Debug.Log("GOCHA!");
                     var point = GetRandomPoint();
                     OnDetectBeaver?.Invoke(point);
+                    fleeCountdown = config.TimeToFlee;
                     isBeaverDetected = true;
                 }
 
@@ -101,7 +107,7 @@ public class HouseBeaverDetector : MonoBehaviour
     {
         var floorHeight = mesh.bounds.size.y / config.LevelCount - config.RoofHeight;
         var groundCenter = new Vector3(mesh.bounds.center.x, 0, mesh.bounds.center.z);
-        var randomLevel = UnityEngine.Random.Range(0, config.LevelCount);
+        var randomLevel = UnityEngine.Random.Range(currentMinLevel, config.LevelCount);
         var levelCenter = groundCenter + new Vector3(0, floorHeight * randomLevel + config.WindowFloorOffset, 0);
 
         var dirs = new Vector3[] {Vector3.forward, Vector3.back, Vector3.left, Vector3.right};
@@ -109,5 +115,11 @@ public class HouseBeaverDetector : MonoBehaviour
 
 
         return levelCenter + dir;
+    }
+
+    private void OnDestroy()
+    {
+        if (CityData.Instance != null && CityData.Instance.worldWaterLevel != null)
+            CityData.Instance.worldWaterLevel.OnFloodLevelChange -= OnFloodLevelChange;
     }
 }

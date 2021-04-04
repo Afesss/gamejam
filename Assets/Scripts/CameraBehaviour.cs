@@ -11,6 +11,7 @@ public class CameraBehaviour : MonoBehaviour
     
     private void Awake()
     {
+        DontDestroyOnLoad(this);
         _transform = transform;
     }
     private void FixedUpdate()

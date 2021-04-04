@@ -12,17 +12,25 @@ public class HouseWaterFlow : MonoBehaviour
     private HouseDamageLevel damageLevelComponent;
 
     private int currentDamageLevel = 0;
+    private int disabledLevelCount = 0;
 
     private void Awake()
     {
         damageLevelComponent.OnLevelIncrease += OnDamageLevelUpdate;
         damageLevelComponent.OnLevelDecrease += OnDamageLevelUpdate;
+        CityData.Instance.worldWaterLevel.OnFloodLevelChange += OnFloodLevelChange;
+    }
+
+    private void OnFloodLevelChange(int level)
+    {
+        disabledLevelCount = level;
     }
 
     private void Update()
     {
-        if (currentDamageLevel > 0)
-            EventBroker.OnHouseWaterFlowInvoke(currentDamageLevel * config.WaterFlowAmountByLevel * Time.deltaTime);
+        var damageLevel = currentDamageLevel - disabledLevelCount;
+        if (damageLevel > 0)
+            EventBroker.OnHouseWaterFlowInvoke(damageLevel * config.WaterFlowAmountByLevel * Time.deltaTime);
     }
 
     private void OnDamageLevelUpdate(int level)
@@ -37,5 +45,7 @@ public class HouseWaterFlow : MonoBehaviour
             damageLevelComponent.OnLevelIncrease -= OnDamageLevelUpdate;
             damageLevelComponent.OnLevelDecrease -= OnDamageLevelUpdate;
         }
+        if (CityData.Instance != null && CityData.Instance.worldWaterLevel != null)
+            CityData.Instance.worldWaterLevel.OnFloodLevelChange -= OnFloodLevelChange;
     }
 }
