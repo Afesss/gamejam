@@ -40,12 +40,24 @@ public class HouseVitality : MonoBehaviour
 
     private float healthPoint;
     private float maxHealthPoint;
+    private AudioSource recievedDamageAudio = null;
 
     private void Awake()
     {
         healthPoint = config.MaxHealthPoint;
         maxHealthPoint = config.MaxHealthPoint;
+
+        recievedDamageAudio = gameObject.AddComponent<AudioSource>();
+        recievedDamageAudio.clip = config.HouseRecievedDamageAudio;
+        recievedDamageAudio.volume = 0.3f;
+        recievedDamageAudio.loop = false;
+
         CityData.Instance.worldWaterLevel.OnFloodLevelChange += OnFloodLevelChange;
+    }
+
+    public void PlayDamageRecievedAudio()
+    {
+        recievedDamageAudio.Play();
     }
 
     private void OnFloodLevelChange(int level)

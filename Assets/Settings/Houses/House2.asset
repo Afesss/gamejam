@@ -29,3 +29,6 @@ MonoBehaviour:
   detectionRatePerHealthUnit: 0.004
   timeToFlee: 3
   fleeButtonOffset: 2
+  beaverDetectedAudio: {fileID: 8300000, guid: b8543823a23122b4bba9a232251d5b15, type: 3}
+  beaverDetectedAudioVolume: 0.5
+  houseRecievedDamageAudio: {fileID: 8300000, guid: f5309b2bea08b2045a949f083e421d70, type: 3}

@@ -29,11 +29,18 @@ public class HouseBeaverDetector : MonoBehaviour
     private bool isBeaverDetected = false;
     private int currentMinLevel = 0;
 
+    private AudioSource detectedAudio = null;
+
     private void Awake()
     {
         tickCountdown = config.DetectionTickDuration;
         fleeCountdown = config.TimeToFlee;
-        
+
+        detectedAudio = gameObject.AddComponent<AudioSource>();
+        detectedAudio.clip = config.BeaverDetectedAudio;
+        detectedAudio.volume = config.BeaverDetectedAudioVolume;
+        detectedAudio.loop = false;
+
         CityData.Instance.worldWaterLevel.OnFloodLevelChange += OnFloodLevelChange;
     }
 
@@ -50,6 +57,7 @@ public class HouseBeaverDetector : MonoBehaviour
             tickCountdown = config.DetectionTickDuration;
             fleeCountdown = config.TimeToFlee;
             isBeaverDetected = false;
+            detectedAudio.Stop();
         }
 
         // если бобер обнаружен даем время на побег
@@ -57,13 +65,12 @@ public class HouseBeaverDetector : MonoBehaviour
         {
             if (fleeCountdown <= 0)
             {
-                Debug.Log("You DIE!");
                 OnDestroyBeaver?.Invoke();
                 isBeaverDetected = false;
+                detectedAudio.Stop();
                 fleeCountdown = config.TimeToFlee;
                 chocolate.IsStealingActive = false;
                 vitality.IsRecieveDamage = false;
-
             }
             else
             {
@@ -81,11 +88,11 @@ public class HouseBeaverDetector : MonoBehaviour
                 
                 if (UnityEngine.Random.Range(0f, 1f) < rate)
                 {
-                    Debug.Log("GOCHA!");
                     var point = GetRandomPoint();
                     OnDetectBeaver?.Invoke(point);
                     fleeCountdown = config.TimeToFlee;
                     isBeaverDetected = true;
+                    detectedAudio.Play();
                 }
 
                 tickCountdown = config.DetectionTickDuration;
