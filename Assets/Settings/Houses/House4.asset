@@ -17,13 +17,15 @@ MonoBehaviour:
   windowFloorOffset: 0.7
   windowMeshOffset: 0.2
   hasRoof: 0
-  damageLevelStep: 0.18
-  maxHealthPoint: 80
+  damageLevelStep: 0.24
+  maxHealthPoint: 200
   damagePerSecond: 10
   reparePerSecond: 5
-  maxChocolateAmount: 40
-  minChocolateAmount: 60
-  chocolateStealPerSecond: 0.4
-  waterFlowAmountByLevel: 14
+  maxChocolateAmount: 25
+  minChocolateAmount: 30
+  chocolateStealPerSecond: 1
+  waterFlowAmountByLevel: 200
   detectionTickDuration: 3
-  detectionRatePerHealthUnit: 0.004
+  detectionRatePerHealthUnit: 0.008
+  timeToFlee: 3
+  fleeButtonOffset: 2

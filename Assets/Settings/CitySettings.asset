@@ -21,7 +21,7 @@ MonoBehaviour:
     HasRoof: 0
     PrefabMaterialsCount: 2
   - Prefab: {fileID: 5387061924319597613, guid: 91d1da4f4992aa542ba3f8e3276da487, type: 3}
-    CountPercent: 25
+    CountPercent: 10
     HasRoof: 0
     PrefabMaterialsCount: 2
   - Prefab: {fileID: 6260125980503860387, guid: 8522f947755514d45b72cb92a3495918, type: 3}
@@ -29,11 +29,11 @@ MonoBehaviour:
     HasRoof: 1
     PrefabMaterialsCount: 1
   - Prefab: {fileID: 2833930589838076849, guid: c0f09e987965e7743b682cede9d329b7, type: 3}
-    CountPercent: 15
+    CountPercent: 20
     HasRoof: 1
     PrefabMaterialsCount: 1
   - Prefab: {fileID: 7009513973003839654, guid: 9451350e744f4d246ae36b4805dbdb31, type: 3}
-    CountPercent: 10
+    CountPercent: 20
     HasRoof: 1
     PrefabMaterialsCount: 1
   materialSets:
@@ -61,5 +61,5 @@ MonoBehaviour:
   - {fileID: 363149376010469843, guid: 1b2b7b730acb63d4983be3a48ad7ec41, type: 3}
   - {fileID: 2230855586578986120, guid: a203b02216371064fa30897dfdd9548f, type: 3}
   maxWaterLevel: 90000
-  maxWaterYPosition: 15
-  outflowSpeedPerSecond: 200
+  maxWaterYPosition: 10
+  outflowSpeedPerSecond: 100
