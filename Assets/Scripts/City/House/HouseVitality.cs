@@ -74,7 +74,7 @@ public class HouseVitality : MonoBehaviour
             houseController._animation.Stop();
             houseController.HomeButton.SetActive(true);
             //TODO: раскоментировать если необходимо чтобы после полной поломки дом не ремонтировался
-            isFlooded = true;
+            //isFlooded = true;
             //TODO: раскоментировать если необходимо отключить состояние повреждения после полной поломки
             //isRecieveDamage = false;
         }
