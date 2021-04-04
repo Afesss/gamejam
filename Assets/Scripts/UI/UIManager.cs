@@ -9,6 +9,7 @@ internal class UIManager : Singleton<UIManager>
     [SerializeField] GameObject gUI;
     [SerializeField] GameObject gameOver;
     [SerializeField] GameObject victory;
+    [SerializeField] GameObject instruction;
     [SerializeField] AnimationClip menuOn;
     [SerializeField] AnimationClip menuOff;
 
@@ -16,12 +17,12 @@ internal class UIManager : Singleton<UIManager>
     private Animation _animation;
     private bool gameOverState;
     private bool gameStart;
-    
+    private bool vin;
     protected override void Awake()
     {
         base.Awake();
         DontDestroyOnLoad(this);
-
+        instruction.SetActive(true);
         _animation = GetComponent<Animation>();
         uIValues = GetComponent<UIEventMethods>();
         gUI.SetActive(false);
@@ -33,8 +34,17 @@ internal class UIManager : Singleton<UIManager>
         if (Input.GetKeyDown(KeyCode.Escape))
             Pause();
     }
+    public void CloseInstruction()
+    {
+        instruction.SetActive(false);
+    }
+    public void Instruction()
+    {
+        instruction.SetActive(true);
+    }
     private void Victory()
     {
+        vin = true;
         victory.SetActive(true);
         EventBroker.UpdateChocolateAmount -= uIValues.UpdateChocolateAmount;
         EventBroker.UpdatePriceAmoun -= uIValues.UpdatePriceAmount;
@@ -50,18 +60,12 @@ internal class UIManager : Singleton<UIManager>
         EventBroker.UpdatePriceAmoun -= uIValues.UpdatePriceAmount;
         EventBroker.GameOver -= GameOver;
         gameOver.SetActive(true);
-        StartCoroutine(WaitSecond());
-    }
-    IEnumerator WaitSecond()
-    {
-        yield return new WaitForSeconds(4);
-        gameOver.SetActive(false);
-        Pause();
     }
     internal void NewGame()
     {
         gameStart = true;
         gameOverState = false;
+        vin = true;
         GameManager.Instance.StartGame();
         GameManager.Instance.UpdateGameState(GameManager.GameState.RUNNING);
 
@@ -72,6 +76,7 @@ internal class UIManager : Singleton<UIManager>
         MenuOff();
         gUI.SetActive(true);
         victory.SetActive(false);
+        
     }
     internal void Pause()
     {
@@ -89,7 +94,7 @@ internal class UIManager : Singleton<UIManager>
     {
         if (gameStart)
         {
-            if (!gameOverState)
+            if (!gameOverState && !vin)
             {
                 EventBroker.OnFloodingComplete += Victory;
                 EventBroker.UpdateChocolateAmount += uIValues.UpdateChocolateAmount;
