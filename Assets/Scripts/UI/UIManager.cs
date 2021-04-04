@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,6 +6,8 @@ using UnityEngine.UI;
 
 internal class UIManager : Singleton<UIManager>
 {
+    internal event Action OnUpdateGameState;
+
     [SerializeField] GameObject mainMenu;
     [SerializeField] GameObject gUI;
     [SerializeField] GameObject gameOver;
@@ -50,13 +53,6 @@ internal class UIManager : Singleton<UIManager>
         EventBroker.UpdatePriceAmoun -= uIValues.UpdatePriceAmount;
         EventBroker.GameOver -= GameOver;
         gameOver.SetActive(true);
-        StartCoroutine(WaitSecond());
-    }
-    IEnumerator WaitSecond()
-    {
-        yield return new WaitForSeconds(4);
-        gameOver.SetActive(false);
-        Pause();
     }
     internal void NewGame()
     {
@@ -72,6 +68,9 @@ internal class UIManager : Singleton<UIManager>
         MenuOff();
         gUI.SetActive(true);
         victory.SetActive(false);
+        gameOver.SetActive(false);
+
+        OnUpdateGameState?.Invoke();
     }
     internal void Pause()
     {
@@ -83,7 +82,8 @@ internal class UIManager : Singleton<UIManager>
         EventBroker.OnFloodingComplete -= Victory;
         GameManager.Instance.UpdateGameState(GameManager.GameState.PAUSE);
         MenuOn();
-        
+
+        OnUpdateGameState?.Invoke();
     }
     internal void Ñontinue()
     {
@@ -98,6 +98,8 @@ internal class UIManager : Singleton<UIManager>
                 GameManager.Instance.UpdateGameState(GameManager.GameState.RUNNING);
                 MenuOff();
                 gUI.SetActive(true);
+
+                OnUpdateGameState?.Invoke();
             }
         }
     }
