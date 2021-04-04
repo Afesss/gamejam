@@ -15,7 +15,6 @@ internal class UIManager : Singleton<UIManager>
     private UIEventMethods uIValues;
     private Animation _animation;
     private bool gameOverState;
-    private bool victoryState;
     
     protected override void Awake()
     {
