@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 /// <summary>
 /// Компонент жизнеспособности дома
@@ -34,17 +35,27 @@ public class HouseVitality : MonoBehaviour
     public float HealthPointRate { get { return Mathf.Clamp01(healthPoint / config.MaxHealthPoint); } }
 
     private float healthPoint;
+    private float maxHealthPoint;
 
     private void Awake()
     {
         healthPoint = config.MaxHealthPoint;
+        maxHealthPoint = config.MaxHealthPoint;
+        CityData.Instance.worldWaterLevel.OnFloodLevelChange += OnFloodLevelChange;
+    }
+
+    private void OnFloodLevelChange(int level)
+    {
+        maxHealthPoint = config.MaxHealthPoint - level * config.DamageLevelStep * config.MaxHealthPoint;
+        if (healthPoint > maxHealthPoint)
+            healthPoint = maxHealthPoint;
     }
 
     private void Update()
     {
         if (isRecieveDamage && healthPoint > 0)
             DecreaseHealthTick();
-        else if (!isRecieveDamage && !isFlooded && healthPoint < config.MaxHealthPoint)
+        else if (!isRecieveDamage && !isFlooded && healthPoint < maxHealthPoint)
             IncreaseHealthTick();
 
         if (isFlooded && healthPoint > 0)
@@ -54,10 +65,23 @@ public class HouseVitality : MonoBehaviour
     private void DecreaseHealthTick()
     {
         healthPoint -= config.DamagePerSecond * Time.deltaTime;
+        if (healthPoint <= 0)
+        {
+            //TODO: раскоментировать если необходимо чтобы после полной поломки дом не ремонтировался
+            //isFlooded = true;
+            //TODO: раскоментировать если необходимо отключить состояние повреждения после полной поломки
+            //isRecieveDamage = false;
+        }
     }
 
     private void IncreaseHealthTick()
     {
         healthPoint += config.ReparePerSecond * Time.deltaTime;
+    }
+
+    private void OnDestroy()
+    {
+        if (CityData.Instance != null && CityData.Instance.worldWaterLevel != null)
+            CityData.Instance.worldWaterLevel.OnFloodLevelChange -= OnFloodLevelChange;
     }
 }

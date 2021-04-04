@@ -26,6 +26,13 @@ public class HouseStateView : MonoBehaviour
     {
         damageLevelComponent.OnLevelIncrease += OnDamageLevelIncrease;
         damageLevelComponent.OnLevelDecrease += OnDamageLevelDecrease;
+
+        CityData.Instance.worldWaterLevel.OnFloodLevelChange += OnFloodLevelChange;
+    }
+
+    private void OnFloodLevelChange(int level)
+    {
+        StopDamageLevelAnimation(level - 1);
     }
 
     private void Start()
@@ -40,15 +47,15 @@ public class HouseStateView : MonoBehaviour
 
     private void OnDamageLevelIncrease(int level)
     {
-        SetNextDamageLevel(level - 1);
+        StartDamageLevelAnimation(level - 1);
     }
 
     private void OnDamageLevelDecrease(int level)
     {
-        SetPreviousDamageLevel(level);
+        StopDamageLevelAnimation(level);
     }
 
-    private void SetNextDamageLevel(int levelIndex)
+    private void StartDamageLevelAnimation(int levelIndex)
     {
         var levelWindowPositions =  windowPosition[levelIndex];
         windowWater[levelIndex] = new WaterfallPoolObject[levelWindowPositions.Length];
@@ -65,12 +72,15 @@ public class HouseStateView : MonoBehaviour
         }
     }
 
-    private void SetPreviousDamageLevel(int levelIndex)
+    private void StopDamageLevelAnimation(int levelIndex)
     {
-        var levelWindowPositions = windowPosition[levelIndex];
-        for (var i = 0; i < levelWindowPositions.Length; i++)
-            if (windowWater[levelIndex][i] != default)
-                windowWater[levelIndex][i].ReturnToPool();
+        if (levelIndex < config.LevelCount && windowWater[levelIndex] != null)
+        {
+            var levelWindowPositions = windowPosition[levelIndex];
+            for (var i = 0; i < levelWindowPositions.Length; i++)
+                if (windowWater[levelIndex][i] != null)
+                    windowWater[levelIndex][i].ReturnToPool();
+        }
     }
 
     private void GenerateWindowPosition()
@@ -109,6 +119,8 @@ public class HouseStateView : MonoBehaviour
             damageLevelComponent.OnLevelIncrease -= OnDamageLevelIncrease;
             damageLevelComponent.OnLevelDecrease -= OnDamageLevelDecrease;
         }
+        if (CityData.Instance != null && CityData.Instance.worldWaterLevel != null)
+            CityData.Instance.worldWaterLevel.OnFloodLevelChange -= OnFloodLevelChange;
     }
 
     private void OnDrawGizmos()
