@@ -19,16 +19,19 @@ public class WorldWaterLevel : MonoBehaviour
     private float waterAmountToLevel = 0;
 
     private int currentFloodLevel = 0;
+    private Transform _transform;
 
     private void Awake()
     {
         EventBroker.OnHouseWaterFlow += OnHouseWaterFlow;
         maxHouseLevel = config.HouseSets.Length;
         waterAmountToLevel = config.MaxWaterLevel / maxHouseLevel;
+        _transform = transform;
     }
 
     private void Update()
     {
+        EventBroker.SendWaterPositionInvoke(_transform.position.y);
         if (currentWaterLevel < config.MaxWaterLevel)
         {
             var yPos = currentWaterLevel / config.MaxWaterLevel * config.MaxWaterYPosition;

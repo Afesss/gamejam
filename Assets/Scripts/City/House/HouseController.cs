@@ -8,6 +8,8 @@ internal class HouseController : MonoBehaviour
     [SerializeField] GameObject attackButton;
     [SerializeField] GameObject stealButton;
     [SerializeField] GameObject homeButton;
+    [SerializeField] GameObject chocolateSign;
+    [SerializeField] GameObject toiletSign;
     [SerializeField] HouseVitality houseVitality;
     [SerializeField] HouseChocolate houseChocolate;
     [SerializeField] HouseBeaverDetector houseBeaverDetector;
@@ -83,10 +85,12 @@ internal class HouseController : MonoBehaviour
         {
             case BeaverBehaviour.State.Attack:
                 houseVitality.IsRecieveDamage = true;
+                toiletSign.SetActive(true);
                 break;
             case BeaverBehaviour.State.Steal:
                 houseChocolate.OnChocolateOutOfStock += OnChocolateOutOfStock;
                 houseChocolate.IsStealingActive = true;
+                chocolateSign.SetActive(true);
                 break;
         }
     }
@@ -133,7 +137,8 @@ internal class HouseController : MonoBehaviour
                 _animation.Stop();
                 isBeaverDetected = false;
             }
-
+            chocolateSign.SetActive(false);
+            toiletSign.SetActive(false);
             houseBeaverDetector.OnDetectBeaver -= OnDetectBeaver;
             houseChocolate.IsStealingActive = false;
             houseVitality.IsRecieveDamage = false;
@@ -157,6 +162,8 @@ internal class HouseController : MonoBehaviour
     
     private void OnDetectBeaver(Vector3 detectPosition)
     {
+        chocolateSign.SetActive(false);
+        toiletSign.SetActive(false);
         _animation.Play();
         isBeaverDetected = true;
         homeButtonTransform.position = detectPosition;

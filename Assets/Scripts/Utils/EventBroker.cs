@@ -15,6 +15,7 @@ internal class EventBroker : MonoBehaviour
     internal static event Action<int> UpdatePriceAmoun;
     internal static event Action BuyBeaver;
     internal static event Action OnFloodingComplete;
+    internal static event Action<float> SendWaterPosition;
 
     internal delegate void WaterFlowAction(float amount);
     internal static event WaterFlowAction OnHouseWaterFlow;
@@ -22,6 +23,10 @@ internal class EventBroker : MonoBehaviour
     internal delegate void StealAction(float remain);
     internal static event StealAction OnChocolateSteal;
     internal static event Action OnChocolateOutOfStock;
+    internal static void SendWaterPositionInvoke(float yPos)
+    {
+        SendWaterPosition?.Invoke(yPos);
+    }
     internal static void OnFloodingCompleteInvoke()
     {
         OnFloodingComplete?.Invoke();
