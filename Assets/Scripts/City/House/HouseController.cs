@@ -11,6 +11,7 @@ internal class HouseController : MonoBehaviour
     [SerializeField] HouseVitality houseVitality;
     [SerializeField] HouseChocolate houseChocolate;
     [SerializeField] HouseBeaverDetector houseBeaverDetector;
+    internal GameObject HomeButton { get { return homeButton; } }
 
     private bool isBeaverDetected;
     private bool beaverMoveToHouse;
@@ -20,7 +21,7 @@ internal class HouseController : MonoBehaviour
 
     private Transform homeButtonTransform;
     private BeaverBehaviour _beaver;
-    private Animation _animation;
+    internal Animation _animation { get; private set; }
 
     private void Awake()
     {
@@ -34,6 +35,7 @@ internal class HouseController : MonoBehaviour
         homeButtonDefaultPosition = homeButton.transform.position;
         EventBroker.ButtonDown += HideOtherButtons;
     }
+
     private void OnDestroy()
     {
         EventBroker.ButtonDown -= HideOtherButtons;

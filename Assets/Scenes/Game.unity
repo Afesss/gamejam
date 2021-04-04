@@ -486,6 +486,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: BuyButton
       objectReference: {fileID: 0}
+    - target: {fileID: 5535208084522467672, guid: 4743a99f89cd962469bea2ef51157467, type: 3}
+      propertyPath: m_Layer
+      value: 4
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4743a99f89cd962469bea2ef51157467, type: 3}
 --- !u!114 &1137126423 stripped

@@ -8,11 +8,14 @@ internal class UIManager : Singleton<UIManager>
     [SerializeField] GameObject mainMenu;
     [SerializeField] GameObject gUI;
     [SerializeField] GameObject gameOver;
+    [SerializeField] GameObject victory;
     [SerializeField] AnimationClip menuOn;
     [SerializeField] AnimationClip menuOff;
 
     private UIEventMethods uIValues;
     private Animation _animation;
+    private bool gameOverState;
+    private bool victoryState;
     
     protected override void Awake()
     {
@@ -23,14 +26,25 @@ internal class UIManager : Singleton<UIManager>
         uIValues = GetComponent<UIEventMethods>();
         gUI.SetActive(false);
         gameOver.SetActive(false);
+        victory.SetActive(false);
     }
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
             Pause();
     }
+    private void Victory()
+    {
+        victory.SetActive(true);
+        EventBroker.UpdateChocolateAmount -= uIValues.UpdateChocolateAmount;
+        EventBroker.UpdatePriceAmoun -= uIValues.UpdatePriceAmount;
+        EventBroker.GameOver -= GameOver;
+        EventBroker.OnFloodingComplete -= Victory;
+    }
     private void GameOver()
     {
+        gameOverState = true;
+        EventBroker.OnFloodingComplete -= Victory;
         EventBroker.UpdateChocolateAmount -= uIValues.UpdateChocolateAmount;
         EventBroker.UpdatePriceAmoun -= uIValues.UpdatePriceAmount;
         EventBroker.GameOver -= GameOver;
@@ -39,39 +53,48 @@ internal class UIManager : Singleton<UIManager>
     }
     IEnumerator WaitSecond()
     {
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(4);
         gameOver.SetActive(false);
+        Pause();
     }
     internal void NewGame()
     {
-
+        gameOverState = false;
         GameManager.Instance.StartGame();
         GameManager.Instance.UpdateGameState(GameManager.GameState.RUNNING);
 
+        EventBroker.OnFloodingComplete += Victory;
         EventBroker.UpdateChocolateAmount += uIValues.UpdateChocolateAmount;
         EventBroker.UpdatePriceAmoun += uIValues.UpdatePriceAmount;
         EventBroker.GameOver += GameOver;
         MenuOff();
         gUI.SetActive(true);
+        victory.SetActive(false);
     }
     internal void Pause()
     {
+        gUI.SetActive(false);
+        victory.SetActive(false);
         EventBroker.UpdateChocolateAmount -= uIValues.UpdateChocolateAmount;
         EventBroker.UpdatePriceAmoun -= uIValues.UpdatePriceAmount;
         EventBroker.GameOver -= GameOver;
-
+        EventBroker.OnFloodingComplete -= Victory;
         GameManager.Instance.UpdateGameState(GameManager.GameState.PAUSE);
         MenuOn();
-        gUI.SetActive(false);
+        
     }
     internal void Ñontinue()
     {
-        EventBroker.UpdateChocolateAmount += uIValues.UpdateChocolateAmount;
-        EventBroker.UpdatePriceAmoun += uIValues.UpdatePriceAmount;
-        EventBroker.GameOver += GameOver;
-        GameManager.Instance.UpdateGameState(GameManager.GameState.RUNNING);
-        MenuOff();
-        gUI.SetActive(true);
+        if (!gameOverState)
+        {
+            EventBroker.OnFloodingComplete += Victory;
+            EventBroker.UpdateChocolateAmount += uIValues.UpdateChocolateAmount;
+            EventBroker.UpdatePriceAmoun += uIValues.UpdatePriceAmount;
+            EventBroker.GameOver += GameOver;
+            GameManager.Instance.UpdateGameState(GameManager.GameState.RUNNING);
+            MenuOff();
+            gUI.SetActive(true);
+        }
     }
     internal void Exit()
     {

@@ -16,5 +16,5 @@ MonoBehaviour:
   walkSpeed: 4
   rotationSpeed: 60
   maxBeaverCount: 10
-  startPrice: 0
+  startPrice: 1
   priceStep: 0

@@ -19,6 +19,8 @@ public class HouseVitality : MonoBehaviour
     [SerializeField]
     private HouseSettings config;
 
+    [SerializeField]
+    private HouseController houseController;
     /// <summary>
     /// Текущее количество жизни у дома
     /// </summary>
@@ -67,8 +69,10 @@ public class HouseVitality : MonoBehaviour
         healthPoint -= config.DamagePerSecond * Time.deltaTime;
         if (healthPoint <= 0)
         {
+            houseController._animation.Stop();
+            houseController.HomeButton.SetActive(true);
             //TODO: раскоментировать если необходимо чтобы после полной поломки дом не ремонтировался
-            //isFlooded = true;
+            isFlooded = true;
             //TODO: раскоментировать если необходимо отключить состояние повреждения после полной поломки
             //isRecieveDamage = false;
         }
