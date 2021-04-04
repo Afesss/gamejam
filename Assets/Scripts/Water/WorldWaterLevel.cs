@@ -45,6 +45,8 @@ public class WorldWaterLevel : MonoBehaviour
         {
             OnFloodLevelChange?.Invoke(newLevel);
             currentFloodLevel = newLevel;
+            if (newLevel >= maxHouseLevel)
+                EventBroker.OnFloodingCompleteInvoke();
         }
     }
 
@@ -52,9 +54,6 @@ public class WorldWaterLevel : MonoBehaviour
     {
         if (currentWaterLevel < config.MaxWaterLevel)
             currentWaterLevel += amount;
-
-        if (currentWaterLevel >= config.MaxWaterLevel)
-            EventBroker.OnFloodingCompleteInvoke();
     }
 
     private void OnDestroy()
