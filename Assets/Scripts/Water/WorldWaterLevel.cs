@@ -1,9 +1,11 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class WorldWaterLevel : MonoBehaviour
 {
     public delegate void FloodLevelAction(int level);
     public event FloodLevelAction OnFloodLevelChange;
+    public event Action OnFloodingComplete;
 
     public float WaterLevelRate { get { return currentWaterLevel / config.MaxWaterLevel; } }
     public int FloodLevel { get { return currentFloodLevel; } }
@@ -51,6 +53,9 @@ public class WorldWaterLevel : MonoBehaviour
     {
         if (currentWaterLevel < config.MaxWaterLevel)
             currentWaterLevel += amount;
+        
+        if (currentWaterLevel >= config.MaxWaterLevel)
+            OnFloodingComplete?.Invoke();
     }
 
     private void OnDestroy()
