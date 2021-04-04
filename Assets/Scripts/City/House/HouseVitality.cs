@@ -21,6 +21,8 @@ public class HouseVitality : MonoBehaviour
 
     [SerializeField]
     private HouseController houseController;
+
+    internal bool IsFlooded { get { return isFlooded; } }
     /// <summary>
     /// Текущее количество жизни у дома
     /// </summary>
