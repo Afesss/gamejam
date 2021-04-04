@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,6 +6,8 @@ using UnityEngine.UI;
 
 internal class UIManager : Singleton<UIManager>
 {
+    internal event Action OnUpdateGameState;
+
     [SerializeField] GameObject mainMenu;
     [SerializeField] GameObject gUI;
     [SerializeField] GameObject gameOver;
@@ -72,6 +75,8 @@ internal class UIManager : Singleton<UIManager>
         MenuOff();
         gUI.SetActive(true);
         victory.SetActive(false);
+
+        OnUpdateGameState?.Invoke();
     }
     internal void Pause()
     {
@@ -83,12 +88,14 @@ internal class UIManager : Singleton<UIManager>
         EventBroker.OnFloodingComplete -= Victory;
         GameManager.Instance.UpdateGameState(GameManager.GameState.PAUSE);
         MenuOn();
-        
+
+        OnUpdateGameState?.Invoke();
     }
     internal void Ñontinue()
     {
         if (gameStart)
         {
+<<<<<<< Updated upstream
             if (!gameOverState)
             {
                 EventBroker.OnFloodingComplete += Victory;
@@ -99,6 +106,17 @@ internal class UIManager : Singleton<UIManager>
                 MenuOff();
                 gUI.SetActive(true);
             }
+=======
+            EventBroker.OnFloodingComplete += Victory;
+            EventBroker.UpdateChocolateAmount += uIValues.UpdateChocolateAmount;
+            EventBroker.UpdatePriceAmoun += uIValues.UpdatePriceAmount;
+            EventBroker.GameOver += GameOver;
+            GameManager.Instance.UpdateGameState(GameManager.GameState.RUNNING);
+            MenuOff();
+            gUI.SetActive(true);
+
+            OnUpdateGameState?.Invoke();
+>>>>>>> Stashed changes
         }
     }
     internal void Exit()

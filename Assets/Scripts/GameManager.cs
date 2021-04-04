@@ -18,7 +18,7 @@ internal class GameManager : Singleton<GameManager>
         PAUSE
     }
 
-    private GameState currentGameState;
+    internal GameState currentGameState { get; private set; }
     private List<AsyncOperation> loadOperations = new List<AsyncOperation>();
     protected override void Awake()
     {

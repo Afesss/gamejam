@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,6 +7,8 @@ public class CameraBehaviour : MonoBehaviour
 {
     [SerializeField] private InputController _input;
     [SerializeField] private float rotateSpeed;
+    [SerializeField] private AudioSource menuThemeAudio = null;
+    [SerializeField] private AudioSource mainThemeAudio = null;
     private Transform _transform;
     private Vector3 rotateAngle;
     private float xAxis;
@@ -15,10 +18,29 @@ public class CameraBehaviour : MonoBehaviour
         DontDestroyOnLoad(this);
         _transform = transform;
         EventBroker.SendWaterPosition += ChengePosition;
+        UIManager.Instance.OnUpdateGameState += ToggleAudioListener;
+        
     }
+
+    private void ToggleAudioListener()
+    {
+        if (GameManager.Instance.currentGameState == GameManager.GameState.RUNNING)
+        {
+            menuThemeAudio.Stop();
+            mainThemeAudio.Play();
+        }
+        else
+        {
+            menuThemeAudio.Play();
+            mainThemeAudio.Stop();
+        }
+    }
+
     private void OnDestroy()
     {
         EventBroker.SendWaterPosition -= ChengePosition;
+        if (UIManager.Instance != null)
+            UIManager.Instance.OnUpdateGameState -= ToggleAudioListener;
     }
     private void FixedUpdate()
     {

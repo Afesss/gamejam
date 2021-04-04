@@ -63,3 +63,9 @@ MonoBehaviour:
   maxWaterLevel: 90000
   maxWaterYPosition: 10
   outflowSpeedPerSecond: 100
+<<<<<<< Updated upstream
+=======
+  waterLevelClip: {fileID: 8300000, guid: a3f9c1cce56ecf64c853ae29ca3f8656, type: 3}
+  minWaterLevelClipVolume: 0
+  maxWaterLevelClipVolume: 0.6
+>>>>>>> Stashed changes

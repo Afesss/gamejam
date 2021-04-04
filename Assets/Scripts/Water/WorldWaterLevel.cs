@@ -20,6 +20,7 @@ public class WorldWaterLevel : MonoBehaviour
 
     private int currentFloodLevel = 0;
     private Transform _transform;
+    private AudioSource waterAudio = null;
 
     private void Awake()
     {
@@ -27,6 +28,16 @@ public class WorldWaterLevel : MonoBehaviour
         maxHouseLevel = config.HouseSets.Length;
         waterAmountToLevel = config.MaxWaterLevel / maxHouseLevel;
         _transform = transform;
+
+        waterAudio = gameObject.AddComponent<AudioSource>();
+        waterAudio.clip = config.WaterLevelClip;
+        waterAudio.volume = 0;
+        waterAudio.loop = true;
+    }
+
+    private void Start()
+    {
+        waterAudio.Play();
     }
 
     private void Update()
@@ -49,7 +60,10 @@ public class WorldWaterLevel : MonoBehaviour
             OnFloodLevelChange?.Invoke(newLevel);
             currentFloodLevel = newLevel;
             if (newLevel >= maxHouseLevel)
+            {
+                waterAudio.Stop();
                 EventBroker.OnFloodingCompleteInvoke();
+            }
         }
     }
 
@@ -57,6 +71,13 @@ public class WorldWaterLevel : MonoBehaviour
     {
         if (currentWaterLevel < config.MaxWaterLevel)
             currentWaterLevel += amount;
+
+        UpdateSoundVolume();
+    }
+
+    private void UpdateSoundVolume()
+    {
+        waterAudio.volume = config.MinWaterLevelClipVolume + WaterLevelRate * (config.MaxWaterLevelClipVolume - config.MinWaterLevelClipVolume);
     }
 
     private void OnDestroy()

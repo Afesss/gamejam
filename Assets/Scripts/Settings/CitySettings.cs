@@ -48,6 +48,13 @@ public class CitySettings : ScriptableObject
     /// </summary>
     public float OutflowSpeedPerSecond { get { return outflowSpeedPerSecond; } }
 
+    public AudioClip WaterLevelClip { get { return waterLevelClip; } }
+
+    public float MinWaterLevelClipVolume { get { return minWaterLevelClipVolume; } }
+
+    public float MaxWaterLevelClipVolume { get { return maxWaterLevelClipVolume; } }
+
+
     [Header("Генератор города")]
 
     [Tooltip("Количество колонок для домов")]
@@ -89,5 +96,15 @@ public class CitySettings : ScriptableObject
     [SerializeField]
     private float outflowSpeedPerSecond = 10;
 
+    [SerializeField]
+    private AudioClip waterLevelClip;
+
+    [SerializeField]
+    [Range(0f,1f)]
+    private float minWaterLevelClipVolume = 0;
+
+    [SerializeField]
+    [Range(0f, 1f)]
+    private float maxWaterLevelClipVolume = 1;
 
 }
